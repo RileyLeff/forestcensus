@@ -1,0 +1,11 @@
+rounding = "half_up"
+
+dbh_pct_warn = 0.08
+dbh_pct_error = 0.16
+
+dbh_abs_floor_warn_mm = 3
+dbh_abs_floor_error_mm = 6
+
+retag_delta_pct = 0.10
+new_tree_flag_min_dbh_mm = 60
+drop_after_absent_surveys = 2

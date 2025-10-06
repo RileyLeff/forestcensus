@@ -1,0 +1,7 @@
+species = [
+{ genus = "Pinus", species = "taeda", code = "PINTAE" },
+{ genus = "Ilex",  species = "opaca", code = "ILEOPA" },
+{ genus = "Acer",  species = "rubrum", code = "ACERUB" }
+]
+
+enforce_no_synonyms = true
