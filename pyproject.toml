@@ -15,7 +15,7 @@ dependencies = [
 
 [project.optional-dependencies]
 test = [
-    "pytest>=8.2",
+    "pytest>=8.2.0",
 ]
 
 [project.scripts]
@@ -27,3 +27,14 @@ package-dir = {"" = "src"}
 [tool.setuptools.packages.find]
 where = ["src"]
 include = ["forcen*"]
+
+[tool.uv]
+managed = true
+
+[dependency-groups]
+test = ["pytest>=8.2.0"]
+
+[tool.uv.workspace]
+members = [
+    "tmp_uv/sample",
+]
