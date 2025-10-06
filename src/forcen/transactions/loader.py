@@ -22,11 +22,13 @@ SURVEY_META_FILENAME = "survey_meta.toml"
 
 
 def load_transaction(
-    path: Path, *, normalization: NormalizationConfig = NormalizationConfig()
+    path: Path, *, normalization: NormalizationConfig | None = None
 ) -> TransactionData:
     path = Path(path)
     if not path.is_dir():
         raise TransactionFormatError(path=path, message="transaction directory not found")
+
+    normalization = normalization or NormalizationConfig()
 
     measurements = load_measurements(path / MEASUREMENTS_FILENAME, normalization)
     commands = _load_updates(path / UPDATES_FILENAME)

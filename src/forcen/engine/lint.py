@@ -15,6 +15,7 @@ from ..validators import (
     validate_growth,
     validate_measurement_rows,
 )
+from .utils import determine_default_effective_date, with_default_effective
 
 
 @dataclass
@@ -70,10 +71,16 @@ def lint_transaction(
 
     config_dir = Path(config_dir)
     transaction_dir = Path(transaction_dir)
-    normalization = normalization or NormalizationConfig()
-
     config = load_config_bundle(config_dir)
+    normalization = normalization or NormalizationConfig(
+        rounding=config.validation.rounding
+    )
     transaction = load_transaction(transaction_dir, normalization=normalization)
+
+    default_effective = determine_default_effective_date(config, transaction)
+    transaction.commands = with_default_effective(
+        transaction.commands, default_effective
+    )
     tx_id = compute_tx_id(transaction_dir)
 
     issues = _collect_issues(config, transaction)

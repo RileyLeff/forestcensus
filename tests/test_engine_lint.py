@@ -6,8 +6,10 @@ from pathlib import Path
 
 import pytest
 
+from forcen.config import load_config_bundle
 from forcen.engine import lint_transaction
 from forcen.transactions import NormalizationConfig
+from forcen.transactions import loader as tx_loader
 
 CONFIG_DIR = Path("planning/fixtures/configs")
 TX1_DIR = Path("planning/fixtures/transactions/tx-1-initial")
@@ -51,3 +53,20 @@ BRNV,H4,112,2019-06-16,171,9,TRUE,""
     normalization = NormalizationConfig(rounding="half_up")
     report = lint_transaction(tx_dir, CONFIG_DIR, normalization=normalization)
     assert report.error_count == 0
+
+
+def test_lint_uses_config_rounding(monkeypatch: pytest.MonkeyPatch) -> None:
+    captured = {}
+    original = tx_loader.load_transaction
+
+    def wrapped(path: Path, *, normalization=None):
+        captured["rounding"] = getattr(normalization, "rounding", None)
+        return original(path, normalization=normalization)
+
+    monkeypatch.setattr(tx_loader, "load_transaction", wrapped)
+    monkeypatch.setattr("forcen.engine.lint.load_transaction", wrapped)
+
+    lint_transaction(TX1_DIR, CONFIG_DIR)
+
+    expected_rounding = load_config_bundle(CONFIG_DIR).validation.rounding
+    assert captured["rounding"] == expected_rounding

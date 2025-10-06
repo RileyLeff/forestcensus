@@ -11,9 +11,9 @@ from ..config import load_config_bundle
 from ..exceptions import ConfigError, ForcenError
 from ..ledger.storage import Ledger
 from ..transactions import NormalizationConfig, load_transaction
-from ..transactions.txid import compute_tx_id
 from ..validators import ValidationIssue
 from .lint import lint_transaction
+from .utils import determine_default_effective_date, with_default_effective
 
 
 @dataclass
@@ -40,19 +40,23 @@ def submit_transaction(
     transaction_dir = Path(transaction_dir)
     config_dir = Path(config_dir)
     workspace = Path(workspace)
-    normalization = normalization or NormalizationConfig()
-
+    normalization_override = normalization
     lint_report = lint_transaction(
         transaction_dir=transaction_dir,
         config_dir=config_dir,
-        normalization=normalization,
+        normalization=normalization_override,
     )
 
     if lint_report.has_errors:
         raise SubmitError("transaction rejected due to validation errors")
 
     config = load_config_bundle(config_dir)
+    normalization = normalization_override or NormalizationConfig(
+        rounding=config.validation.rounding
+    )
     tx_data = load_transaction(transaction_dir, normalization=normalization)
+    default_effective = determine_default_effective_date(config, tx_data)
+    tx_data.commands = with_default_effective(tx_data.commands, default_effective)
     tx_id = lint_report.tx_id
 
     ledger = Ledger(workspace)
