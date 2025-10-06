@@ -26,6 +26,7 @@ class Ledger:
         self.updates_log = self.root / "updates_log.tdl"
         self.trees_view = self.root / "trees_view.csv"
         self.retag_suggestions = self.root / "retag_suggestions.csv"
+        self.validation_report = self.root / "validation_report.json"
         self.transactions_log = self.root / "transactions.jsonl"
         self.versions_dir = self.root / "versions"
         self.versions_dir.mkdir(exist_ok=True)
@@ -172,6 +173,9 @@ class Ledger:
             self.retag_suggestions, index=False
         )
 
+    def write_validation_report(self, payload: dict) -> None:
+        self.validation_report.write_text(json.dumps(payload, indent=2) + "\n", encoding="utf-8")
+
     def write_version(
         self,
         tx_ids: List[str],
@@ -190,6 +194,7 @@ class Ledger:
         trees_dest = version_dir / "trees_view.csv"
         retag_dest = version_dir / "retag_suggestions.csv"
         updates_dest = version_dir / "updates_log.tdl"
+        validation_dest = version_dir / "validation_report.json"
         manifest_path = version_dir / "manifest.json"
 
         _copy_file(self.observations_csv, observations_dest)
@@ -200,6 +205,8 @@ class Ledger:
             _copy_file(self.retag_suggestions, retag_dest)
         if self.updates_log.exists():
             _copy_file(self.updates_log, updates_dest)
+        if self.validation_report.exists():
+            _copy_file(self.validation_report, validation_dest)
 
         manifest = {
             "version_seq": seq,
@@ -226,6 +233,11 @@ class Ledger:
                 **(
                     {"updates_log.tdl": _sha256_file(updates_dest)}
                     if updates_dest.exists()
+                    else {}
+                ),
+                **(
+                    {"validation_report.json": _sha256_file(validation_dest)}
+                    if validation_dest.exists()
                     else {}
                 ),
             },

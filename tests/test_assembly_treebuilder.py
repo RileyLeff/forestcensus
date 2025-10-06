@@ -27,7 +27,8 @@ from forcen.assembly.properties import apply_properties, build_property_timeline
 from forcen.transactions import NormalizationConfig, load_transaction
 from forcen.transactions.models import MeasurementRow
 from forcen.dsl import DSLParser
-from forcen.dsl.types import SplitCommand, TagRef, UpdateCommand
+from forcen.dsl.types import AliasCommand, SplitCommand, TagRef, UpdateCommand
+from forcen.assembly.primary import apply_primary_tags, build_primary_timelines
 
 
 CONFIG_DIR = Path("planning/fixtures/configs")
@@ -80,27 +81,43 @@ def test_split_selector_reassigns_historical_rows():
     assert largest_row.tree_uid == target_uid
 
 
-def test_update_properties_applied_to_measurements():
+def test_update_and_primary_applied_to_measurements():
     config = load_config_bundle(CONFIG_DIR)
     tx = load_transaction(TX1_DIR, normalization=NormalizationConfig())
     parser = DSLParser()
-    update_commands = parser.parse(
-        "UPDATE BRNV/H4/112 SET genus=Pinus,species=taeda,code=PINTAE EFFECTIVE 2018-01-01"
+    command_text = "\n".join(
+        [
+            "UPDATE BRNV/H4/112 SET genus=Pinus,species=taeda,code=PINTAE EFFECTIVE 2018-01-01",
+            "ALIAS BRNV/H4/508 TO BRNV/H4/112 PRIMARY EFFECTIVE 2020-06-15",
+        ]
     )
-    commands = with_default_effective(update_commands, determine_default_effective_date(config, tx))
+    commands = parser.parse(command_text)
+    commands = with_default_effective(
+        commands, determine_default_effective_date(config, tx)
+    )
 
     resolver = build_alias_resolver(tx.measurements, commands)
     assign_tree_uids(tx.measurements, resolver)
-    timelines = build_property_timelines(
+    catalog = SurveyCatalog.from_config(config)
+
+    property_timelines = build_property_timelines(
         [cmd for cmd in commands if isinstance(cmd, UpdateCommand)],
         resolver,
     )
-    apply_properties(tx.measurements, timelines)
+    apply_properties(tx.measurements, property_timelines)
+
+    primary_timelines = build_primary_timelines(
+        [cmd for cmd in commands if isinstance(cmd, AliasCommand)],
+        resolver,
+    )
+    apply_primary_tags(tx.measurements, primary_timelines, catalog)
 
     for row in tx.measurements:
         assert row.genus == "Pinus"
         assert row.species == "taeda"
         assert row.code == "PINTAE"
+        if row.date.year == 2020:
+            assert row.public_tag == "508"
 
 
 def _make_config_with_three_surveys() -> ConfigBundle:

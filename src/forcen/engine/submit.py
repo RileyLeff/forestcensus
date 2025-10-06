@@ -22,8 +22,9 @@ from ..assembly.trees import generate_implied_rows
 from ..assembly.split import apply_splits
 from ..assembly.survey import SurveyCatalog
 from ..assembly.properties import apply_properties, build_property_timelines
+from ..assembly.primary import apply_primary_tags, build_primary_timelines
 from ..assembly.tree_outputs import build_retag_suggestions, build_tree_view
-from ..dsl.types import SplitCommand, UpdateCommand
+from ..dsl.types import AliasCommand, SplitCommand, UpdateCommand
 
 
 @dataclass
@@ -69,17 +70,23 @@ def submit_transaction(
     tx_data.commands = with_default_effective(tx_data.commands, default_effective)
     resolver = build_alias_resolver(tx_data.measurements, tx_data.commands)
     assign_tree_uids(tx_data.measurements, resolver)
+    catalog = SurveyCatalog.from_config(config)
     apply_splits(
         tx_data.measurements,
         [cmd for cmd in tx_data.commands if isinstance(cmd, SplitCommand)],
         resolver,
-        SurveyCatalog.from_config(config),
+        catalog,
     )
     property_timelines = build_property_timelines(
         [cmd for cmd in tx_data.commands if isinstance(cmd, UpdateCommand)],
         resolver,
     )
     apply_properties(tx_data.measurements, property_timelines)
+    primary_timelines = build_primary_timelines(
+        [cmd for cmd in tx_data.commands if isinstance(cmd, AliasCommand)],
+        resolver,
+    )
+    apply_primary_tags(tx_data.measurements, primary_timelines, catalog)
     tx_id = lint_report.tx_id
 
     ledger = Ledger(workspace)
@@ -90,7 +97,7 @@ def submit_transaction(
     all_rows = list(tx_data.measurements) + implied_rows
 
     existing_rows = _load_existing_observations(ledger.observations_csv)
-    catalog = SurveyCatalog.from_config(config)
+    apply_primary_tags(existing_rows, primary_timelines, catalog)
 
     output_rows = existing_rows + all_rows
     tree_view_rows = build_tree_view(output_rows, catalog)
@@ -107,6 +114,24 @@ def submit_transaction(
     summary = _summarize_issues(issues_list)
 
     code_version = _detect_code_version()
+
+    validation_payload = {
+        "tx_id": tx_id,
+        "summary": {
+            "errors": lint_report.error_count,
+            "warnings": lint_report.warning_count,
+        },
+        "issues": [
+            {
+                "code": issue.code,
+                "severity": issue.severity,
+                "message": issue.message,
+                "location": issue.location,
+            }
+            for issue in lint_report.issues
+        ],
+    }
+    ledger.write_validation_report(validation_payload)
 
     ledger.append_transaction_entry(
         tx_id=tx_id,
@@ -204,6 +229,7 @@ def _load_existing_observations(path: Path) -> List[MeasurementRow]:
                 normalization_flags=[],
                 raw={},
                 tree_uid=record.get("tree_uid") or None,
+                public_tag=record.get("public_tag") or record.get("tag"),
             )
         )
     return rows

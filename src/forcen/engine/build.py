@@ -38,6 +38,8 @@ def build_workspace(config_dir: Path, workspace: Path) -> BuildResult:
 
     validation_summary = _aggregate_validation(records)
     config_hashes = _hash_config(config_dir)
+    validation_payload = _build_validation_report(records, validation_summary)
+    ledger.write_validation_report(validation_payload)
 
     row_counts = _compute_row_counts(ledger.observations_csv)
 
@@ -61,6 +63,20 @@ def _aggregate_validation(records: list[dict]) -> Dict[str, int]:
         total_errors += int(summary.get("errors", 0))
         total_warnings += int(summary.get("warnings", 0))
     return {"errors": total_errors, "warnings": total_warnings}
+
+
+def _build_validation_report(records: list[dict], summary: Dict[str, int]) -> dict:
+    return {
+        "summary": summary,
+        "transactions": [
+            {
+                "tx_id": record.get("tx_id"),
+                "validation_summary": record.get("validation_summary", {}),
+                "row_counts": record.get("row_counts", {}),
+            }
+            for record in records
+        ],
+    }
 
 
 def _hash_config(config_dir: Path) -> Dict[str, str]:

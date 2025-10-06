@@ -72,6 +72,8 @@ def apply_properties(
             row.site = fields["site"]
         if "plot" in fields:
             row.plot = fields["plot"]
+        if "tag" in fields:
+            row.tag = fields["tag"]
 
 
 def _resolve_tree_uid(resolver: AliasResolver, tree_ref: TreeRef, when: date) -> str:

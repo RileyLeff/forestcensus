@@ -28,6 +28,7 @@ class MeasurementRow:
     normalization_flags: List[str] = field(default_factory=list)
     raw: Dict[str, str] = field(default_factory=dict)
     tree_uid: Optional[str] = None
+    public_tag: Optional[str] = None
 
 
 @dataclass

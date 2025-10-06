@@ -30,13 +30,23 @@ def test_submit_transaction_creates_ledger(tmp_path: Path) -> None:
     assert manifest["version_seq"] == 1
     assert manifest["tx_ids"] == [result.tx_id]
     assert manifest["row_counts"]["field"] >= 2
+    assert "trees_view.csv" in manifest["artifact_checksums"]
+    assert "retag_suggestions.csv" in manifest["artifact_checksums"]
+    assert "updates_log.tdl" in manifest["artifact_checksums"]
+    assert "validation_report.json" in manifest["artifact_checksums"]
 
     trees_view = workspace / "trees_view.csv"
     assert trees_view.exists()
-    assert "tree_uid" in trees_view.read_text()
+    trees_content = trees_view.read_text().splitlines()
+    assert any("tree_uid" in line for line in trees_content)
 
     retag_csv = workspace / "retag_suggestions.csv"
     assert retag_csv.exists()
+
+    validation_path = workspace / "validation_report.json"
+    assert validation_path.exists()
+    report_payload = json.loads(validation_path.read_text())
+    assert report_payload["summary"]["errors"] == 0
 
 
 def test_submit_transaction_idempotent(tmp_path: Path) -> None:
@@ -58,3 +68,22 @@ def test_submit_second_transaction_produces_retag(tmp_path: Path) -> None:
     retag_csv = workspace / "retag_suggestions.csv"
     content = retag_csv.read_text()
     assert "suggested_alias_line" in content
+
+    validation_path = workspace / "validation_report.json"
+    payload = json.loads(validation_path.read_text())
+    assert len(payload["issues"]) >= 0
+
+    trees_view = workspace / "trees_view.csv"
+    rows = trees_view.read_text().splitlines()
+    header = rows[0].split(",")
+    public_tag_idx = header.index("public_tag")
+    survey_idx = header.index("survey_id")
+    found = False
+    for row in rows[1:]:
+        cols = row.split(",")
+        if len(cols) <= max(public_tag_idx, survey_idx):
+            continue
+        if cols[survey_idx] == "2020_Jun" and cols[public_tag_idx] == "508":
+            found = True
+            break
+    assert found
