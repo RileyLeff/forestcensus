@@ -106,12 +106,36 @@ class Ledger:
         with self.transactions_log.open("a", encoding="utf-8") as fh:
             fh.write(json.dumps(record, sort_keys=True) + "\n")
 
+    def read_transactions(self) -> List[dict]:
+        if not self.transactions_log.exists():
+            return []
+        records: List[dict] = []
+        with self.transactions_log.open("r", encoding="utf-8") as fh:
+            for line in fh:
+                line = line.strip()
+                if not line:
+                    continue
+                try:
+                    records.append(json.loads(line))
+                except json.JSONDecodeError:
+                    continue
+        return records
+
+    def list_versions(self) -> List[int]:
+        versions = [
+            int(path.name)
+            for path in self.versions_dir.iterdir()
+            if path.is_dir() and path.name.isdigit()
+        ]
+        return sorted(versions)
+
     def write_version(
         self,
-        tx_id: str,
-        issues: Iterable[ValidationIssue],
+        tx_ids: List[str],
+        validation_summary: Dict[str, int],
         config_hashes: Dict[str, str],
         input_hashes: Dict[str, str],
+        code_version: str,
     ) -> int:
         seq = self._next_version_seq()
         version_dir = self.versions_dir / f"{seq:04d}"
@@ -127,11 +151,11 @@ class Ledger:
         manifest = {
             "version_seq": seq,
             "created_at": datetime.now(timezone.utc).isoformat(),
-            "code_version": "unknown",
-            "tx_ids": [tx_id],
+            "code_version": code_version,
+            "tx_ids": tx_ids,
             "config_hashes": config_hashes,
             "input_checksums": input_hashes,
-            "validation_summary": _summarize_issues(list(issues)),
+            "validation_summary": validation_summary,
             "artifact_checksums": {
                 "observations_long.csv": _sha256_file(observations_dest),
                 "observations_long.parquet": _sha256_file(parquet_dest),

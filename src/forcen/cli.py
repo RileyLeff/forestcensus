@@ -8,7 +8,14 @@ from typing import Optional
 
 import typer
 
-from .engine import SubmitError, SubmitResult, lint_transaction, submit_transaction
+from .engine import (
+    BuildError,
+    SubmitError,
+    SubmitResult,
+    build_workspace,
+    lint_transaction,
+    submit_transaction,
+)
 from .exceptions import ConfigError, ForcenError
 from .transactions import NormalizationConfig
 from .transactions.exceptions import (
@@ -17,6 +24,7 @@ from .transactions.exceptions import (
     TransactionFormatError,
 )
 from .dsl.exceptions import DSLParseError
+from .ledger.storage import Ledger
 
 
 EXIT_SUCCESS = 0
@@ -28,7 +36,9 @@ EXIT_CONFIG_ERROR = 5
 
 app = typer.Typer(help="Forest census transaction engine")
 tx_app = typer.Typer(help="Transaction commands")
+versions_app = typer.Typer(help="Version inspection")
 app.add_typer(tx_app, name="tx")
+app.add_typer(versions_app, name="versions")
 
 
 @app.callback()
@@ -147,4 +157,52 @@ def tx_submit(
         "version_seq": result.version_seq,
         "warnings": result.warnings,
     }
+    typer.echo(json.dumps(payload, indent=2))
+
+
+@app.command("build")
+def build_command(
+    config_dir: Path = typer.Option(
+        Path("config"),
+        "--config",
+        "-c",
+        help="Path to configuration directory",
+    ),
+    workspace: Path = typer.Option(
+        Path(".forcen"),
+        "--workspace",
+        "-w",
+        help="Directory for ledger state",
+    ),
+) -> None:
+    """Rebuild artifacts from ledger state."""
+
+    try:
+        result = build_workspace(config_dir, workspace)
+    except ConfigError as exc:
+        typer.echo(f"Config error: {exc}", err=True)
+        raise typer.Exit(EXIT_CONFIG_ERROR) from exc
+    except BuildError as exc:
+        typer.echo(f"Build error: {exc}", err=True)
+        raise typer.Exit(EXIT_IO_ERROR) from exc
+
+    payload = {
+        "version_seq": result.version_seq,
+        "tx_count": result.tx_count,
+    }
+    typer.echo(json.dumps(payload, indent=2))
+
+
+@versions_app.command("list")
+def versions_list(
+    workspace: Path = typer.Option(
+        Path(".forcen"),
+        "--workspace",
+        "-w",
+        help="Directory for ledger state",
+    ),
+) -> None:
+    ledger = Ledger(workspace)
+    versions = ledger.list_versions()
+    payload = {"versions": versions}
     typer.echo(json.dumps(payload, indent=2))

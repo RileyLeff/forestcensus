@@ -65,21 +65,27 @@ def submit_transaction(
     config_hashes = _hash_config(config_dir)
     input_hashes = _hash_transaction_inputs(transaction_dir)
 
+    issues_list = _rebuild_issues(lint_report.issues)
+    summary = _summarize_issues(issues_list)
+
+    code_version = _detect_code_version()
+
     ledger.append_transaction_entry(
         tx_id=tx_id,
-        code_version=_detect_code_version(),
+        code_version=code_version,
         config_hashes=config_hashes,
         input_hashes=input_hashes,
         rows_added=rows_added,
         dsl_lines_added=dsl_lines_added,
-        issues=_rebuild_issues(lint_report.issues),
+        issues=issues_list,
     )
 
     version_seq = ledger.write_version(
-        tx_id=tx_id,
-        issues=_rebuild_issues(lint_report.issues),
+        tx_ids=[tx_id],
+        validation_summary=summary,
         config_hashes=config_hashes,
         input_hashes=input_hashes,
+        code_version=code_version,
     )
 
     return SubmitResult(
@@ -122,3 +128,10 @@ def _detect_code_version() -> str:
 def _rebuild_issues(issues: List[ValidationIssue]) -> List[ValidationIssue]:
     # Issues are already ValidationIssue instances, but ensure a copy for ledger writes.
     return list(issues)
+
+
+def _summarize_issues(issues: List[ValidationIssue]) -> Dict[str, int]:
+    return {
+        "errors": sum(1 for issue in issues if issue.is_error()),
+        "warnings": sum(1 for issue in issues if not issue.is_error()),
+    }
