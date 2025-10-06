@@ -3,12 +3,11 @@
 from __future__ import annotations
 
 from bisect import bisect_right
-from collections import defaultdict
 from datetime import date
 from typing import Dict, Iterable, List, Optional, Tuple
 from uuid import UUID, uuid5
 
-from ..dsl.types import AliasCommand, Command, TagRef, TreeRef
+from ..dsl.types import AliasCommand, Command, SplitCommand, TagRef, TreeRef
 from ..transactions.models import MeasurementRow
 
 
@@ -63,6 +62,8 @@ class AliasResolver:
                 self.ensure_tag(command.target)
                 if command.tree_ref.tag is not None:
                     self.ensure_tag(command.tree_ref.tag)
+            elif isinstance(command, SplitCommand):
+                self.ensure_tag(command.target)
 
 
 def _tree_uid_for_tag(key: Tuple[str, str, str]) -> str:
@@ -78,14 +79,22 @@ def build_alias_resolver(
     resolver.register_commands(commands)
 
     dated_commands = sorted(
-        (cmd for cmd in commands if isinstance(cmd, AliasCommand)),
+        (cmd for cmd in commands if isinstance(cmd, (AliasCommand, SplitCommand))),
         key=lambda cmd: cmd.effective_date,
     )
 
     for command in dated_commands:
         assert command.effective_date is not None
-        tree_uid = _resolve_tree_ref(resolver, command.tree_ref, command.effective_date)
-        resolver.bind(command.target, command.effective_date, tree_uid)
+        if isinstance(command, AliasCommand):
+            tree_uid = _resolve_tree_ref(
+                resolver, command.tree_ref, command.effective_date
+            )
+            resolver.bind(command.target, command.effective_date, tree_uid)
+        elif isinstance(command, SplitCommand):
+            source_uid = _resolve_tree_ref(
+                resolver, command.source, command.effective_date
+            )
+            resolver.bind(command.target, command.effective_date, source_uid)
 
     return resolver
 

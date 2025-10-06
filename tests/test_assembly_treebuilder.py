@@ -3,12 +3,26 @@
 from __future__ import annotations
 
 from datetime import date
+from datetime import date
 from pathlib import Path
 
 from forcen.config import load_config_bundle
+from forcen.config.models import (
+    ConfigBundle,
+    DatasheetsConfig,
+    SiteConfig,
+    SitesConfig,
+    SpeciesEntry,
+    SurveyWindow,
+    SurveysConfig,
+    TaxonomyConfig,
+    ValidationConfig,
+)
 from forcen.engine.utils import determine_default_effective_date, with_default_effective
 from forcen.assembly.treebuilder import assign_tree_uids, build_alias_resolver
+from forcen.assembly.trees import generate_implied_rows
 from forcen.transactions import NormalizationConfig, load_transaction
+from forcen.transactions.models import MeasurementRow
 
 
 CONFIG_DIR = Path("planning/fixtures/configs")
@@ -40,3 +54,97 @@ def test_alias_rebinds_tag_to_existing_tree():
     alias_tree_uid = tx_alias.measurements[0].tree_uid
 
     assert alias_tree_uid == base_tree_uid
+
+
+def _make_config_with_three_surveys() -> ConfigBundle:
+    taxonomy = TaxonomyConfig(
+        species=[SpeciesEntry(genus="Pinus", species="taeda", code="PINTAE")],
+        enforce_no_synonyms=True,
+    )
+    sites = SitesConfig(
+        sites={
+            "BRNV": SiteConfig(zone_order=["Z"], plots=["H1"], girdling={})
+        }
+    )
+    surveys = SurveysConfig(
+        surveys=[
+            SurveyWindow(id="2019", start=date(2019, 1, 1), end=date(2019, 1, 31)),
+            SurveyWindow(id="2020", start=date(2020, 1, 1), end=date(2020, 1, 31)),
+            SurveyWindow(id="2021", start=date(2021, 1, 1), end=date(2021, 1, 31)),
+        ]
+    )
+    validation = ValidationConfig(
+        rounding="half_up",
+        dbh_pct_warn=0.08,
+        dbh_pct_error=0.16,
+        dbh_abs_floor_warn_mm=3,
+        dbh_abs_floor_error_mm=6,
+        retag_delta_pct=0.10,
+        new_tree_flag_min_dbh_mm=60,
+        drop_after_absent_surveys=2,
+    )
+    datasheets = DatasheetsConfig(
+        show_previous_surveys=2,
+        sort="public_tag_numeric_asc",
+        show_zombie_asterisk=True,
+    )
+    return ConfigBundle(
+        taxonomy=taxonomy,
+        sites=sites,
+        surveys=surveys,
+        validation=validation,
+        datasheets=datasheets,
+    )
+
+
+def test_generate_implied_row_for_trailing_gap():
+    config = _make_config_with_three_surveys()
+    row = MeasurementRow(
+        row_number=1,
+        site="BRNV",
+        plot="H1",
+        tag="100",
+        date=date(2019, 1, 15),
+        dbh_mm=120,
+        health=9,
+        standing=True,
+        notes="",
+        origin="field",
+    )
+    row.tree_uid = "tree-uid"
+    implied_rows = generate_implied_rows([row], config)
+    assert len(implied_rows) == 1
+    implied = implied_rows[0]
+    assert implied.origin == "implied"
+    assert implied.date == date(2020, 1, 1)
+
+
+def test_generate_implied_removed_when_rediscovered():
+    config = _make_config_with_three_surveys()
+    row1 = MeasurementRow(
+        row_number=1,
+        site="BRNV",
+        plot="H1",
+        tag="100",
+        date=date(2019, 1, 15),
+        dbh_mm=120,
+        health=9,
+        standing=True,
+        notes="",
+        origin="field",
+    )
+    row2 = MeasurementRow(
+        row_number=2,
+        site="BRNV",
+        plot="H1",
+        tag="100",
+        date=date(2021, 1, 15),
+        dbh_mm=125,
+        health=9,
+        standing=True,
+        notes="",
+        origin="field",
+    )
+    row1.tree_uid = row2.tree_uid = "tree-uid"
+    implied_rows = generate_implied_rows([row1, row2], config)
+    assert implied_rows == []

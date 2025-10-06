@@ -15,6 +15,7 @@ from ..validators import ValidationIssue
 from .lint import lint_transaction
 from .utils import determine_default_effective_date, with_default_effective
 from ..assembly.treebuilder import assign_tree_uids, build_alias_resolver
+from ..assembly.trees import generate_implied_rows
 
 
 @dataclass
@@ -66,7 +67,10 @@ def submit_transaction(
     if ledger.has_transaction(tx_id):
         return SubmitResult(tx_id=tx_id, accepted=False, version_seq=None, warnings=lint_report.warning_count)
 
-    rows_added, row_counts = ledger.append_observations(config, tx_data.measurements, tx_id)
+    implied_rows = generate_implied_rows(tx_data.measurements, config)
+    all_rows = list(tx_data.measurements) + implied_rows
+
+    rows_added, row_counts = ledger.append_observations(config, all_rows, tx_id)
     dsl_lines_added = ledger.append_updates(transaction_dir)
 
     config_hashes = _hash_config(config_dir)
