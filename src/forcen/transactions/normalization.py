@@ -107,7 +107,16 @@ def _normalize_row(
     notes = optional("notes")
     genus = optional("genus") or None
     species = optional("species") or None
+    code = optional("code") or None
     origin = optional("origin") or config.default_origin
+    origin = origin.lower()
+    if origin not in {"field", "ai", "implied"}:
+        raise TransactionDataError(
+            path=path,
+            row=row_number,
+            column="origin",
+            message=f"invalid origin '{origin}'",
+        )
 
     normalization_flags = list(health_flags)
 
@@ -133,6 +142,7 @@ def _normalize_row(
         notes=notes,
         genus=genus,
         species=species,
+        code=code,
         origin=origin,
         normalization_flags=normalization_flags,
         raw={key: (value or "") for key, value in raw.items()},
@@ -142,14 +152,16 @@ def _normalize_row(
 def _parse_dbh(path: Path, row: int, value: str) -> Optional[int]:
     if value == "" or value.upper() == "NA":
         return None
-    if not value.isdigit():
+    try:
+        number = int(value)
+    except ValueError as exc:
         raise TransactionDataError(
             path=path,
             row=row,
             column="dbh_mm",
             message=f"invalid integer '{value}'",
-        )
-    return int(value)
+        ) from exc
+    return number
 
 
 def _parse_health(

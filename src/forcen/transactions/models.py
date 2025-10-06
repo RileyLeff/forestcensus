@@ -23,6 +23,7 @@ class MeasurementRow:
     notes: str
     genus: Optional[str] = None
     species: Optional[str] = None
+    code: Optional[str] = None
     origin: str = "field"
     normalization_flags: List[str] = field(default_factory=list)
     raw: Dict[str, str] = field(default_factory=dict)
