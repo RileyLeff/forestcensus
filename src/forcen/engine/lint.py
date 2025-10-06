@@ -17,6 +17,9 @@ from ..validators import (
 )
 from .utils import determine_default_effective_date, with_default_effective
 from ..assembly.treebuilder import assign_tree_uids, build_alias_resolver
+from ..assembly.split import apply_splits
+from ..assembly.survey import SurveyCatalog
+from ..dsl.types import SplitCommand
 
 
 @dataclass
@@ -84,6 +87,12 @@ def lint_transaction(
     )
     resolver = build_alias_resolver(transaction.measurements, transaction.commands)
     assign_tree_uids(transaction.measurements, resolver)
+    apply_splits(
+        transaction.measurements,
+        [cmd for cmd in transaction.commands if isinstance(cmd, SplitCommand)],
+        resolver,
+        SurveyCatalog.from_config(config),
+    )
     tx_id = compute_tx_id(transaction_dir)
 
     issues = _collect_issues(config, transaction)

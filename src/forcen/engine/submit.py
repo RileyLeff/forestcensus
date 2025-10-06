@@ -16,6 +16,9 @@ from .lint import lint_transaction
 from .utils import determine_default_effective_date, with_default_effective
 from ..assembly.treebuilder import assign_tree_uids, build_alias_resolver
 from ..assembly.trees import generate_implied_rows
+from ..assembly.split import apply_splits
+from ..assembly.survey import SurveyCatalog
+from ..dsl.types import SplitCommand
 
 
 @dataclass
@@ -61,6 +64,12 @@ def submit_transaction(
     tx_data.commands = with_default_effective(tx_data.commands, default_effective)
     resolver = build_alias_resolver(tx_data.measurements, tx_data.commands)
     assign_tree_uids(tx_data.measurements, resolver)
+    apply_splits(
+        tx_data.measurements,
+        [cmd for cmd in tx_data.commands if isinstance(cmd, SplitCommand)],
+        resolver,
+        SurveyCatalog.from_config(config),
+    )
     tx_id = lint_report.tx_id
 
     ledger = Ledger(workspace)

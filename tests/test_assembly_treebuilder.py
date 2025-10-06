@@ -21,8 +21,11 @@ from forcen.config.models import (
 from forcen.engine.utils import determine_default_effective_date, with_default_effective
 from forcen.assembly.treebuilder import assign_tree_uids, build_alias_resolver
 from forcen.assembly.trees import generate_implied_rows
+from forcen.assembly.split import apply_splits
+from forcen.assembly.survey import SurveyCatalog
 from forcen.transactions import NormalizationConfig, load_transaction
 from forcen.transactions.models import MeasurementRow
+from forcen.dsl.types import SplitCommand, TagRef
 
 
 CONFIG_DIR = Path("planning/fixtures/configs")
@@ -54,6 +57,25 @@ def test_alias_rebinds_tag_to_existing_tree():
     alias_tree_uid = tx_alias.measurements[0].tree_uid
 
     assert alias_tree_uid == base_tree_uid
+
+
+def test_split_selector_reassigns_historical_rows():
+    config = load_config_bundle(CONFIG_DIR)
+    measurements = load_transaction(TX1_DIR, normalization=NormalizationConfig()).measurements
+    tx_split = load_transaction(TX2_DIR, normalization=NormalizationConfig())
+    default_effective = determine_default_effective_date(config, tx_split)
+    commands = with_default_effective(tx_split.commands, default_effective)
+
+    resolver = build_alias_resolver(measurements, commands)
+    assign_tree_uids(measurements, resolver)
+    splits = [cmd for cmd in commands if isinstance(cmd, SplitCommand)]
+    apply_splits(measurements, splits, resolver, SurveyCatalog.from_config(config))
+
+    split_cmd = splits[0]
+    target_uid = resolver.resolve(split_cmd.target, split_cmd.effective_date)
+
+    largest_row = max(measurements, key=lambda row: row.dbh_mm or 0)
+    assert largest_row.tree_uid == target_uid
 
 
 def _make_config_with_three_surveys() -> ConfigBundle:
