@@ -1,7 +1,29 @@
 [project]
 name = "forestcensus"
 version = "0.1.0"
-description = "Add your description here"
+description = "Forest census transaction engine and CLI"
 readme = "README.md"
-requires-python = ">=3.13"
-dependencies = []
+requires-python = ">=3.11"
+dependencies = [
+    "typer>=0.12",
+    "pydantic>=2.6",
+    "lark>=1.1",
+    "rich>=13.7",
+    "pandas>=2.2",
+    "pyarrow>=15.0",
+]
+
+[project.optional-dependencies]
+test = [
+    "pytest>=8.2",
+]
+
+[project.scripts]
+forcen = "forcen.cli:app"
+
+[tool.setuptools]
+package-dir = {"" = "src"}
+
+[tool.setuptools.packages.find]
+where = ["src"]
+include = ["forcen*"]
