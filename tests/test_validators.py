@@ -7,7 +7,11 @@ import pytest
 from forcen.config import load_config_bundle
 from forcen.dsl import DSLParser
 from forcen.transactions import load_measurements
-from forcen.validators import validate_dsl_commands, validate_measurement_rows
+from forcen.validators import (
+    validate_dsl_commands,
+    validate_growth,
+    validate_measurement_rows,
+)
 
 CONFIG = load_config_bundle("planning/fixtures/configs")
 
@@ -81,3 +85,17 @@ def test_dsl_validator_accepts_clean_commands():
     )
     issues = validate_dsl_commands(commands)
     assert not issues
+
+
+def test_growth_validator_warns_on_large_delta(tmp_path):
+    csv_path = tmp_path / "measurements.csv"
+    csv_path.write_text(
+        """site,plot,tag,date,dbh_mm,health,standing,notes
+BRNV,H4,112,2019-06-16,100,9,TRUE,""
+BRNV,H4,112,2020-06-16,120,9,TRUE,""
+"""
+    )
+    rows = load_measurements(csv_path)
+    issues = validate_growth(rows, CONFIG)
+    codes = {issue.code for issue in issues}
+    assert "W_DBH_GROWTH_WARN" in codes or "E_DBH_GROWTH_ERROR" in codes
