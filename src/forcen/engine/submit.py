@@ -3,7 +3,9 @@
 from __future__ import annotations
 
 import json
+import math
 from dataclasses import dataclass
+from datetime import date
 from pathlib import Path
 from typing import Dict, List, Optional
 
@@ -11,6 +13,7 @@ from ..config import load_config_bundle
 from ..exceptions import ConfigError, ForcenError
 from ..ledger.storage import Ledger
 from ..transactions import NormalizationConfig, load_transaction
+from ..transactions.models import MeasurementRow
 from ..validators import ValidationIssue
 from .lint import lint_transaction
 from .utils import determine_default_effective_date, with_default_effective
@@ -19,6 +22,7 @@ from ..assembly.trees import generate_implied_rows
 from ..assembly.split import apply_splits
 from ..assembly.survey import SurveyCatalog
 from ..assembly.properties import apply_properties, build_property_timelines
+from ..assembly.tree_outputs import build_retag_suggestions, build_tree_view
 from ..dsl.types import SplitCommand, UpdateCommand
 
 
@@ -85,7 +89,15 @@ def submit_transaction(
     implied_rows = generate_implied_rows(tx_data.measurements, config)
     all_rows = list(tx_data.measurements) + implied_rows
 
+    existing_rows = _load_existing_observations(ledger.observations_csv)
+    catalog = SurveyCatalog.from_config(config)
+
+    output_rows = existing_rows + all_rows
+    tree_view_rows = build_tree_view(output_rows, catalog)
+    retag_rows = build_retag_suggestions(output_rows, config)
+
     rows_added, row_counts = ledger.append_observations(config, all_rows, tx_id)
+    ledger.write_tree_outputs(tree_view_rows, retag_rows)
     dsl_lines_added = ledger.append_updates(transaction_dir)
 
     config_hashes = _hash_config(config_dir)
@@ -103,6 +115,7 @@ def submit_transaction(
         input_hashes=input_hashes,
         rows_added=rows_added,
         dsl_lines_added=dsl_lines_added,
+        row_counts=row_counts,
         issues=issues_list,
     )
 
@@ -112,6 +125,7 @@ def submit_transaction(
         config_hashes=config_hashes,
         input_hashes=input_hashes,
         code_version=code_version,
+        row_counts=row_counts,
     )
 
     return SubmitResult(
@@ -161,3 +175,57 @@ def _summarize_issues(issues: List[ValidationIssue]) -> Dict[str, int]:
         "errors": sum(1 for issue in issues if issue.is_error()),
         "warnings": sum(1 for issue in issues if not issue.is_error()),
     }
+
+
+def _load_existing_observations(path: Path) -> List[MeasurementRow]:
+    if not path.exists():
+        return []
+
+    import pandas as pd
+
+    df = pd.read_csv(path)
+    rows: List[MeasurementRow] = []
+    for record in df.to_dict(orient="records"):
+        rows.append(
+            MeasurementRow(
+                row_number=0,
+                site=str(record.get("site", "")),
+                plot=str(record.get("plot", "")),
+                tag=str(record.get("tag", "")),
+                date=date.fromisoformat(str(record.get("date"))),
+                dbh_mm=_maybe_int(record.get("dbh_mm")),
+                health=_maybe_int(record.get("health")),
+                standing=_maybe_bool(record.get("standing")),
+                notes=str(record.get("notes", "")),
+                origin=str(record.get("origin", "field")),
+                genus=record.get("genus") or None,
+                species=record.get("species") or None,
+                code=record.get("code") or None,
+                normalization_flags=[],
+                raw={},
+                tree_uid=record.get("tree_uid") or None,
+            )
+        )
+    return rows
+
+
+def _maybe_int(value) -> Optional[int]:
+    if value is None or (isinstance(value, float) and math.isnan(value)):
+        return None
+    try:
+        return int(value)
+    except (TypeError, ValueError):
+        return None
+
+
+def _maybe_bool(value) -> Optional[bool]:
+    if value is None:
+        return None
+    if isinstance(value, bool):
+        return value
+    text = str(value).lower()
+    if text in {"true", "t", "1"}:
+        return True
+    if text in {"false", "f", "0"}:
+        return False
+    return None

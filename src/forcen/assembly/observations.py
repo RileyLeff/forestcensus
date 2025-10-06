@@ -39,6 +39,10 @@ def assemble_observations(
                 "notes": row.notes,
                 "origin": row.origin,
                 "source_tx": tx_id,
+                "tree_uid": row.tree_uid,
+                "genus": row.genus,
+                "species": row.species,
+                "code": row.code,
             }
         )
     return observations

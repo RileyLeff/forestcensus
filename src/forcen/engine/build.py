@@ -39,12 +39,15 @@ def build_workspace(config_dir: Path, workspace: Path) -> BuildResult:
     validation_summary = _aggregate_validation(records)
     config_hashes = _hash_config(config_dir)
 
+    row_counts = _compute_row_counts(ledger.observations_csv)
+
     version_seq = ledger.write_version(
         tx_ids=tx_ids,
         validation_summary=validation_summary,
         config_hashes=config_hashes,
         input_hashes={},
         code_version="unknown",
+        row_counts=row_counts,
     )
 
     return BuildResult(version_seq=version_seq, tx_count=len(tx_ids))
@@ -75,3 +78,11 @@ def _sha256_file(path: Path) -> str:
         for chunk in iter(lambda: fh.read(8192), b""):
             digest.update(chunk)
     return digest.hexdigest()
+
+
+def _compute_row_counts(path: Path) -> Dict[str, int]:
+    import pandas as pd
+
+    df = pd.read_csv(path)
+    counts = df["origin"].value_counts().sort_index()
+    return {str(index): int(value) for index, value in counts.items()}

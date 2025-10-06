@@ -24,6 +24,8 @@ class Ledger:
         self.observations_csv = self.root / "observations_long.csv"
         self.observations_parquet = self.root / "observations_long.parquet"
         self.updates_log = self.root / "updates_log.tdl"
+        self.trees_view = self.root / "trees_view.csv"
+        self.retag_suggestions = self.root / "retag_suggestions.csv"
         self.transactions_log = self.root / "transactions.jsonl"
         self.versions_dir = self.root / "versions"
         self.versions_dir.mkdir(exist_ok=True)
@@ -74,6 +76,10 @@ class Ledger:
             ["survey_id", "site", "plot", "tag", "obs_id"],
             kind="mergesort",
         ).reset_index(drop=True)
+        combined["standing"] = combined["standing"].astype("boolean")
+        for column in ["site", "plot", "tag", "notes", "origin", "source_tx", "tree_uid", "genus", "species", "code"]:
+            if column in combined.columns:
+                combined[column] = combined[column].astype("string")
 
         combined.to_csv(self.observations_csv, index=False)
         combined.to_parquet(self.observations_parquet, index=False)
@@ -91,6 +97,7 @@ class Ledger:
         input_hashes: Dict[str, str],
         rows_added: int,
         dsl_lines_added: int,
+        row_counts: Dict[str, int],
         issues: Iterable[ValidationIssue],
     ) -> None:
         record = {
@@ -101,6 +108,7 @@ class Ledger:
             "input_checksums": input_hashes,
             "rows_added": rows_added,
             "dsl_lines_added": dsl_lines_added,
+            "row_counts": row_counts,
             "validation_summary": _summarize_issues(list(issues)),
         }
         with self.transactions_log.open("a", encoding="utf-8") as fh:
@@ -129,6 +137,41 @@ class Ledger:
         ]
         return sorted(versions)
 
+    def write_tree_outputs(self, tree_rows: List[dict], retag_rows: List[dict]) -> None:
+        import pandas as pd
+
+        tree_columns = [
+            "tree_uid",
+            "survey_id",
+            "public_tag",
+            "site",
+            "plot",
+            "genus",
+            "species",
+            "code",
+            "origin",
+        ]
+        retag_columns = [
+            "survey_id",
+            "plot",
+            "lost_tree_uid",
+            "lost_public_tag",
+            "lost_max_dbh_mm",
+            "new_tree_uid",
+            "new_public_tag",
+            "new_max_dbh_mm",
+            "delta_mm",
+            "delta_pct",
+            "suggested_alias_line",
+        ]
+
+        pd.DataFrame(tree_rows, columns=tree_columns).to_csv(
+            self.trees_view, index=False
+        )
+        pd.DataFrame(retag_rows, columns=retag_columns).to_csv(
+            self.retag_suggestions, index=False
+        )
+
     def write_version(
         self,
         tx_ids: List[str],
@@ -136,6 +179,7 @@ class Ledger:
         config_hashes: Dict[str, str],
         input_hashes: Dict[str, str],
         code_version: str,
+        row_counts: Dict[str, int],
     ) -> int:
         seq = self._next_version_seq()
         version_dir = self.versions_dir / f"{seq:04d}"
@@ -143,10 +187,19 @@ class Ledger:
 
         observations_dest = version_dir / "observations_long.csv"
         parquet_dest = version_dir / "observations_long.parquet"
+        trees_dest = version_dir / "trees_view.csv"
+        retag_dest = version_dir / "retag_suggestions.csv"
+        updates_dest = version_dir / "updates_log.tdl"
         manifest_path = version_dir / "manifest.json"
 
         _copy_file(self.observations_csv, observations_dest)
         _copy_file(self.observations_parquet, parquet_dest)
+        if self.trees_view.exists():
+            _copy_file(self.trees_view, trees_dest)
+        if self.retag_suggestions.exists():
+            _copy_file(self.retag_suggestions, retag_dest)
+        if self.updates_log.exists():
+            _copy_file(self.updates_log, updates_dest)
 
         manifest = {
             "version_seq": seq,
@@ -156,9 +209,25 @@ class Ledger:
             "config_hashes": config_hashes,
             "input_checksums": input_hashes,
             "validation_summary": validation_summary,
+            "row_counts": row_counts,
             "artifact_checksums": {
                 "observations_long.csv": _sha256_file(observations_dest),
                 "observations_long.parquet": _sha256_file(parquet_dest),
+                **(
+                    {"trees_view.csv": _sha256_file(trees_dest)}
+                    if trees_dest.exists()
+                    else {}
+                ),
+                **(
+                    {"retag_suggestions.csv": _sha256_file(retag_dest)}
+                    if retag_dest.exists()
+                    else {}
+                ),
+                **(
+                    {"updates_log.tdl": _sha256_file(updates_dest)}
+                    if updates_dest.exists()
+                    else {}
+                ),
             },
         }
         manifest_path.write_text(json.dumps(manifest, indent=2, sort_keys=True) + "\n", encoding="utf-8")

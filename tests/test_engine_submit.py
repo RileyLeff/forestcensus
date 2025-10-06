@@ -29,6 +29,14 @@ def test_submit_transaction_creates_ledger(tmp_path: Path) -> None:
     manifest = json.loads(manifest_path.read_text())
     assert manifest["version_seq"] == 1
     assert manifest["tx_ids"] == [result.tx_id]
+    assert manifest["row_counts"]["field"] >= 2
+
+    trees_view = workspace / "trees_view.csv"
+    assert trees_view.exists()
+    assert "tree_uid" in trees_view.read_text()
+
+    retag_csv = workspace / "retag_suggestions.csv"
+    assert retag_csv.exists()
 
 
 def test_submit_transaction_idempotent(tmp_path: Path) -> None:
@@ -39,3 +47,14 @@ def test_submit_transaction_idempotent(tmp_path: Path) -> None:
     assert result.accepted is False
     versions = list((workspace / "versions").iterdir())
     assert len(versions) == 1
+
+
+def test_submit_second_transaction_produces_retag(tmp_path: Path) -> None:
+    workspace = tmp_path / "ledger"
+    submit_transaction(TX1_DIR, CONFIG_DIR, workspace)
+    tx2_dir = Path("planning/fixtures/transactions/tx-2-ops")
+    submit_transaction(tx2_dir, CONFIG_DIR, workspace)
+
+    retag_csv = workspace / "retag_suggestions.csv"
+    content = retag_csv.read_text()
+    assert "suggested_alias_line" in content
