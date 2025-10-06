@@ -96,6 +96,8 @@ BRNV,H4,112,2020-06-16,120,9,TRUE,""
 """
     )
     rows = load_measurements(csv_path)
+    for row in rows:
+        row.tree_uid = "tree-112"
     issues = validate_growth(rows, CONFIG)
     codes = {issue.code for issue in issues}
     assert "W_DBH_GROWTH_WARN" in codes or "E_DBH_GROWTH_ERROR" in codes

@@ -4,10 +4,11 @@ from __future__ import annotations
 
 from dataclasses import dataclass, field
 from pathlib import Path
-from typing import Iterable, List
+from typing import Iterable, List, Optional
 
 from ..config import ConfigBundle, load_config_bundle
 from ..transactions import NormalizationConfig, TransactionData, load_transaction
+from ..transactions.models import MeasurementRow
 from ..transactions.txid import compute_tx_id
 from ..validators import (
     ValidationIssue,
@@ -16,13 +17,11 @@ from ..validators import (
     validate_measurement_rows,
 )
 from .utils import determine_default_effective_date, with_default_effective
-from ..assembly.treebuilder import assign_tree_uids, build_alias_resolver
-from ..assembly.split import apply_splits
-from ..assembly.survey import SurveyCatalog
-from ..assembly.properties import apply_properties, build_property_timelines
-from ..assembly.primary import apply_primary_tags, build_primary_timelines
 from ..assembly.tree_outputs import build_tree_view, build_retag_suggestions
-from ..dsl.types import AliasCommand, SplitCommand, UpdateCommand
+from ..assembly.reassemble import assemble_dataset, clone_raw_measurement
+from ..assembly.survey import SurveyCatalog
+from ..dsl.types import Command
+from ..ledger.storage import Ledger
 
 
 @dataclass
@@ -77,6 +76,7 @@ def lint_transaction(
     config_dir: Path,
     *,
     normalization: NormalizationConfig | None = None,
+    workspace: Optional[Path] = None,
 ) -> LintReport:
     """Lint a transaction directory against project configuration."""
 
@@ -92,28 +92,25 @@ def lint_transaction(
     transaction.commands = with_default_effective(
         transaction.commands, default_effective
     )
-    resolver = build_alias_resolver(transaction.measurements, transaction.commands)
-    assign_tree_uids(transaction.measurements, resolver)
-    catalog = SurveyCatalog.from_config(config)
-    apply_splits(
-        transaction.measurements,
-        [cmd for cmd in transaction.commands if isinstance(cmd, SplitCommand)],
-        resolver,
-        catalog,
-    )
-    property_timelines = build_property_timelines(
-        [cmd for cmd in transaction.commands if isinstance(cmd, UpdateCommand)],
-        resolver,
-    )
-    apply_properties(transaction.measurements, property_timelines)
-    primary_timelines = build_primary_timelines(
-        [cmd for cmd in transaction.commands if isinstance(cmd, AliasCommand)],
-        resolver,
-    )
-    apply_primary_tags(transaction.measurements, primary_timelines, catalog)
-    tx_id = compute_tx_id(transaction_dir)
 
-    issues = _collect_issues(config, transaction)
+    lint_tx_id = compute_tx_id(transaction_dir)
+    raw_new_rows = [clone_raw_measurement(row) for row in transaction.measurements]
+    for row in raw_new_rows:
+        row.source_tx = lint_tx_id
+
+    existing_raw_rows: List[MeasurementRow] = []
+    existing_commands: List[Command] = []
+    if workspace is not None:
+        ledger = Ledger(workspace)
+        existing_raw_rows = ledger.load_raw_measurements()
+        existing_commands = ledger.load_commands()
+
+    combined_raw_rows = existing_raw_rows + raw_new_rows
+    combined_commands = existing_commands + transaction.commands
+
+    assembled_rows = assemble_dataset(combined_raw_rows, combined_commands, config)
+
+    issues = _collect_issues(config, transaction, assembled_rows)
     measurement_rows = [
         {
             "row_number": row.row_number,
@@ -132,14 +129,16 @@ def lint_transaction(
             "public_tag": row.public_tag or row.tag,
             "flags": list(row.normalization_flags),
         }
-        for row in transaction.measurements
+        for row in assembled_rows
+        if row.source_tx == lint_tx_id
     ]
-    tree_view_rows = build_tree_view(transaction.measurements, catalog)
-    retag_rows = build_retag_suggestions(transaction.measurements, config)
+    catalog = SurveyCatalog.from_config(config)
+    tree_view_rows = build_tree_view(assembled_rows, catalog)
+    retag_rows = build_retag_suggestions(assembled_rows, config)
 
     return LintReport(
         transaction_path=transaction_dir,
-        tx_id=tx_id,
+        tx_id=lint_tx_id,
         issues=issues,
         measurement_rows=measurement_rows,
         tree_view=tree_view_rows,
@@ -147,9 +146,14 @@ def lint_transaction(
     )
 
 
-def _collect_issues(config: ConfigBundle, tx: TransactionData) -> List[ValidationIssue]:
+def _collect_issues(
+    config: ConfigBundle,
+    tx: TransactionData,
+    growth_rows: Optional[Iterable[MeasurementRow]] = None,
+) -> List[ValidationIssue]:
     issues: List[ValidationIssue] = []
     issues.extend(validate_measurement_rows(tx.measurements, config))
-    issues.extend(validate_growth(tx.measurements, config))
+    growth_source = growth_rows if growth_rows is not None else tx.measurements
+    issues.extend(validate_growth(growth_source, config))
     issues.extend(validate_dsl_commands(tx.commands))
     return sorted(issues, key=lambda issue: (issue.severity, issue.code, issue.location))

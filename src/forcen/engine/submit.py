@@ -3,9 +3,7 @@
 from __future__ import annotations
 
 import json
-import math
 from dataclasses import dataclass
-from datetime import date
 from pathlib import Path
 from typing import Dict, List, Optional
 
@@ -13,18 +11,12 @@ from ..config import load_config_bundle
 from ..exceptions import ConfigError, ForcenError
 from ..ledger.storage import Ledger
 from ..transactions import NormalizationConfig, load_transaction
-from ..transactions.models import MeasurementRow
 from ..validators import ValidationIssue
 from .lint import lint_transaction
 from .utils import determine_default_effective_date, with_default_effective
-from ..assembly.treebuilder import assign_tree_uids, build_alias_resolver
-from ..assembly.trees import generate_implied_rows
-from ..assembly.split import apply_splits
 from ..assembly.survey import SurveyCatalog
-from ..assembly.properties import apply_properties, build_property_timelines
-from ..assembly.primary import apply_primary_tags, build_primary_timelines
 from ..assembly.tree_outputs import build_retag_suggestions, build_tree_view
-from ..dsl.types import AliasCommand, SplitCommand, UpdateCommand
+from ..assembly.reassemble import assemble_dataset, clone_raw_measurement
 
 
 @dataclass
@@ -56,6 +48,7 @@ def submit_transaction(
         transaction_dir=transaction_dir,
         config_dir=config_dir,
         normalization=normalization_override,
+        workspace=workspace,
     )
 
     if lint_report.has_errors:
@@ -68,44 +61,31 @@ def submit_transaction(
     tx_data = load_transaction(transaction_dir, normalization=normalization)
     default_effective = determine_default_effective_date(config, tx_data)
     tx_data.commands = with_default_effective(tx_data.commands, default_effective)
-    resolver = build_alias_resolver(tx_data.measurements, tx_data.commands)
-    assign_tree_uids(tx_data.measurements, resolver)
-    catalog = SurveyCatalog.from_config(config)
-    apply_splits(
-        tx_data.measurements,
-        [cmd for cmd in tx_data.commands if isinstance(cmd, SplitCommand)],
-        resolver,
-        catalog,
-    )
-    property_timelines = build_property_timelines(
-        [cmd for cmd in tx_data.commands if isinstance(cmd, UpdateCommand)],
-        resolver,
-    )
-    apply_properties(tx_data.measurements, property_timelines)
-    primary_timelines = build_primary_timelines(
-        [cmd for cmd in tx_data.commands if isinstance(cmd, AliasCommand)],
-        resolver,
-    )
-    apply_primary_tags(tx_data.measurements, primary_timelines, catalog)
+    raw_new_rows = [clone_raw_measurement(row) for row in tx_data.measurements]
     tx_id = lint_report.tx_id
+    for row in raw_new_rows:
+        row.source_tx = tx_id
 
     ledger = Ledger(workspace)
     if ledger.has_transaction(tx_id):
         return SubmitResult(tx_id=tx_id, accepted=False, version_seq=None, warnings=lint_report.warning_count)
 
-    implied_rows = generate_implied_rows(tx_data.measurements, config)
-    all_rows = list(tx_data.measurements) + implied_rows
+    existing_raw_rows = ledger.load_raw_measurements()
+    existing_commands = ledger.load_commands()
+    all_commands = existing_commands + tx_data.commands
+    combined_raw_rows = existing_raw_rows + raw_new_rows
 
-    existing_rows = _load_existing_observations(ledger.observations_csv)
-    apply_primary_tags(existing_rows, primary_timelines, catalog)
+    assembled_rows = assemble_dataset(combined_raw_rows, all_commands, config)
 
-    output_rows = existing_rows + all_rows
-    tree_view_rows = build_tree_view(output_rows, catalog)
-    retag_rows = build_retag_suggestions(output_rows, config)
+    ledger.write_raw_measurements(combined_raw_rows)
+    row_counts = ledger.write_observations(config, assembled_rows)
 
-    rows_added, row_counts = ledger.append_observations(config, all_rows, tx_id)
+    catalog = SurveyCatalog.from_config(config)
+    tree_view_rows = build_tree_view(assembled_rows, catalog)
+    retag_rows = build_retag_suggestions(assembled_rows, config)
     ledger.write_tree_outputs(tree_view_rows, retag_rows)
     dsl_lines_added = ledger.append_updates(transaction_dir)
+    rows_added = len(raw_new_rows)
 
     config_hashes = _hash_config(config_dir)
     input_hashes = _hash_transaction_inputs(transaction_dir)
@@ -142,6 +122,7 @@ def submit_transaction(
         dsl_lines_added=dsl_lines_added,
         row_counts=row_counts,
         issues=issues_list,
+        commands=tx_data.commands,
     )
 
     version_seq = ledger.write_version(
@@ -200,58 +181,3 @@ def _summarize_issues(issues: List[ValidationIssue]) -> Dict[str, int]:
         "errors": sum(1 for issue in issues if issue.is_error()),
         "warnings": sum(1 for issue in issues if not issue.is_error()),
     }
-
-
-def _load_existing_observations(path: Path) -> List[MeasurementRow]:
-    if not path.exists():
-        return []
-
-    import pandas as pd
-
-    df = pd.read_csv(path)
-    rows: List[MeasurementRow] = []
-    for record in df.to_dict(orient="records"):
-        rows.append(
-            MeasurementRow(
-                row_number=0,
-                site=str(record.get("site", "")),
-                plot=str(record.get("plot", "")),
-                tag=str(record.get("tag", "")),
-                date=date.fromisoformat(str(record.get("date"))),
-                dbh_mm=_maybe_int(record.get("dbh_mm")),
-                health=_maybe_int(record.get("health")),
-                standing=_maybe_bool(record.get("standing")),
-                notes=str(record.get("notes", "")),
-                origin=str(record.get("origin", "field")),
-                genus=record.get("genus") or None,
-                species=record.get("species") or None,
-                code=record.get("code") or None,
-                normalization_flags=[],
-                raw={},
-                tree_uid=record.get("tree_uid") or None,
-                public_tag=record.get("public_tag") or record.get("tag"),
-            )
-        )
-    return rows
-
-
-def _maybe_int(value) -> Optional[int]:
-    if value is None or (isinstance(value, float) and math.isnan(value)):
-        return None
-    try:
-        return int(value)
-    except (TypeError, ValueError):
-        return None
-
-
-def _maybe_bool(value) -> Optional[bool]:
-    if value is None:
-        return None
-    if isinstance(value, bool):
-        return value
-    text = str(value).lower()
-    if text in {"true", "t", "1"}:
-        return True
-    if text in {"false", "f", "0"}:
-        return False
-    return None

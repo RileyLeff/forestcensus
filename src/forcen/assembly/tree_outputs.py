@@ -99,7 +99,10 @@ def build_retag_suggestions(
                     new_entries.append((tree_uid, new_row))
 
         for lost_tree_uid, lost_row in lost_entries:
+            best: Optional[tuple] = None
             for new_tree_uid, new_row in new_entries:
+                if lost_tree_uid == new_tree_uid:
+                    continue
                 if lost_row.site != new_row.site or lost_row.plot != new_row.plot:
                     continue
                 lost_dbh = lost_row.dbh_mm or 0
@@ -110,24 +113,29 @@ def build_retag_suggestions(
                 allowed = delta_pct * max(lost_dbh, new_dbh)
                 if delta > allowed:
                     continue
-
-                suggestion = {
-                    "survey_id": curr_survey,
-                    "plot": f"{new_row.site}/{new_row.plot}",
-                    "lost_tree_uid": lost_tree_uid,
-                    "lost_public_tag": lost_row.public_tag or lost_row.tag,
-                    "lost_max_dbh_mm": lost_dbh,
-                    "new_tree_uid": new_tree_uid,
-                    "new_public_tag": new_row.public_tag or new_row.tag,
-                    "new_max_dbh_mm": new_dbh,
-                    "delta_mm": delta,
-                    "delta_pct": round(delta / max(lost_dbh, new_dbh), 4),
-                    "suggested_alias_line": (
-                        f"ALIAS {new_row.site}/{new_row.plot}/{new_row.tag} "
-                        f"TO {lost_tree_uid} PRIMARY EFFECTIVE {curr_start.isoformat()}"
-                    ),
-                }
-                suggestions.append(suggestion)
+                new_tag = new_row.public_tag or new_row.tag
+                if best is None or (delta, new_tag) < (best[0], best[1]):
+                    best = (delta, new_tag, new_tree_uid, new_row, lost_dbh, new_dbh)
+            if best is None:
+                continue
+            delta, new_tag, new_tree_uid, new_row, lost_dbh, new_dbh = best
+            suggestion = {
+                "survey_id": curr_survey,
+                "plot": f"{new_row.site}/{new_row.plot}",
+                "lost_tree_uid": lost_tree_uid,
+                "lost_public_tag": lost_row.public_tag or lost_row.tag,
+                "lost_max_dbh_mm": lost_dbh,
+                "new_tree_uid": new_tree_uid,
+                "new_public_tag": new_tag,
+                "new_max_dbh_mm": new_dbh,
+                "delta_mm": delta,
+                "delta_pct": round(delta / max(lost_dbh, new_dbh), 4),
+                "suggested_alias_line": (
+                    f"ALIAS {new_row.site}/{new_row.plot}/{new_row.tag} "
+                    f"TO {lost_tree_uid} PRIMARY EFFECTIVE {curr_start.isoformat()}"
+                ),
+            }
+            suggestions.append(suggestion)
 
     suggestions.sort(key=lambda rec: (rec["survey_id"], rec["plot"], rec["new_public_tag"]))
     return suggestions

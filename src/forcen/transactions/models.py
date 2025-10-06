@@ -29,6 +29,7 @@ class MeasurementRow:
     raw: Dict[str, str] = field(default_factory=dict)
     tree_uid: Optional[str] = None
     public_tag: Optional[str] = None
+    source_tx: Optional[str] = None
 
 
 @dataclass

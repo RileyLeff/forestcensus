@@ -7,7 +7,7 @@ from datetime import date
 from typing import Dict, Iterable, List, Optional, Tuple
 from uuid import UUID, uuid5
 
-from ..dsl.types import AliasCommand, Command, TagRef, TreeRef
+from ..dsl.types import AliasCommand, Command, SplitCommand, TagRef, TreeRef
 from ..transactions.models import MeasurementRow
 
 
@@ -45,7 +45,7 @@ class AliasResolver:
     def ensure_tag(self, tag: TagRef) -> None:
         key = tag.key()
         if key not in self._tags:
-            tree_uid = _tree_uid_for_tag(key)
+            tree_uid = tree_uid_for_tag(key)
             self._tags[key] = TagTimeline(tree_uid)
 
     def bind(self, tag: TagRef, when: date, tree_uid: str) -> None:
@@ -62,9 +62,15 @@ class AliasResolver:
                 self.ensure_tag(command.target)
                 if command.tree_ref.tag is not None:
                     self.ensure_tag(command.tree_ref.tag)
+            elif isinstance(command, SplitCommand):
+                self.ensure_tag(command.target)
 
 
-def _tree_uid_for_tag(key: Tuple[str, str, str]) -> str:
+def tree_uid_for_tag(tag: TagRef | Tuple[str, str, str]) -> str:
+    if isinstance(tag, TagRef):
+        key = tag.key()
+    else:
+        key = tag
     return str(uuid5(_TAG_NAMESPACE, "/".join(key)))
 
 
@@ -76,17 +82,27 @@ def build_alias_resolver(
         resolver.ensure_tag(TagRef(site=row.site, plot=row.plot, tag=row.tag))
     resolver.register_commands(commands)
 
-    dated_commands = sorted(
+    alias_commands = sorted(
         (cmd for cmd in commands if isinstance(cmd, AliasCommand)),
         key=lambda cmd: cmd.effective_date,
     )
 
-    for command in dated_commands:
+    for command in alias_commands:
         assert command.effective_date is not None
         tree_uid = _resolve_tree_ref(
             resolver, command.tree_ref, command.effective_date
         )
         resolver.bind(command.target, command.effective_date, tree_uid)
+
+    split_commands = sorted(
+        (cmd for cmd in commands if isinstance(cmd, SplitCommand)),
+        key=lambda cmd: cmd.effective_date,
+    )
+
+    for command in split_commands:
+        if command.effective_date is None:
+            continue
+        resolver.bind(command.target, command.effective_date, tree_uid_for_tag(command.target))
 
     return resolver
 

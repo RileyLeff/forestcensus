@@ -31,6 +31,8 @@ def test_tx_lint_success(tmp_path: Path) -> None:
         str(config_dir),
         "--report",
         str(tmp_path / "report.json"),
+        "--workspace",
+        str(tmp_path / "lint-ledger"),
     ])
 
     assert result.exit_code == 0
@@ -56,6 +58,8 @@ UNKNOWN,H4,112,2019-06-16,171,9,TRUE,""
         str(tx_dir),
         "--config",
         "planning/fixtures/configs",
+        "--workspace",
+        str(tmp_path / "lint-ledger"),
     ])
 
     assert result.exit_code == 2

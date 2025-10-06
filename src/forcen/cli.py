@@ -60,6 +60,12 @@ def tx_lint(
         "--report",
         help="Optional path for lint report JSON (defaults to <txdir>/lint-report.json)",
     ),
+    workspace: Path = typer.Option(
+        Path(".forcen"),
+        "--workspace",
+        "-w",
+        help="Directory for ledger state (to include prior DSL)",
+    ),
 ) -> None:
     """Lint a transaction directory."""
 
@@ -70,6 +76,7 @@ def tx_lint(
             transaction_dir=tx_dir,
             config_dir=config_dir,
             normalization=NormalizationConfig(),
+            workspace=workspace,
         )
     except ConfigError as exc:
         typer.echo(f"Config error: {exc}", err=True)

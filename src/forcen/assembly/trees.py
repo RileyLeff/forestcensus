@@ -73,6 +73,7 @@ def generate_implied_rows(
                 raw={},
                 tree_uid=tree_uid,
                 public_tag=last_real_row.public_tag or last_real_row.tag,
+                source_tx=last_real_row.source_tx,
             )
         )
 

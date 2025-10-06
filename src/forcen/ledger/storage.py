@@ -2,16 +2,19 @@
 
 from __future__ import annotations
 
+import hashlib
 import json
 from datetime import datetime, timezone
 from pathlib import Path
-from typing import Dict, Iterable, List, Tuple
+from typing import Dict, Iterable, List, Optional, Tuple
 
 import pandas as pd
 
-from ..assembly import assemble_observations
 from ..config import ConfigBundle
 from ..transactions.models import MeasurementRow
+from ..dsl.types import Command
+from ..dsl.serialization import deserialize_command, serialize_command
+from ..assembly.survey import SurveyCatalog
 from ..validators import ValidationIssue
 
 
@@ -21,6 +24,7 @@ class Ledger:
     def __init__(self, root: Path) -> None:
         self.root = Path(root)
         self.root.mkdir(parents=True, exist_ok=True)
+        self.observations_raw_csv = self.root / "observations_raw.csv"
         self.observations_csv = self.root / "observations_long.csv"
         self.observations_parquet = self.root / "observations_long.parquet"
         self.updates_log = self.root / "updates_log.tdl"
@@ -57,38 +61,122 @@ class Ledger:
             fh.write(text)
         return len(lines)
 
-    def append_observations(
-        self,
-        config: ConfigBundle,
-        measurements: List[MeasurementRow],
-        tx_id: str,
-    ) -> Tuple[int, Dict[str, int]]:
-        rows = assemble_observations(measurements, config, tx_id)
-        df_new = pd.DataFrame(rows)
-        df_new["standing"] = df_new["standing"].astype("boolean")
+    def load_raw_measurements(self) -> List[MeasurementRow]:
+        if not self.observations_raw_csv.exists():
+            return []
+        df = pd.read_csv(self.observations_raw_csv)
+        rows: List[MeasurementRow] = []
+        for record in df.to_dict(orient="records"):
+            rows.append(
+                MeasurementRow(
+                    row_number=int(record.get("row_number", 0)),
+                    site=str(record.get("site", "")),
+                    plot=str(record.get("plot", "")),
+                    tag=str(record.get("tag", "")),
+                    date=pd.to_datetime(record.get("date")).date(),
+                    dbh_mm=_maybe_int(record.get("dbh_mm")),
+                    health=_maybe_int(record.get("health")),
+                    standing=_maybe_bool(record.get("standing")),
+                    notes=str(record.get("notes", "")),
+                    genus=record.get("genus") or None,
+                    species=record.get("species") or None,
+                    code=record.get("code") or None,
+                    origin=str(record.get("origin", "field")),
+                    normalization_flags=[],
+                    raw={},
+                    tree_uid=None,
+                    public_tag=None,
+                    source_tx=record.get("source_tx") or None,
+                )
+            )
+        return rows
 
-        if self.observations_csv.exists():
-            df_existing = pd.read_csv(self.observations_csv)
-            combined = pd.concat([df_existing, df_new], ignore_index=True)
-        else:
-            combined = df_new
+    def write_raw_measurements(self, rows: Iterable[MeasurementRow]) -> None:
+        records = [
+            {
+                "row_number": row.row_number,
+                "site": row.site,
+                "plot": row.plot,
+                "tag": row.tag,
+                "date": row.date.isoformat(),
+                "dbh_mm": row.dbh_mm,
+                "health": row.health,
+                "standing": row.standing,
+                "notes": row.notes,
+                "genus": row.genus,
+                "species": row.species,
+                "code": row.code,
+                "origin": row.origin,
+                "source_tx": row.source_tx,
+            }
+            for row in rows
+        ]
+        df = pd.DataFrame(records)
+        if not df.empty:
+            df["standing"] = df["standing"].astype("boolean")
+        df.to_csv(self.observations_raw_csv, index=False)
 
-        combined = combined.sort_values(
-            ["survey_id", "site", "plot", "tag", "obs_id"],
-            kind="mergesort",
-        ).reset_index(drop=True)
-        combined["standing"] = combined["standing"].astype("boolean")
-        for column in ["site", "plot", "tag", "notes", "origin", "source_tx", "tree_uid", "genus", "species", "code"]:
-            if column in combined.columns:
-                combined[column] = combined[column].astype("string")
+    def write_observations(
+        self, config: ConfigBundle, measurements: List[MeasurementRow]
+    ) -> Dict[str, int]:
+        catalog = SurveyCatalog.from_config(config)
+        records = []
+        for row in measurements:
+            survey_id = catalog.survey_for_date(row.date)
+            if survey_id is None:
+                continue
+            obs_id = _observation_id(row)
+            records.append(
+                {
+                    "obs_id": obs_id,
+                    "survey_id": survey_id,
+                    "date": row.date.isoformat(),
+                    "site": row.site,
+                    "plot": row.plot,
+                    "tag": row.tag,
+                    "public_tag": row.public_tag or row.tag,
+                    "dbh_mm": row.dbh_mm,
+                    "health": row.health,
+                    "standing": row.standing,
+                    "notes": row.notes,
+                    "origin": row.origin,
+                    "source_tx": row.source_tx,
+                    "tree_uid": row.tree_uid,
+                    "genus": row.genus,
+                    "species": row.species,
+                    "code": row.code,
+                }
+            )
 
-        combined.to_csv(self.observations_csv, index=False)
-        combined.to_parquet(self.observations_parquet, index=False)
+        df = pd.DataFrame(records)
+        if not df.empty:
+            df = df.sort_values(
+                ["survey_id", "site", "plot", "tag", "obs_id"],
+                kind="mergesort",
+            ).reset_index(drop=True)
+            df["standing"] = df["standing"].astype("boolean")
+            for column in [
+                "site",
+                "plot",
+                "tag",
+                "public_tag",
+                "notes",
+                "origin",
+                "source_tx",
+                "tree_uid",
+                "genus",
+                "species",
+                "code",
+            ]:
+                df[column] = df[column].astype("string")
+
+        df.to_csv(self.observations_csv, index=False)
+        df.to_parquet(self.observations_parquet, index=False)
 
         by_origin = (
-            combined["origin"].value_counts().sort_index().to_dict()  # type: ignore[return-value]
+            df["origin"].value_counts().sort_index().to_dict() if not df.empty else {}
         )
-        return len(rows), {str(k): int(v) for k, v in by_origin.items()}
+        return {str(k): int(v) for k, v in by_origin.items()}
 
     def append_transaction_entry(
         self,
@@ -100,6 +188,7 @@ class Ledger:
         dsl_lines_added: int,
         row_counts: Dict[str, int],
         issues: Iterable[ValidationIssue],
+        commands: Iterable[Command],
     ) -> None:
         record = {
             "tx_id": tx_id,
@@ -111,6 +200,7 @@ class Ledger:
             "dsl_lines_added": dsl_lines_added,
             "row_counts": row_counts,
             "validation_summary": _summarize_issues(list(issues)),
+            "commands": [serialize_command(cmd) for cmd in commands],
         }
         with self.transactions_log.open("a", encoding="utf-8") as fh:
             fh.write(json.dumps(record, sort_keys=True) + "\n")
@@ -129,6 +219,16 @@ class Ledger:
                 except json.JSONDecodeError:
                     continue
         return records
+
+    def load_commands(self) -> List[Command]:
+        commands: List[Command] = []
+        for record in self.read_transactions():
+            for data in record.get("commands", []):
+                try:
+                    commands.append(deserialize_command(data))
+                except Exception:
+                    continue
+        return commands
 
     def list_versions(self) -> List[int]:
         versions = [
@@ -260,8 +360,6 @@ def _copy_file(src: Path, dest: Path) -> None:
 
 
 def _sha256_file(path: Path) -> str:
-    import hashlib
-
     digest = hashlib.sha256()
     with path.open("rb") as fh:
         for chunk in iter(lambda: fh.read(8192), b""):
@@ -274,3 +372,39 @@ def _summarize_issues(issues: List[ValidationIssue]) -> dict:
         "errors": sum(1 for issue in issues if issue.is_error()),
         "warnings": sum(1 for issue in issues if not issue.is_error()),
     }
+
+
+def _observation_id(row: MeasurementRow) -> str:
+    seed = "|".join(
+        [
+            str(row.source_tx or "unknown"),
+            str(row.row_number),
+            row.site,
+            row.plot,
+            row.tag,
+            row.date.isoformat(),
+        ]
+    )
+    return hashlib.sha256(seed.encode("utf-8")).hexdigest()
+
+
+def _maybe_int(value) -> Optional[int]:
+    if value is None or pd.isna(value):
+        return None
+    try:
+        return int(value)
+    except (TypeError, ValueError):
+        return None
+
+
+def _maybe_bool(value) -> Optional[bool]:
+    if value is None or pd.isna(value):
+        return None
+    if isinstance(value, bool):
+        return value
+    text = str(value).lower()
+    if text in {"true", "t", "1", "yes"}:
+        return True
+    if text in {"false", "f", "0", "no"}:
+        return False
+    return None

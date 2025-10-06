@@ -18,7 +18,7 @@ class TreeSurveyRecord:
     max_dbh_mm: Optional[int]
 
 
-TreeKey = Tuple[str, str, str]
+TreeKey = str
 
 
 def validate_growth(
@@ -90,10 +90,15 @@ def _build_tree_history(
 ) -> Dict[TreeKey, Dict[str, TreeSurveyRecord]]:
     history: Dict[TreeKey, Dict[str, TreeSurveyRecord]] = defaultdict(dict)
     for row in measurements:
+        tree_uid = row.tree_uid
+        if tree_uid is None:
+            continue
         survey_id = catalog.survey_for_date(row.date)
         if survey_id is None:
             continue
-        key = (row.site, row.plot, row.tag)
+        if row.origin == "implied":
+            continue
+        key = tree_uid
         record = history[key].get(survey_id)
         max_dbh = row.dbh_mm
         if record is None:
@@ -112,6 +117,5 @@ def _sort_history(
     return [history[survey_id] for survey_id in ordered_ids if survey_id in history]
 
 
-def _growth_location(key: TreeKey, survey_id: str) -> str:
-    site, plot, tag = key
-    return f"growth:{site}/{plot}/{tag}:{survey_id}"
+def _growth_location(tree_uid: TreeKey, survey_id: str) -> str:
+    return f"growth:{tree_uid}:{survey_id}"

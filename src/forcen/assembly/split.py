@@ -48,8 +48,13 @@ def _apply_selector_split(
     selected = _select_views(views, selector)
 
     for view in selected:
-        if view.row.date >= command.effective_date:
-            continue
+        view.row.tree_uid = target_uid
+
+    future_views = [
+        view for view in views if view.row.date >= command.effective_date
+    ]
+    future_selected = _select_future_views(future_views, selector)
+    for view in future_selected:
         view.row.tree_uid = target_uid
 
 
@@ -135,3 +140,19 @@ def _select_ranks(
             if 0 <= idx < len(ordered):
                 result.append(ordered[idx])
     return result
+
+
+def _select_future_views(
+    views: List[MeasurementView], selector: Selector
+) -> List[MeasurementView]:
+    if not views:
+        return []
+    if selector.strategy == SelectorStrategy.ALL:
+        return views
+    if selector.strategy == SelectorStrategy.LARGEST:
+        return [_max_dbh(views)]
+    if selector.strategy == SelectorStrategy.SMALLEST:
+        return [_min_dbh(views)]
+    if selector.strategy == SelectorStrategy.RANKS:
+        return _select_ranks(views, selector.ranks)
+    return []

@@ -9,6 +9,9 @@ from typing import Dict
 from ..config import load_config_bundle
 from ..exceptions import ForcenError
 from ..ledger.storage import Ledger
+from ..assembly.reassemble import assemble_dataset, clone_raw_measurement
+from ..assembly.tree_outputs import build_retag_suggestions, build_tree_view
+from ..assembly.survey import SurveyCatalog
 
 
 @dataclass
@@ -28,7 +31,8 @@ def build_workspace(config_dir: Path, workspace: Path) -> BuildResult:
     config = load_config_bundle(config_dir)
     ledger = Ledger(workspace)
 
-    if not ledger.observations_csv.exists():
+    raw_rows = ledger.load_raw_measurements()
+    if not raw_rows:
         raise BuildError("No observations found; submit a transaction first")
 
     records = ledger.read_transactions()
@@ -36,12 +40,19 @@ def build_workspace(config_dir: Path, workspace: Path) -> BuildResult:
     if not tx_ids:
         raise BuildError("No transactions recorded; nothing to build")
 
+    commands = ledger.load_commands()
+    assembled_rows = assemble_dataset(raw_rows, commands, config)
+    row_counts = ledger.write_observations(config, assembled_rows)
+
+    catalog = SurveyCatalog.from_config(config)
+    tree_rows = build_tree_view(assembled_rows, catalog)
+    retag_rows = build_retag_suggestions(assembled_rows, config)
+    ledger.write_tree_outputs(tree_rows, retag_rows)
+
     validation_summary = _aggregate_validation(records)
     config_hashes = _hash_config(config_dir)
     validation_payload = _build_validation_report(records, validation_summary)
     ledger.write_validation_report(validation_payload)
-
-    row_counts = _compute_row_counts(ledger.observations_csv)
 
     version_seq = ledger.write_version(
         tx_ids=tx_ids,
@@ -95,10 +106,3 @@ def _sha256_file(path: Path) -> str:
             digest.update(chunk)
     return digest.hexdigest()
 
-
-def _compute_row_counts(path: Path) -> Dict[str, int]:
-    import pandas as pd
-
-    df = pd.read_csv(path)
-    counts = df["origin"].value_counts().sort_index()
-    return {str(index): int(value) for index, value in counts.items()}
