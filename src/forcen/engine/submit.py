@@ -14,6 +14,7 @@ from ..transactions import NormalizationConfig, load_transaction
 from ..validators import ValidationIssue
 from .lint import lint_transaction
 from .utils import determine_default_effective_date, with_default_effective
+from ..assembly.treebuilder import assign_tree_uids, build_alias_resolver
 
 
 @dataclass
@@ -57,6 +58,8 @@ def submit_transaction(
     tx_data = load_transaction(transaction_dir, normalization=normalization)
     default_effective = determine_default_effective_date(config, tx_data)
     tx_data.commands = with_default_effective(tx_data.commands, default_effective)
+    resolver = build_alias_resolver(tx_data.measurements, tx_data.commands)
+    assign_tree_uids(tx_data.measurements, resolver)
     tx_id = lint_report.tx_id
 
     ledger = Ledger(workspace)

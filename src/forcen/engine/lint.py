@@ -16,6 +16,7 @@ from ..validators import (
     validate_measurement_rows,
 )
 from .utils import determine_default_effective_date, with_default_effective
+from ..assembly.treebuilder import assign_tree_uids, build_alias_resolver
 
 
 @dataclass
@@ -81,6 +82,8 @@ def lint_transaction(
     transaction.commands = with_default_effective(
         transaction.commands, default_effective
     )
+    resolver = build_alias_resolver(transaction.measurements, transaction.commands)
+    assign_tree_uids(transaction.measurements, resolver)
     tx_id = compute_tx_id(transaction_dir)
 
     issues = _collect_issues(config, transaction)
