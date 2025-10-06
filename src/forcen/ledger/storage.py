@@ -341,6 +341,30 @@ class Ledger:
                     else {}
                 ),
             },
+            "artifact_sizes": {
+                "observations_long.csv": _file_size(observations_dest),
+                "observations_long.parquet": _file_size(parquet_dest),
+                **(
+                    {"trees_view.csv": _file_size(trees_dest)}
+                    if trees_dest.exists()
+                    else {}
+                ),
+                **(
+                    {"retag_suggestions.csv": _file_size(retag_dest)}
+                    if retag_dest.exists()
+                    else {}
+                ),
+                **(
+                    {"updates_log.tdl": _file_size(updates_dest)}
+                    if updates_dest.exists()
+                    else {}
+                ),
+                **(
+                    {"validation_report.json": _file_size(validation_dest)}
+                    if validation_dest.exists()
+                    else {}
+                ),
+            },
         }
         manifest_path.write_text(json.dumps(manifest, indent=2, sort_keys=True) + "\n", encoding="utf-8")
         return seq
@@ -408,3 +432,7 @@ def _maybe_bool(value) -> Optional[bool]:
     if text in {"false", "f", "0", "no"}:
         return False
     return None
+
+
+def _file_size(path: Path) -> int:
+    return path.stat().st_size if path.exists() else 0

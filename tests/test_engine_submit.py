@@ -34,6 +34,7 @@ def test_submit_transaction_creates_ledger(tmp_path: Path) -> None:
     assert "retag_suggestions.csv" in manifest["artifact_checksums"]
     assert "updates_log.tdl" in manifest["artifact_checksums"]
     assert "validation_report.json" in manifest["artifact_checksums"]
+    assert manifest["artifact_sizes"]["trees_view.csv"] > 0
 
     trees_view = workspace / "trees_view.csv"
     assert trees_view.exists()
