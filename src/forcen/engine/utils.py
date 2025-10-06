@@ -45,6 +45,13 @@ def determine_default_effective_date(
         survey_ids.add(survey_id)
 
     if not survey_ids:
+        if transaction.commands and all(
+            getattr(command, "effective_date", None) is not None
+            for command in transaction.commands
+        ):
+            ordered = catalog.ordered_surveys()
+            if ordered:
+                return catalog.get(ordered[0]).start
         raise ForcenError("cannot infer default EFFECTIVE date without measurements")
     if len(survey_ids) > 1:
         raise ForcenError(

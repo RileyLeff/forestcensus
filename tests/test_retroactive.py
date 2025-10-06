@@ -19,8 +19,9 @@ from forcen.config.models import (
     TaxonomyConfig,
     ValidationConfig,
 )
-from forcen.engine import submit_transaction
+from forcen.engine import lint_transaction, submit_transaction
 from forcen.engine.utils import determine_default_effective_date, with_default_effective
+from forcen.assembly.tree_outputs import build_retag_suggestions
 from forcen.assembly.reassemble import assemble_dataset, clone_raw_measurement
 from forcen.assembly.trees import generate_implied_rows
 from forcen.ledger.storage import Ledger
@@ -56,12 +57,14 @@ def test_retroactive_alias_and_split_updates_history(tmp_path: Path) -> None:
 
     assembled = _assemble_from_workspace(workspace)
 
-    by_dbh = {row.dbh_mm: row for row in assembled if row.origin == "field"}
-    largest_2019 = by_dbh[171]
-    largest_2020 = by_dbh[174]
-    smaller_2019 = by_dbh[95]
+    by_key = {(row.date, row.dbh_mm): row for row in assembled if row.origin == "field"}
+    largest_2019 = by_key[(date(2019, 6, 16), 171)]
+    largest_2020 = by_key[(date(2020, 6, 16), 174)]
+    smaller_2019 = by_key[(date(2019, 6, 16), 95)]
+    smaller_2020 = by_key[(date(2020, 6, 16), 97)]
 
     assert largest_2019.tree_uid == largest_2020.tree_uid
+    assert smaller_2019.tree_uid == smaller_2020.tree_uid
     assert smaller_2019.tree_uid != largest_2019.tree_uid
     assert largest_2020.public_tag == "508"
     assert largest_2019.public_tag == "112"
@@ -97,6 +100,60 @@ def test_retroactive_update_applies_to_prior_rows(tmp_path: Path) -> None:
             assert row.code == "PICEAB"
 
 
+def test_retag_deduplicates_closest_candidate() -> None:
+    rows = [
+        MeasurementRow(
+            row_number=1,
+            site="BRNV",
+            plot="H1",
+            tag="100",
+            date=date(2019, 6, 16),
+            dbh_mm=110,
+            health=9,
+            standing=True,
+            notes="",
+            origin="field",
+            tree_uid="lost",
+            public_tag="100",
+        ),
+        MeasurementRow(
+            row_number=2,
+            site="BRNV",
+            plot="H1",
+            tag="200",
+            date=date(2020, 6, 16),
+            dbh_mm=109,
+            health=9,
+            standing=True,
+            notes="",
+            origin="field",
+            tree_uid="newA",
+            public_tag="200",
+        ),
+        MeasurementRow(
+            row_number=3,
+            site="BRNV",
+            plot="H1",
+            tag="300",
+            date=date(2020, 6, 16),
+            dbh_mm=100,
+            health=9,
+            standing=True,
+            notes="",
+            origin="field",
+            tree_uid="newB",
+            public_tag="300",
+        ),
+    ]
+
+    suggestions = build_retag_suggestions(rows, CONFIG)
+    assert len(suggestions) == 1
+    suggestion = suggestions[0]
+    assert suggestion["lost_tree_uid"] == "lost"
+    assert suggestion["new_tree_uid"] == "newA"
+    assert suggestion["new_public_tag"] == "200"
+
+
 def test_implied_rows_for_trailing_gaps(tmp_path: Path) -> None:
     config = _make_config_with_surveys(
         [
@@ -114,7 +171,7 @@ def test_implied_rows_for_trailing_gaps(tmp_path: Path) -> None:
         site="BRNV",
         plot="H1",
         tag="100",
-        date=date(2019, 6, 1),
+        date=date(2019, 6, 16),
         dbh_mm=150,
         health=9,
         standing=True,
@@ -128,7 +185,7 @@ def test_implied_rows_for_trailing_gaps(tmp_path: Path) -> None:
         site="BRNV",
         plot="H1",
         tag="100",
-        date=date(2022, 6, 1),
+        date=date(2022, 6, 16),
         dbh_mm=155,
         health=9,
         standing=True,
@@ -159,6 +216,46 @@ def test_implied_rows_for_trailing_gaps(tmp_path: Path) -> None:
     implied_trailing = [row for row in dataset_trailing if row.origin == "implied"]
     assert len(implied_trailing) == 1
     assert implied_trailing[0].date == date(2023, 1, 1)
+
+
+def test_split_idempotent() -> None:
+    tx_initial = load_transaction(Path("planning/fixtures/transactions/tx-1-initial"), normalization=NormalizationConfig())
+    tx_split = load_transaction(Path("planning/fixtures/transactions/tx-2-ops"), normalization=NormalizationConfig())
+    default_effective = determine_default_effective_date(CONFIG, tx_split)
+    commands = with_default_effective(tx_split.commands, default_effective)
+
+    raw_rows = [clone_raw_measurement(row) for row in tx_initial.measurements + tx_split.measurements]
+    for idx, row in enumerate(raw_rows):
+        row.source_tx = "tx1" if idx < len(tx_initial.measurements) else "tx2"
+
+    first_pass = assemble_dataset(raw_rows, commands, CONFIG)
+    second_pass = assemble_dataset(raw_rows, commands, CONFIG)
+
+    first = [(row.date, row.dbh_mm, row.tree_uid) for row in first_pass]
+    second = [(row.date, row.dbh_mm, row.tree_uid) for row in second_pass]
+    assert first == second
+
+
+def test_lint_with_workspace_merges_history(tmp_path: Path) -> None:
+    workspace = tmp_path / "ledger"
+    workspace.mkdir()
+    submit_transaction(Path("planning/fixtures/transactions/tx-1-initial"), CONFIG_DIR, workspace)
+
+    report_no_ws = lint_transaction(
+        Path("planning/fixtures/transactions/tx-2-ops"),
+        CONFIG_DIR,
+        normalization=NormalizationConfig(),
+    )
+    assert report_no_ws.error_count == 0
+
+    report_with_ws = lint_transaction(
+        Path("planning/fixtures/transactions/tx-2-ops"),
+        CONFIG_DIR,
+        normalization=NormalizationConfig(),
+        workspace=workspace,
+    )
+    assert report_with_ws.error_count == 0
+    assert report_with_ws.tree_view
 
 
 def _make_config_with_surveys(surveys: list[tuple[str, str, str]], drop_after: int) -> ConfigBundle:
