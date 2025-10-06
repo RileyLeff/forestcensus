@@ -19,7 +19,8 @@ from .utils import determine_default_effective_date, with_default_effective
 from ..assembly.treebuilder import assign_tree_uids, build_alias_resolver
 from ..assembly.split import apply_splits
 from ..assembly.survey import SurveyCatalog
-from ..dsl.types import SplitCommand
+from ..assembly.properties import apply_properties, build_property_timelines
+from ..dsl.types import SplitCommand, UpdateCommand
 
 
 @dataclass
@@ -93,6 +94,11 @@ def lint_transaction(
         resolver,
         SurveyCatalog.from_config(config),
     )
+    property_timelines = build_property_timelines(
+        [cmd for cmd in transaction.commands if isinstance(cmd, UpdateCommand)],
+        resolver,
+    )
+    apply_properties(transaction.measurements, property_timelines)
     tx_id = compute_tx_id(transaction_dir)
 
     issues = _collect_issues(config, transaction)

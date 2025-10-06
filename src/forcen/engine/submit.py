@@ -18,7 +18,8 @@ from ..assembly.treebuilder import assign_tree_uids, build_alias_resolver
 from ..assembly.trees import generate_implied_rows
 from ..assembly.split import apply_splits
 from ..assembly.survey import SurveyCatalog
-from ..dsl.types import SplitCommand
+from ..assembly.properties import apply_properties, build_property_timelines
+from ..dsl.types import SplitCommand, UpdateCommand
 
 
 @dataclass
@@ -70,6 +71,11 @@ def submit_transaction(
         resolver,
         SurveyCatalog.from_config(config),
     )
+    property_timelines = build_property_timelines(
+        [cmd for cmd in tx_data.commands if isinstance(cmd, UpdateCommand)],
+        resolver,
+    )
+    apply_properties(tx_data.measurements, property_timelines)
     tx_id = lint_report.tx_id
 
     ledger = Ledger(workspace)

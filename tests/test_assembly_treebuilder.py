@@ -23,9 +23,11 @@ from forcen.assembly.treebuilder import assign_tree_uids, build_alias_resolver
 from forcen.assembly.trees import generate_implied_rows
 from forcen.assembly.split import apply_splits
 from forcen.assembly.survey import SurveyCatalog
+from forcen.assembly.properties import apply_properties, build_property_timelines
 from forcen.transactions import NormalizationConfig, load_transaction
 from forcen.transactions.models import MeasurementRow
-from forcen.dsl.types import SplitCommand, TagRef
+from forcen.dsl import DSLParser
+from forcen.dsl.types import SplitCommand, TagRef, UpdateCommand
 
 
 CONFIG_DIR = Path("planning/fixtures/configs")
@@ -76,6 +78,29 @@ def test_split_selector_reassigns_historical_rows():
 
     largest_row = max(measurements, key=lambda row: row.dbh_mm or 0)
     assert largest_row.tree_uid == target_uid
+
+
+def test_update_properties_applied_to_measurements():
+    config = load_config_bundle(CONFIG_DIR)
+    tx = load_transaction(TX1_DIR, normalization=NormalizationConfig())
+    parser = DSLParser()
+    update_commands = parser.parse(
+        "UPDATE BRNV/H4/112 SET genus=Pinus,species=taeda,code=PINTAE EFFECTIVE 2018-01-01"
+    )
+    commands = with_default_effective(update_commands, determine_default_effective_date(config, tx))
+
+    resolver = build_alias_resolver(tx.measurements, commands)
+    assign_tree_uids(tx.measurements, resolver)
+    timelines = build_property_timelines(
+        [cmd for cmd in commands if isinstance(cmd, UpdateCommand)],
+        resolver,
+    )
+    apply_properties(tx.measurements, timelines)
+
+    for row in tx.measurements:
+        assert row.genus == "Pinus"
+        assert row.species == "taeda"
+        assert row.code == "PINTAE"
 
 
 def _make_config_with_three_surveys() -> ConfigBundle:
