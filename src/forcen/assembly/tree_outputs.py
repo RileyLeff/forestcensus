@@ -103,6 +103,8 @@ def build_retag_suggestions(
             for new_tree_uid, new_row in new_entries:
                 if lost_tree_uid == new_tree_uid:
                     continue
+                if new_row.public_tag == lost_row.public_tag:
+                    continue
                 if lost_row.site != new_row.site or lost_row.plot != new_row.plot:
                     continue
                 lost_dbh = lost_row.dbh_mm or 0

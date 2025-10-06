@@ -154,6 +154,42 @@ def test_retag_deduplicates_closest_candidate() -> None:
     assert suggestion["new_public_tag"] == "200"
 
 
+def test_retag_skips_pre_aliased_tags() -> None:
+    rows = [
+        MeasurementRow(
+            row_number=1,
+            site="BRNV",
+            plot="H1",
+            tag="100",
+            date=date(2019, 6, 16),
+            dbh_mm=110,
+            health=9,
+            standing=True,
+            notes="",
+            origin="field",
+            tree_uid="lost",
+            public_tag="200",
+        ),
+        MeasurementRow(
+            row_number=2,
+            site="BRNV",
+            plot="H1",
+            tag="200",
+            date=date(2020, 6, 16),
+            dbh_mm=109,
+            health=9,
+            standing=True,
+            notes="",
+            origin="field",
+            tree_uid="lost",
+            public_tag="200",
+        ),
+    ]
+
+    suggestions = build_retag_suggestions(rows, CONFIG)
+    assert suggestions == []
+
+
 def test_implied_rows_for_trailing_gaps(tmp_path: Path) -> None:
     config = _make_config_with_surveys(
         [
