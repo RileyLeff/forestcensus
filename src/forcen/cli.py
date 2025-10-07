@@ -10,10 +10,16 @@ import typer
 
 from .engine import (
     BuildError,
+    DatasheetOptions,
+    DatasheetsError,
     SubmitError,
     SubmitResult,
+    VersionNotFoundError,
     build_workspace,
+    diff_manifests,
+    generate_datasheet,
     lint_transaction,
+    load_manifest,
     submit_transaction,
 )
 from .exceptions import ConfigError, ForcenError
@@ -37,13 +43,62 @@ EXIT_CONFIG_ERROR = 5
 app = typer.Typer(help="Forest census transaction engine")
 tx_app = typer.Typer(help="Transaction commands")
 versions_app = typer.Typer(help="Version inspection")
+datasheets_app = typer.Typer(help="Datasheet commands")
 app.add_typer(tx_app, name="tx")
 app.add_typer(versions_app, name="versions")
+app.add_typer(datasheets_app, name="datasheets")
 
 
 @app.callback()
 def main_callback() -> None:
     """Base command callback reserved for shared options."""
+
+
+@tx_app.command("new")
+def tx_new(
+    out: Path = typer.Option(
+        ...,
+        "--out",
+        "-o",
+        exists=False,
+        file_okay=False,
+        dir_okay=True,
+        writable=True,
+        help="Directory to write transaction scaffold",
+    ),
+    force: bool = typer.Option(
+        False,
+        "--force",
+        help="Overwrite existing files if the directory already exists",
+    ),
+) -> None:
+    """Create a new transaction scaffold."""
+
+    header = "site,plot,tag,date,dbh_mm,health,standing,notes\n"
+    out = Path(out)
+
+    if out.exists():
+        if not out.is_dir():
+            typer.echo(f"Path {out} exists and is not a directory", err=True)
+            raise typer.Exit(EXIT_IO_ERROR)
+        if not force:
+            typer.echo(
+                f"Transaction directory {out} already exists; use --force to overwrite",
+                err=True,
+            )
+            raise typer.Exit(EXIT_IO_ERROR)
+    else:
+        out.mkdir(parents=True, exist_ok=True)
+
+    measurements_path = out / "measurements.csv"
+    updates_path = out / "updates.tdl"
+
+    try:
+        measurements_path.write_text(header, encoding="utf-8")
+        updates_path.write_text("", encoding="utf-8")
+    except OSError as exc:
+        typer.echo(f"Failed to write scaffold files: {exc}", err=True)
+        raise typer.Exit(EXIT_IO_ERROR) from exc
 
 
 @tx_app.command("lint")
@@ -198,6 +253,101 @@ def build_command(
         "tx_count": result.tx_count,
     }
     typer.echo(json.dumps(payload, indent=2))
+
+
+@versions_app.command("show")
+def versions_show(
+    seq: int = typer.Argument(..., min=1),
+    workspace: Path = typer.Option(
+        Path(".forcen"),
+        "--workspace",
+        "-w",
+        help="Directory for ledger state",
+    ),
+) -> None:
+    """Show manifest for a specific version."""
+
+    try:
+        manifest = load_manifest(workspace, seq)
+    except VersionNotFoundError as exc:
+        typer.echo(str(exc), err=True)
+        raise typer.Exit(EXIT_IO_ERROR) from exc
+
+    typer.echo(json.dumps(manifest, indent=2, sort_keys=True))
+
+
+@versions_app.command("diff")
+def versions_diff(
+    seq_a: int = typer.Argument(..., min=1),
+    seq_b: int = typer.Argument(..., min=1),
+    workspace: Path = typer.Option(
+        Path(".forcen"),
+        "--workspace",
+        "-w",
+        help="Directory for ledger state",
+    ),
+) -> None:
+    """Show differences between two versions."""
+
+    try:
+        manifest_a = load_manifest(workspace, seq_a)
+        manifest_b = load_manifest(workspace, seq_b)
+    except VersionNotFoundError as exc:
+        typer.echo(str(exc), err=True)
+        raise typer.Exit(EXIT_IO_ERROR) from exc
+
+    diff_payload = diff_manifests(manifest_a, manifest_b)
+    typer.echo(json.dumps(diff_payload, indent=2, sort_keys=True))
+
+
+@datasheets_app.command("generate")
+def datasheets_generate(
+    survey: str = typer.Option(..., "--survey", help="Target survey id"),
+    site: str = typer.Option(..., "--site", help="Site code"),
+    plot: str = typer.Option(..., "--plot", help="Plot code"),
+    out_dir: Path = typer.Option(
+        Path("datasheets"),
+        "--out",
+        "-o",
+        file_okay=False,
+        dir_okay=True,
+        writable=True,
+        help="Output directory for datasheet context",
+    ),
+    config_dir: Path = typer.Option(
+        Path("config"),
+        "--config",
+        "-c",
+        help="Path to configuration directory",
+    ),
+    workspace: Path = typer.Option(
+        Path(".forcen"),
+        "--workspace",
+        "-w",
+        help="Directory for ledger state",
+    ),
+) -> None:
+    """Generate datasheet context JSON for a plot."""
+
+    try:
+        options = DatasheetOptions(
+            survey_id=survey,
+            site=site,
+            plot=plot,
+            output_dir=out_dir,
+        )
+        output_path = generate_datasheet(config_dir, workspace, options)
+    except ConfigError as exc:
+        typer.echo(f"Config error: {exc}", err=True)
+        raise typer.Exit(EXIT_CONFIG_ERROR) from exc
+    except DatasheetsError as exc:
+        typer.echo(f"Datasheets error: {exc}", err=True)
+        raise typer.Exit(EXIT_IO_ERROR) from exc
+
+    payload = {
+        "output": str(output_path),
+    }
+    typer.echo(json.dumps(payload, indent=2, sort_keys=True))
 
 
 @versions_app.command("list")

@@ -89,3 +89,42 @@ def test_tx_submit_success(tmp_path: Path) -> None:
     assert payload["accepted"] is True
     manifest = workspace / "versions" / "0001" / "manifest.json"
     assert manifest.exists()
+
+
+def test_tx_new_scaffold(tmp_path: Path) -> None:
+    out_dir = tmp_path / "new-tx"
+
+    result = run_cli(
+        [
+            "tx",
+            "new",
+            "--out",
+            str(out_dir),
+        ]
+    )
+    assert result.exit_code == 0
+    measurements = (out_dir / "measurements.csv").read_text(encoding="utf-8")
+    updates = (out_dir / "updates.tdl").read_text(encoding="utf-8")
+    assert measurements == "site,plot,tag,date,dbh_mm,health,standing,notes\n"
+    assert updates == ""
+
+    repeat = run_cli(
+        [
+            "tx",
+            "new",
+            "--out",
+            str(out_dir),
+        ]
+    )
+    assert repeat.exit_code == 4
+
+    forced = run_cli(
+        [
+            "tx",
+            "new",
+            "--out",
+            str(out_dir),
+            "--force",
+        ]
+    )
+    assert forced.exit_code == 0

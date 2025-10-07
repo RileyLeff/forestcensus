@@ -378,6 +378,19 @@ class Ledger:
         ]
         return (max(existing) + 1) if existing else 1
 
+    def read_manifest(self, seq: int) -> Dict[str, object]:
+        """Load manifest for the given *seq* or raise FileNotFoundError."""
+
+        version_dir = self.versions_dir / f"{seq:04d}"
+        manifest_path = version_dir / "manifest.json"
+        if not manifest_path.exists():
+            raise FileNotFoundError(f"manifest not found for version {seq}")
+        try:
+            with manifest_path.open("r", encoding="utf-8") as fh:
+                return json.load(fh)
+        except json.JSONDecodeError as exc:  # pragma: no cover - malformed manifest
+            raise ValueError(f"manifest for version {seq} is invalid JSON") from exc
+
 
 def _copy_file(src: Path, dest: Path) -> None:
     dest.write_bytes(src.read_bytes())
