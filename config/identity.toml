@@ -1,0 +1,53 @@
+# Identity operations are time-aware transformations from visible field tags to
+# internal tree identities. They do not edit raw data.
+
+[[row_reassignments]]
+note = "H4 112 was entered under the wrong tag in 2021; old R oneoff reassigns it to visible and identity tag 508."
+match = { survey_id = "June_2021", site = "BRNV", plot = "H4", public_tag = "112" }
+public_tag = "508"
+identity_tag = "508"
+tree_number = "508"
+
+[[row_reassignments]]
+note = "April 2025 R2/631 Pinus row is a tag mix-up; DBH 563 mm matches missing April 2025 continuation of R2/931 Pinus."
+match = { source_file = "2025_spring.csv", source_row = 696, survey_id = "April_2025", site = "BRNV", plot = "R2", public_tag = "631", genus = "Pinus", dbh_mm = 563 }
+public_tag = "931"
+identity_tag = "931"
+tree_number = "931"
+
+[[splits]]
+note = "L6/74 contains an early Juniperus tree that dies before later Pinus evidence appears under the same visible tag; move the closed Juniperus history to its own identity while preserving the field tag."
+source = { site = "BRNV", plot = "L6", identity_tag = "74" }
+target_identity_tag = "74_old_juniper"
+target_identity_label = "L6/74 old Juniperus"
+selector = { kind = "all", before = "2023-01-01", match = { genus = "Juniperus" } }
+
+[[splits]]
+note = "L6/75 contains a historical 420 mm dead Pinus and a later live ~150 mm tree under the same visible tag; move the closed dead Pinus history to its own identity while preserving the field tag."
+source = { site = "BRNV", plot = "L6", identity_tag = "75" }
+target_identity_tag = "75_old_dead_pinus"
+target_identity_label = "L6/75 old dead Pinus"
+selector = { kind = "all", before = "2021-01-01", match = { genus = "Pinus", health_observed = 0 } }
+
+# Example for future retags:
+#
+# [[aliases]]
+# site = "BRNV"
+# plot = "H4"
+# tag = "508"
+# identity_tag = "112"
+# effective_from = "2024-05-01"
+# note = "Retag: visible tag 508 should resolve to identity 112 from May 2024 forward."
+#
+# Example for splitting a historical biological individual away from a visible
+# field tag while keeping the written datasheet tag unchanged:
+#
+# [[splits]]
+# note = "Old dead tree under visible tag 75 gets its own closed identity."
+# source = { site = "BRNV", plot = "L6", identity_tag = "75" }
+# target_identity_tag = "75_old_dead_pinus"
+# target_identity_label = "L6/75 old dead Pinus"
+# selector = { kind = "all", before = "2021-01-01", match = { genus = "Pinus", health_observed = 0 } }
+#
+# `target_public_tag` and `target_tree_number` are optional. Omit them when the
+# datasheet tag should remain visible as written.

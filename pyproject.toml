@@ -1,0 +1,28 @@
+[project]
+name = "forestcensus"
+version = "0.1.0"
+description = "Canonical forest census processing pipeline"
+requires-python = ">=3.13.7"
+dependencies = [
+    "google-genai>=1.74.0",
+    "pandas>=3.0.2",
+    "pillow>=12.2.0",
+    "pyarrow>=24.0.0",
+    "pydantic>=2.13.3",
+    "python-dotenv>=1.2.2",
+]
+
+[project.scripts]
+forestcensus = "forestcensus.cli:main"
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[tool.pytest.ini_options]
+pythonpath = ["src"]
+
+[dependency-groups]
+dev = [
+    "pytest>=9.0.3",
+]

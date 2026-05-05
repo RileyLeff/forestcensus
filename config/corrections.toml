@@ -1,0 +1,311 @@
+# Corrections are applied after raw-file adaptation and before assembly.
+# They are deliberately separate from raw data so the historical record remains intact.
+
+[[row_corrections]]
+note = "M5 2478 June 2023 DBH was 450 mm, not 45 mm, per old R oneoff."
+match = { survey_id = "June_2023", site = "BRNV", plot = "M5", public_tag = "2478", dbh_mm = 45 }
+set = { dbh_mm = 450 }
+
+[[row_corrections]]
+note = "May 2024 R1/957 health 20 is invalid; same-date same-DBH row has health 10 and adjacent surveys are 9, 9, and 10."
+match = { source_file = "2024_spring.csv", source_row = 1047, survey_id = "May_2024", site = "BRNV", plot = "R1", public_tag = "957", dbh_mm = 141, health_observed = 20 }
+set = { health_observed = 10 }
+
+[[row_corrections]]
+note = "June 2023 L3/918 has health 0 but alive true; adjacent records indicate dead, so trust health 0 over alive flag."
+match = { source_file = "2023_and_prior.csv", source_row = 4531, survey_id = "June_2023", site = "BRNV", plot = "L3", public_tag = "918", health_observed = 0, alive_observed = true }
+set = { alive_observed = false, field_status = "observed_dead" }
+
+[[row_corrections]]
+note = "June 2023 L3/919 has health 0 but alive true; later records indicate dead, so trust health 0 over alive flag."
+match = { source_file = "2023_and_prior.csv", source_row = 4532, survey_id = "June_2023", site = "BRNV", plot = "L3", public_tag = "919", health_observed = 0, alive_observed = true }
+set = { alive_observed = false, field_status = "observed_dead" }
+
+[[row_corrections]]
+note = "May 2024 H0/262 has health 0 but alive true in an otherwise dead history, so trust health 0 over alive flag."
+match = { source_file = "2024_spring.csv", source_row = 936, survey_id = "May_2024", site = "BRNV", plot = "H0", public_tag = "262", health_observed = 0, alive_observed = true }
+set = { alive_observed = false, field_status = "observed_dead" }
+
+[[row_corrections]]
+note = "October 2024 L2/215 has health 0 but alive true in a consistently dead Pinus history, so trust health 0 over alive flag."
+match = { source_file = "2024_fall.csv", source_row = 146, survey_id = "October_2024", site = "BRNV", plot = "L2", public_tag = "215", dbh_mm = 325, health_observed = 0, alive_observed = true }
+set = { alive_observed = false, field_status = "observed_dead" }
+
+[[row_corrections]]
+note = "October 2024 M5/2495 has health 0 but alive true in a consistently dead Pinus history, so trust health 0 over alive flag."
+match = { source_file = "2024_fall.csv", source_row = 761, survey_id = "October_2024", site = "BRNV", plot = "M5", public_tag = "2495", dbh_mm = 236, health_observed = 0, alive_observed = true }
+set = { alive_observed = false, field_status = "observed_dead" }
+
+[[row_corrections]]
+note = "October 2024 L5/421 health 0 is inconsistent with an alive Juniperus trajectory of 9 before and 9 after."
+match = { source_file = "2024_fall.csv", source_row = 312, survey_id = "October_2024", site = "BRNV", plot = "L5", public_tag = "421", dbh_mm = 90, health_observed = 0, alive_observed = true }
+set = { health_observed = 9 }
+
+[[row_corrections]]
+note = "May 2024 M6/390 has health 0 but alive true; surrounding records show dead from June 2023 onward, so trust health 0 over alive flag."
+match = { source_file = "2024_spring.csv", source_row = 1152, survey_id = "May_2024", site = "BRNV", plot = "M6", public_tag = "390", dbh_mm = 140, health_observed = 0, alive_observed = true }
+set = { alive_observed = false, field_status = "observed_dead" }
+
+[[row_corrections]]
+note = "October 2024 L0/170 has health 0 but alive true; keep June 2023 health 1 rediscovery as observed alive, but trust health 0 for this later dead observation."
+match = { source_file = "2024_fall.csv", source_row = 22, survey_id = "October_2024", site = "BRNV", plot = "L0", public_tag = "170", dbh_mm = 75, health_observed = 0, alive_observed = true }
+set = { alive_observed = false, field_status = "observed_dead" }
+
+[[row_corrections]]
+note = "October 2024 L0/184 has health 0 but alive true; preserve observed alive without interpolating seasonal health by setting minimum live health."
+match = { source_file = "2024_fall.csv", source_row = 36, survey_id = "October_2024", site = "BRNV", plot = "L0", public_tag = "184", dbh_mm = 109, health_observed = 0, alive_observed = true }
+set = { health_observed = 1 }
+
+[[row_corrections]]
+note = "October 2024 L1/118 has health 0 but alive true; preserve observed alive without interpolating seasonal health by setting minimum live health."
+match = { source_file = "2024_fall.csv", source_row = 73, survey_id = "October_2024", site = "BRNV", plot = "L1", public_tag = "118", dbh_mm = 179, health_observed = 0, alive_observed = true }
+set = { health_observed = 1 }
+
+[[row_corrections]]
+note = "October 2024 L4/462 second stem has health 0 but alive true; April 2025 records the same 60 mm stem alive with health 1."
+match = { source_file = "2024_fall.csv", source_row = 290, survey_id = "October_2024", site = "BRNV", plot = "L4", public_tag = "462", datasheet_slot = "2", dbh_mm = 60, health_observed = 0, alive_observed = true }
+set = { health_observed = 1 }
+
+[[row_corrections]]
+note = "June 2022 H2/180 DBH 24 mm is below measurement threshold and surrounded by 244/244 mm observations; interpreted as missing zero in 240 mm."
+match = { source_file = "2023_and_prior.csv", source_row = 1353, survey_id = "June_2022", site = "BRNV", plot = "H2", public_tag = "180", dbh_mm = 24 }
+set = { dbh_mm = 240 }
+
+[[row_corrections]]
+note = "June 2021 H2/194 DBH 27 mm is below measurement threshold and surrounded by 286/270 mm observations; interpreted as missing zero in 270 mm."
+match = { source_file = "2023_and_prior.csv", source_row = 2209, survey_id = "June_2021", site = "BRNV", plot = "H2", public_tag = "194", dbh_mm = 27 }
+set = { dbh_mm = 270 }
+
+[[row_corrections]]
+note = "June 2021 H3/161 DBH 23 mm is below measurement threshold and surrounded by 243/232 mm observations; interpreted as missing zero in 230 mm."
+match = { source_file = "2023_and_prior.csv", source_row = 1787, survey_id = "June_2021", site = "BRNV", plot = "H3", public_tag = "161", dbh_mm = 23 }
+set = { dbh_mm = 230 }
+
+[[row_corrections]]
+note = "June 2022 H5/550 DBH 33.7 mm is below measurement threshold and surrounded by 333/338 mm observations; interpreted as decimal-place error, 337 mm."
+match = { source_file = "2023_and_prior.csv", source_row = 1618, survey_id = "June_2022", site = "BRNV", plot = "H5", public_tag = "550", dbh_mm = 33.7 }
+set = { dbh_mm = 337 }
+
+[[row_corrections]]
+note = "June 2021 H6/534 DBH 22 mm is below measurement threshold and surrounded by 225/221 mm observations; interpreted as missing zero in 220 mm."
+match = { source_file = "2023_and_prior.csv", source_row = 3463, survey_id = "June_2021", site = "BRNV", plot = "H6", public_tag = "534", dbh_mm = 22 }
+set = { dbh_mm = 220 }
+
+[[row_corrections]]
+note = "June 2020 L3/200 DBH 44.2 mm is below measurement threshold and followed by 451 mm; interpreted as decimal-place error, 442 mm."
+match = { source_file = "2023_and_prior.csv", source_row = 3688, survey_id = "June_2020", site = "BRNV", plot = "L3", public_tag = "200", dbh_mm = 44.2 }
+set = { dbh_mm = 442 }
+
+[[row_corrections]]
+note = "June 2021 M0/825 DBH 48 mm is below measurement threshold and followed by 481 mm; interpreted as missing zero in 480 mm."
+match = { source_file = "2023_and_prior.csv", source_row = 2013, survey_id = "June_2021", site = "BRNV", plot = "M0", public_tag = "825", dbh_mm = 48 }
+set = { dbh_mm = 480 }
+
+[[row_corrections]]
+note = "June 2020 M6/367 DBH 42.7 mm is below measurement threshold and followed by 433 mm; interpreted as decimal-place error, 427 mm."
+match = { source_file = "2023_and_prior.csv", source_row = 3860, survey_id = "June_2020", site = "BRNV", plot = "M6", public_tag = "367", dbh_mm = 42.7 }
+set = { dbh_mm = 427 }
+
+[[row_corrections]]
+note = "June 2020 M6/381 DBH 17.7 mm is below measurement threshold and followed by 179 mm; interpreted as decimal-place error, 177 mm."
+match = { source_file = "2023_and_prior.csv", source_row = 3235, survey_id = "June_2020", site = "BRNV", plot = "M6", public_tag = "381", dbh_mm = 17.7 }
+set = { dbh_mm = 177 }
+
+[[row_corrections]]
+note = "October 2024 M1/873 DBH 22 mm is below measurement threshold and followed by 220 mm; interpreted as missing zero in 220 mm."
+match = { source_file = "2024_fall.csv", source_row = 600, survey_id = "October_2024", site = "BRNV", plot = "M1", public_tag = "873", dbh_mm = 22 }
+set = { dbh_mm = 220 }
+
+[[row_corrections]]
+note = "June 2019 M6/398 Juniperus/unknown DBH 750 mm is implausibly large for this dead non-pine and later measurements are 65 mm; interpreted as 75 mm."
+match = { source_file = "2023_and_prior.csv", source_row = 1183, survey_id = "June_2019", site = "BRNV", plot = "M6", public_tag = "398", dbh_mm = 750 }
+set = { dbh_mm = 75 }
+
+[[row_corrections]]
+note = "June 2020 M6/398 Juniperus DBH 750 mm is implausibly large for this dead non-pine and later measurements are 65 mm; interpreted as 75 mm."
+match = { source_file = "2023_and_prior.csv", source_row = 266, survey_id = "June_2020", site = "BRNV", plot = "M6", public_tag = "398", dbh_mm = 750 }
+set = { dbh_mm = 75 }
+
+[[row_corrections]]
+note = "May 2024 L4/256 Juniperus DBH 725 mm is a likely handwriting typo in a 110-140-135 mm trajectory; interpreted as 125 mm."
+match = { source_file = "2024_spring.csv", source_row = 651, survey_id = "May_2024", site = "BRNV", plot = "L4", public_tag = "256", dbh_mm = 725 }
+set = { dbh_mm = 125 }
+
+[[row_corrections]]
+note = "October 2024 L6/85 dead Pinus DBH 35 mm is below measurement threshold and inconsistent with prior 348-360 mm history; interpreted as 350 mm while leaving dead status unchanged."
+match = { source_file = "2024_fall.csv", source_row = 413, survey_id = "October_2024", site = "BRNV", plot = "L6", public_tag = "85", dbh_mm = 35, health_observed = 0 }
+set = { dbh_mm = 350 }
+
+[[row_corrections]]
+note = "May 2024 M0/520 row represents did-not-find evidence, not a 7 mm measurement; mark as not_found with missing DBH/health."
+match = { source_file = "2024_spring.csv", source_row = 1257, survey_id = "May_2024", site = "BRNV", plot = "M0", public_tag = "520", dbh_mm = 7 }
+set = { dbh_mm = nan, health_observed = nan, alive_observed = false, field_status = "not_found" }
+
+[[row_corrections]]
+note = "April 2025 H3/166 DBH 13 mm is below measurement threshold and follows a stable 131-135 mm split-trunk history; interpreted as 130 mm."
+match = { source_file = "2025_spring.csv", source_row = 1089, survey_id = "April_2025", site = "BRNV", plot = "H3", public_tag = "166", dbh_mm = 13 }
+set = { dbh_mm = 130 }
+
+[[row_corrections]]
+note = "June 2019 M7/336 dead Nyssa DBH 775 mm is implausible and later records are 76-78 mm; interpreted as decimal-place error, 77.5 mm."
+match = { source_file = "2023_and_prior.csv", source_row = 487, survey_id = "June_2019", site = "BRNV", plot = "M7", public_tag = "336", dbh_mm = 775 }
+set = { dbh_mm = 77.5 }
+
+[[row_corrections]]
+note = "June 2020 M7/336 dead Nyssa DBH 775 mm is implausible and later records are 76-78 mm; interpreted as decimal-place error, 77.5 mm."
+match = { source_file = "2023_and_prior.csv", source_row = 496, survey_id = "June_2020", site = "BRNV", plot = "M7", public_tag = "336", dbh_mm = 775 }
+set = { dbh_mm = 77.5 }
+
+[[row_corrections]]
+note = "June 2021 H0/5841 DBH 548 mm conflicts with later 91-101 mm history and no matching huge-tree candidate was found; strike DBH while retaining health evidence."
+match = { source_file = "2023_and_prior.csv", source_row = 3432, survey_id = "June_2021", site = "BRNV", plot = "H0", public_tag = "5841", dbh_mm = 548, health_observed = 10 }
+set = { dbh_mm = nan }
+
+[[row_corrections]]
+note = "May 2024 H0/297 76 mm Liquidambar row has no similar-sized Liquidambar candidate elsewhere in H0 and conflicts with the stable 210-214 mm tree history; strike DBH while retaining live/taxon evidence."
+match = { source_file = "2024_spring.csv", source_row = 973, survey_id = "May_2024", site = "BRNV", plot = "H0", public_tag = "297", dbh_mm = 76, health_observed = 8 }
+set = { dbh_mm = nan }
+
+[[row_corrections]]
+note = "June 2021 H4/149 slot 2 is one of the smaller Ilex stems; Juniperus label appears to be stale slot/species noise."
+match = { source_file = "2023_and_prior.csv", source_row = 3191, survey_id = "June_2021", site = "BRNV", plot = "H4", public_tag = "149", datasheet_slot = "2", genus = "Juniperus", dbh_mm = 42, health_observed = 10 }
+set = { genus = "Ilex", species = "opaca", taxon_code = "ILEOPA" }
+
+[[row_corrections]]
+note = "June 2021 H4/149 slot 3 is one of the smaller Ilex stems; Juniperus label appears to be stale slot/species noise."
+match = { source_file = "2023_and_prior.csv", source_row = 3192, survey_id = "June_2021", site = "BRNV", plot = "H4", public_tag = "149", datasheet_slot = "3", genus = "Juniperus", dbh_mm = 57, health_observed = 10 }
+set = { genus = "Ilex", species = "opaca", taxon_code = "ILEOPA" }
+
+[[taxon_overrides]]
+note = "H0/298 is Acer rubrum in three consecutive modern surveys; apply that resolved taxon to older Acer spp. and later Acer spp. rows."
+match = { site = "BRNV", plot = "H0", identity_tag = "298" }
+genus = "Acer"
+species = "rubrum"
+
+[[taxon_overrides]]
+note = "H7/906 is Quercus bicolor in every observed taxon row; apply that resolved taxon to the one May 2024 Quercus spp. missing-evidence row."
+match = { site = "BRNV", plot = "H7", identity_tag = "906" }
+genus = "Quercus"
+species = "bicolor"
+
+[[taxon_overrides]]
+note = "H0/275 is consistently Nyssa sylvatica across the record; one June 2021 Juniperus row is treated as a taxon label slip within the same multi-stem tree."
+match = { site = "BRNV", plot = "H0", identity_tag = "275" }
+genus = "Nyssa"
+species = "sylvatica"
+
+[[taxon_overrides]]
+note = "H2/208 is a stable large Pinus taeda; April 2025 Nyssa label has matching DBH and is treated as a taxon label slip."
+match = { site = "BRNV", plot = "H2", identity_tag = "208" }
+genus = "Pinus"
+species = "taeda"
+
+[[taxon_overrides]]
+note = "L0/162 is consistently Juniperus virginiana before and after October 2024; the one Pinus label has matching DBH and is treated as a taxon label slip."
+match = { site = "BRNV", plot = "L0", identity_tag = "162" }
+genus = "Juniperus"
+species = "virginiana"
+
+[[taxon_overrides]]
+note = "L2/227 is a multi-stem Nyssa sylvatica; the one June 2020 Pinus row matches the smaller stem and is treated as a taxon label slip."
+match = { site = "BRNV", plot = "L2", identity_tag = "227" }
+genus = "Nyssa"
+species = "sylvatica"
+
+[[taxon_overrides]]
+note = "L5/423 is consistently Pinus taeda before and after October 2024; the one Juniperus label has matching DBH and is treated as a taxon label slip."
+match = { site = "BRNV", plot = "L5", identity_tag = "423" }
+genus = "Pinus"
+species = "taeda"
+
+[[taxon_overrides]]
+note = "L5/425 is consistently Pinus taeda before and after October 2024; the one Juniperus label has matching DBH and is treated as a taxon label slip."
+match = { site = "BRNV", plot = "L5", identity_tag = "425" }
+genus = "Pinus"
+species = "taeda"
+
+[[taxon_overrides]]
+note = "L6/106 is consistently Pinus taeda; April 2025 Juniperus label is on a dead-standing row and is treated as a taxon label slip."
+match = { site = "BRNV", plot = "L6", identity_tag = "106" }
+genus = "Pinus"
+species = "taeda"
+
+[[taxon_overrides]]
+note = "L7/12 is consistently dead Pinus taeda; the one May 2024 Juniperus row is treated as a taxon label slip."
+match = { site = "BRNV", plot = "L7", identity_tag = "12" }
+genus = "Pinus"
+species = "taeda"
+
+[[taxon_overrides]]
+note = "H0/293 switches cleanly from early Acer pensylvanicum labels to modern Liquidambar styraciflua labels; use the modern resolved taxon."
+match = { site = "BRNV", plot = "H0", identity_tag = "293" }
+genus = "Liquidambar"
+species = "styraciflua"
+
+[[taxon_overrides]]
+note = "H0/297 is treated as Liquidambar styraciflua after review; conflicting Acer labels are taxonomy noise, and the anomalous 76 mm May 2024 row is separately struck."
+match = { site = "BRNV", plot = "H0", identity_tag = "297" }
+genus = "Liquidambar"
+species = "styraciflua"
+
+[[taxon_overrides]]
+note = "H0/299 is treated as Liquidambar styraciflua after review despite stable DBH and mixed Acer/Liquidambar labels."
+match = { site = "BRNV", plot = "H0", identity_tag = "299" }
+genus = "Liquidambar"
+species = "styraciflua"
+
+[[taxon_overrides]]
+note = "H4/130 is a long-dead/fallen unidentified tree with conflicting later field guesses; keep canonical taxon unidentifiable."
+match = { site = "BRNV", plot = "H4", identity_tag = "130" }
+genus = "Unidentifiable"
+species = "spp."
+
+[[taxon_overrides]]
+note = "H6/516 is dead throughout; call the Acer spp./Acer rubrum conflict Acer rubrum after review."
+match = { site = "BRNV", plot = "H6", identity_tag = "516" }
+genus = "Acer"
+species = "rubrum"
+
+[[taxon_overrides]]
+note = "H7/883 has no convincing species-level oak call despite bicolor/michauxii guesses; keep canonical taxon at Quercus spp. after review."
+match = { site = "BRNV", plot = "H7", identity_tag = "883" }
+genus = "Quercus"
+species = "spp."
+
+[[taxon_overrides]]
+note = "L0/188 is a multi-stem Juniperus virginiana; early Nyssa rows are treated as taxon label slips after review."
+match = { site = "BRNV", plot = "L0", identity_tag = "188" }
+genus = "Juniperus"
+species = "virginiana"
+
+[[taxon_overrides]]
+note = "L6/56 is treated as Pinus taeda after review; early Juniperus labels belong to the same dead-standing tree history."
+match = { site = "BRNV", plot = "L6", identity_tag = "56" }
+genus = "Pinus"
+species = "taeda"
+
+[[taxon_overrides]]
+note = "H4/149 is a multi-stem Ilex opaca; Juniperus rows were reviewed as stale slot/species artifacts."
+match = { site = "BRNV", plot = "H4", identity_tag = "149" }
+genus = "Ilex"
+species = "opaca"
+
+[[row_exclusions]]
+note = "May 2024 H2/210 duplicate entry: same survey and same 200 mm DBH as the valid living row, with only health 0 differing."
+match = { source_file = "2024_spring.csv", source_row = 1018, survey_id = "May_2024", site = "BRNV", plot = "H2", public_tag = "210", dbh_mm = 200, health_observed = 0, alive_observed = true }
+
+[[row_exclusions]]
+note = "June 2022 H4/149 slot 2 blank Juniperus row is stale placeholder scaffolding beside the measured Ilex slot history."
+match = { source_file = "2023_and_prior.csv", source_row = 3909, survey_id = "June_2022", site = "BRNV", plot = "H4", public_tag = "149", datasheet_slot = "2", genus = "Juniperus" }
+
+[[row_exclusions]]
+note = "June 2022 H4/149 slot 3 blank Juniperus row is stale placeholder scaffolding beside the measured Ilex slot history."
+match = { source_file = "2023_and_prior.csv", source_row = 3910, survey_id = "June_2022", site = "BRNV", plot = "H4", public_tag = "149", datasheet_slot = "3", genus = "Juniperus" }
+
+[[row_exclusions]]
+note = "May 2024 H4/149 slot 2 blank Juniperus row duplicates stale placeholder scaffolding next to a measured Ilex slot 2 row."
+match = { source_file = "2024_spring.csv", source_row = 344, survey_id = "May_2024", site = "BRNV", plot = "H4", public_tag = "149", datasheet_slot = "2", genus = "Juniperus" }
+
+[[row_exclusions]]
+note = "May 2024 H4/149 slot 3 blank Juniperus row duplicates stale placeholder scaffolding next to a measured Ilex slot 3 row."
+match = { source_file = "2024_spring.csv", source_row = 347, survey_id = "May_2024", site = "BRNV", plot = "H4", public_tag = "149", datasheet_slot = "3", genus = "Juniperus" }

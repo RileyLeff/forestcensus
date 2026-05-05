@@ -1,0 +1,44 @@
+[[surveys]]
+id = "June_2019"
+start = "2019-06-15"
+end = "2019-06-15"
+
+[[surveys]]
+id = "June_2020"
+start = "2020-06-15"
+end = "2020-06-15"
+
+[[surveys]]
+id = "June_2021"
+start = "2021-06-15"
+end = "2021-06-15"
+
+[[surveys]]
+id = "June_2022"
+start = "2022-06-15"
+end = "2022-06-21"
+
+[[surveys]]
+id = "June_2023"
+start = "2023-06-08"
+end = "2023-06-20"
+
+[[surveys]]
+id = "May_2024"
+start = "2024-05-01"
+end = "2024-05-31"
+
+[[surveys]]
+id = "October_2024"
+start = "2024-10-02"
+end = "2024-10-02"
+
+[[surveys]]
+id = "April_2025"
+start = "2025-04-29"
+end = "2025-04-29"
+
+[[surveys]]
+id = "October_2025"
+start = "2025-10-09"
+end = "2025-10-10"
