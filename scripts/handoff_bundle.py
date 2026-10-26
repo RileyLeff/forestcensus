@@ -22,6 +22,11 @@ def digest(data: bytes) -> str:
     return hashlib.sha256(data).hexdigest()
 
 
+def file_digest(path: Path) -> str:
+    with path.open("rb") as handle:
+        return hashlib.file_digest(handle, "sha256").hexdigest()
+
+
 def safe_name(name: str) -> PurePosixPath:
     path = PurePosixPath(name)
     if (path.is_absolute() or ".." in path.parts or "\\" in name
@@ -73,7 +78,7 @@ def pack(root: Path, destination: Path) -> dict:
             manifest["files"][name] = {"sha256": digest(data), "bytes": len(data)}
             _add(archive, name, data)
         _add(archive, MANIFEST, (json.dumps(manifest, indent=2, sort_keys=True) + "\n").encode())
-    return {"files": len(paths), "archive": str(destination), "sha256": digest(destination.read_bytes())}
+    return {"files": len(paths), "archive": str(destination), "sha256": file_digest(destination)}
 
 
 def verify(bundle: Path, extract_to: Path | None = None) -> dict:
@@ -81,18 +86,19 @@ def verify(bundle: Path, extract_to: Path | None = None) -> dict:
     with tarfile.open(bundle, "r:gz") as archive:
         members = archive.getmembers()
         names = [member.name for member in members]
+        by_name = {member.name: member for member in members}
         if len(names) != len(set(names)) or MANIFEST not in names:
             raise ValueError("Missing manifest or duplicate archive members")
         for member in members:
             safe_name(member.name)
             if not member.isfile():
                 raise ValueError(f"Non-regular archive member: {member.name}")
-        manifest = json.load(archive.extractfile(MANIFEST))
+        manifest = json.load(archive.extractfile(by_name[MANIFEST]))
         if manifest.get("version") != 1 or set(names) != set(manifest["files"]) | {MANIFEST}:
             raise ValueError("Manifest does not match archive members")
         # Check the entire snapshot and all destination conflicts before writing.
         for name, expected in manifest["files"].items():
-            data = archive.extractfile(name).read()
+            data = archive.extractfile(by_name[name]).read()
             if digest(data) != expected["sha256"] or len(data) != expected["bytes"]:
                 raise ValueError(f"Hash/size mismatch: {name}")
             if root is not None:
@@ -111,10 +117,10 @@ def verify(bundle: Path, extract_to: Path | None = None) -> dict:
                 if not target.exists():
                     target.parent.mkdir(parents=True, exist_ok=True)
                     with target.open("xb") as handle:
-                        handle.write(archive.extractfile(name).read())
+                        handle.write(archive.extractfile(by_name[name]).read())
                     restored += 1
     return {"verified_files": len(manifest["files"]), "restored_files": restored,
-            "created_utc": manifest["created_utc"], "sha256": digest(bundle.read_bytes())}
+            "created_utc": manifest["created_utc"], "sha256": file_digest(bundle)}
 
 
 def main() -> None:
