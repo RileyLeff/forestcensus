@@ -99,6 +99,22 @@ Next: agree on observed vs inferred public columns, contextual side tables,
 and seasonal interpretation before removing columns or recalculating mortality.
 The October roster's two-survey omission rule is already agreed and separate.
 
+### UI Dependency Security Before Network Hosting
+
+The October 26 clean-install audit reports 10 vulnerable dependency packages
+in each UI (5 high, 3 moderate, 2 low; no critical). This includes the Svelte /
+SvelteKit / Vite toolchain and CSV parsing dependencies. Package audit counts
+are not proof that each advisory is exploitable in this application, but must
+not be represented as a clean security audit. Keep these unauthenticated,
+file-editing review apps bound to `127.0.0.1`; public source/data permission
+does not authorize exposing a running reviewer to the network.
+
+Next: update dependencies in a separate tested change, inspect advisory
+applicability, and rerun both app checks/builds and review-save browser tests.
+Do not run `npm audit fix --force` blindly during an active review session.
+Some fixes require major-version migration. No dependency upgrades were mixed
+into this handoff or the live demo.
+
 ## Scientific Cases Still Open
 
 - **Source-era/tag-alignment blocks:** H4 roughly 136-152; H1 233/235/239/241;
@@ -132,6 +148,8 @@ Reconcile them against accepted config and current sources before acting.
 
 - Reviewer's stale-process EPERM resolved by a scoped restart; HTTP 200,
   loaded scan image, and no browser runtime errors verified.
+- Both UI manifests now explicitly include Node TypeScript definitions;
+  clean-install checks no longer depend on packages above the checkout.
 - Current publication reproduced exactly in a separate candidate; raw data,
   published Parquet, and live review decisions were not rewritten.
 - Current counts and 214 accepted config decisions documented; historical

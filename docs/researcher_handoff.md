@@ -162,6 +162,12 @@ to overwrite differing local files. Identical existing files are left alone.
 The release also provides a whole-archive SHA-256. The archive's own manifest
 is an integrity check, not a cryptographic signature of its publisher.
 
+The October 26 snapshot contains 37,218 files (about 289 MiB compressed),
+captured at 19:26:03 UTC / 3:26 PM Eastern. Archive SHA-256:
+`b4a43c558ee2937c5d9b477166d386202cef2ac33efe400e39b7f7ea6698822c`.
+A clean-checkout restore verified every member hash. Raw files in Git have
+line-ending conversion disabled because their exact bytes are provenance.
+
 The bundle includes data archives, all saved output snapshots (except handoff
 builds and synthetic dev fixtures), review logs, crops, original model JSON,
 printed packet manifests, and available source scans. It deliberately excludes
@@ -393,6 +399,21 @@ npm run build
 No test/setup command should call Gemini or need a paid key. An intact bundle
 is needed for data-dependent regression tests. The handoff audit does not
 certify every historical identity, every OCR character, or diagnostic freshness.
+
+Handoff verification: a clean checkout restored the complete release bundle,
+installed Python dependencies with `uv sync --locked`, and passed all **207
+Python tests** with Gemini/Google API-key environment variables unset. Both
+UI clean installs succeeded; both app checks and production builds passed,
+as did the transcription UI's five tests. Credential scans of Git history,
+source files, output and the release archive found no leaks; an exact-match
+check for the local secret also found none. These checks cannot guarantee
+the absence of every possible secret or security issue.
+
+Both UI dependency audits still report 10 vulnerable packages each (5 high,
+3 moderate, 2 low). Keep reviewers local-only on `127.0.0.1`; dependency
+updates and network-hosting security are separate follow-up work, recorded
+in the open register. No live review decisions or published measurements were
+changed by the handoff work.
 
 Next priorities are in `handoff_open_questions.md`: finish October without
 losing pilot edits; align diagnostic thresholds with the accepted policy;
