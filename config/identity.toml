@@ -1,6 +1,23 @@
 # Identity operations are time-aware transformations from visible field tags to
 # internal tree identities. They do not edit raw data.
 
+# May 2026 field-written tag interpretations, approved by Riley 2026-10-03.
+# These are survey-scoped inferences, not assertions from the old tag-change sheet.
+[[row_reassignments]]
+note = "Riley approved May M6/5154 -> identity 5145: swapped digits, no prior 5154, historical dead-standing 40 mm Juniperus 5145 omitted by the old threshold and absent from May Main. Retain written public tag 5154; canonical identity and future primary recording tag are 5145."
+match = { source_file = "import_recent_format_reviewed.csv", survey_id = "May_2026", site = "BRNV", plot = "M6", public_tag = "5154", datasheet_slot = "1", dbh_mm = nan, health_observed = 0, standing_observed = true, notes = "dead standing, previously tagged" }
+identity_tag = "5145"
+
+[[row_reassignments]]
+note = "Riley approved May L2/616 -> identity 816: same-plot Morella, plausible digit confusion, declining 59 mm history (health 3 then 2), and complementary May missing entry. This is an accepted field-tag inference, not OCR correction or proof of a physical alias. Preserve public tag 616; primary recording tag is 816. The blank Main placeholder is suppressed separately."
+match = { source_file = "import_recent_format_reviewed.csv", survey_id = "May_2026", site = "BRNV", plot = "L2", public_tag = "616", datasheet_slot = "1", genus = "Morella", dbh_mm = nan, health_observed = 0, standing_observed = true, notes = "previously tagged" }
+identity_tag = "816"
+
+[[row_reassignments]]
+note = "Riley approved May L2/733 as a second stem observation of identity 5380: 'double stem, same as 5038' is interpreted as a digit-order error for same-plot Morella 5380. Main 5380 and written slot-2 733 both have health 3; the explicit double-stem note means retain both observations, not deduplicate. Preserve original public tag 733 and note 5038; no permanent stem identity or historical second-stem measurement is invented."
+match = { source_file = "import_recent_format_reviewed.csv", survey_id = "May_2026", site = "BRNV", plot = "L2", public_tag = "733", datasheet_slot = "2", genus = "Morella", dbh_mm = nan, health_observed = 3, standing_observed = "", notes = "double stem, same as 5038" }
+identity_tag = "5380"
+
 [[row_reassignments]]
 note = "H4 112 was entered under the wrong tag in 2021; old R oneoff reassigns it to visible and identity tag 508."
 match = { survey_id = "June_2021", site = "BRNV", plot = "H4", public_tag = "112" }
@@ -15,6 +32,69 @@ public_tag = "931"
 identity_tag = "931"
 tree_number = "931"
 
+[[row_reassignments]]
+note = "October 2024 M4/2444 Quercus phellos row is compatible with M4/2452, which is missing an October DBH and later noted as willow oak."
+match = { source_file = "2024_fall.csv", source_row = 705, survey_id = "October_2024", site = "BRNV", plot = "M4", public_tag = "2444", genus = "Quercus", dbh_mm = 132 }
+public_tag = "2452"
+identity_tag = "2452"
+tree_number = "2452"
+
+[[row_reassignments]]
+note = "June 2019 M0 adjacent-tag shift: early tag 824 DBH 330 mm belongs with the modern M0/823 identity."
+match = { source_file = "2023_and_prior.csv", source_row = 2858, survey_id = "June_2019", site = "BRNV", plot = "M0", public_tag = "824", dbh_mm = 330 }
+public_tag = "823"
+identity_tag = "823"
+tree_number = "823"
+
+[[row_reassignments]]
+note = "June 2020 M0 adjacent-tag shift: early tag 824 DBH 330 mm belongs with the modern M0/823 identity."
+match = { source_file = "2023_and_prior.csv", source_row = 2875, survey_id = "June_2020", site = "BRNV", plot = "M0", public_tag = "824", dbh_mm = 330 }
+public_tag = "823"
+identity_tag = "823"
+tree_number = "823"
+
+[[row_reassignments]]
+note = "June 2019 M0 adjacent-tag shift: early tag 825 DBH 295 mm belongs with the modern M0/824 identity."
+match = { source_file = "2023_and_prior.csv", source_row = 2010, survey_id = "June_2019", site = "BRNV", plot = "M0", public_tag = "825", dbh_mm = 295 }
+public_tag = "824"
+identity_tag = "824"
+tree_number = "824"
+
+[[row_reassignments]]
+note = "June 2020 M0 adjacent-tag shift: early tag 825 DBH 295 mm belongs with the modern M0/824 identity."
+match = { source_file = "2023_and_prior.csv", source_row = 2011, survey_id = "June_2020", site = "BRNV", plot = "M0", public_tag = "825", dbh_mm = 295 }
+public_tag = "824"
+identity_tag = "824"
+tree_number = "824"
+
+[[row_reassignments]]
+note = "June 2019 M0 adjacent-tag shift: early tag 826 DBH 493 mm belongs with the modern M0/825 identity."
+match = { source_file = "2023_and_prior.csv", source_row = 3767, survey_id = "June_2019", site = "BRNV", plot = "M0", public_tag = "826", dbh_mm = 493 }
+public_tag = "825"
+identity_tag = "825"
+tree_number = "825"
+
+[[row_reassignments]]
+note = "June 2020 M0 adjacent-tag shift: early tag 826 DBH 492 mm belongs with the modern M0/825 identity."
+match = { source_file = "2023_and_prior.csv", source_row = 3820, survey_id = "June_2020", site = "BRNV", plot = "M0", public_tag = "826", dbh_mm = 492 }
+public_tag = "825"
+identity_tag = "825"
+tree_number = "825"
+
+[[row_reassignments]]
+note = "June 2019 M0 adjacent-tag shift: early tag 823 DBH 89 mm belongs with the modern M0/826 identity."
+match = { source_file = "2023_and_prior.csv", source_row = 2495, survey_id = "June_2019", site = "BRNV", plot = "M0", public_tag = "823", dbh_mm = 89 }
+public_tag = "826"
+identity_tag = "826"
+tree_number = "826"
+
+[[row_reassignments]]
+note = "June 2020 M0 adjacent-tag shift: early tag 823 DBH 89 mm belongs with the modern M0/826 identity."
+match = { source_file = "2023_and_prior.csv", source_row = 2497, survey_id = "June_2020", site = "BRNV", plot = "M0", public_tag = "823", dbh_mm = 89 }
+public_tag = "826"
+identity_tag = "826"
+tree_number = "826"
+
 [[splits]]
 note = "L6/74 contains an early Juniperus tree that dies before later Pinus evidence appears under the same visible tag; move the closed Juniperus history to its own identity while preserving the field tag."
 source = { site = "BRNV", plot = "L6", identity_tag = "74" }
@@ -28,6 +108,115 @@ source = { site = "BRNV", plot = "L6", identity_tag = "75" }
 target_identity_tag = "75_old_dead_pinus"
 target_identity_label = "L6/75 old dead Pinus"
 selector = { kind = "all", before = "2021-01-01", match = { genus = "Pinus", health_observed = 0 } }
+
+[[splits]]
+note = "M5/2497 has three 2019 live Nyssa stems recorded under the same visible tag as a separate dead Pinus history; keep them as an explicit orphan identity."
+source = { site = "BRNV", plot = "M5", identity_tag = "2497" }
+target_identity_tag = "orphan_2497_nyssa_2019"
+target_identity_label = "M5/2497 orphan Nyssa 2019"
+selector = { kind = "all", survey_id = "June_2019", match = { genus = "Nyssa" } }
+
+[[splits]]
+note = "M5/2498 has one 2019 live Nyssa row recorded under an otherwise coherent Juniperus history; keep it as an explicit orphan identity."
+source = { site = "BRNV", plot = "M5", identity_tag = "2498" }
+target_identity_tag = "orphan_2498_nyssa_2019"
+target_identity_label = "M5/2498 orphan Nyssa 2019"
+selector = { kind = "all", survey_id = "June_2019", match = { genus = "Nyssa" } }
+
+[[splits]]
+note = "M5/2500 has one 2019 live Pinus row recorded under an otherwise coherent Nyssa history; no compatible complementary Pinus target was found, so keep it as an explicit orphan identity."
+source = { site = "BRNV", plot = "M5", identity_tag = "2500" }
+target_identity_tag = "orphan_2500_pinus_2019"
+target_identity_label = "M5/2500 orphan Pinus 2019"
+selector = { kind = "all", survey_id = "June_2019", match = { genus = "Pinus" } }
+
+[[aliases]]
+site = "BRNV"
+plot = "L0"
+tag = "905"
+identity_tag = "171"
+effective_from = "2023-01-01"
+note = "Accepted explicit 2023 tag-change assertion L0_171_Pin -> L0_905_Pin after datasheet review; keep visible tag 905 but resolve it to the 171 identity."
+
+[[aliases]]
+site = "BRNV"
+plot = "L0"
+tag = "989"
+identity_tag = "177"
+effective_from = "2023-01-01"
+note = "Accepted explicit 2023 tag-change assertion L0_177_Pin -> L0_989_Pin after datasheet review; keep visible tag 989 but resolve it to the 177 identity."
+
+[[aliases]]
+site = "BRNV"
+plot = "L1"
+tag = "927"
+identity_tag = "130"
+effective_from = "2023-01-01"
+note = "Accepted explicit 2023 tag-change assertion L1_130_Pin -> L1_927_Pin after datasheet review; keep visible tag 927 but resolve it to the 130 identity."
+
+[[aliases]]
+site = "BRNV"
+plot = "L1"
+tag = "924"
+identity_tag = "144"
+effective_from = "2023-01-01"
+note = "Accepted explicit 2023 tag-change assertion L1_144_Nys -> L1_924_Nys after datasheet review; keep visible tag 924 but resolve it to the 144 identity."
+
+[[aliases]]
+site = "BRNV"
+plot = "L2"
+tag = "928"
+identity_tag = "210"
+effective_from = "2023-01-01"
+note = "Accepted explicit 2023 tag-change assertion L2_210_Jun -> L2_928_Jun after datasheet review; keep visible tag 928 but resolve it to the 210 identity."
+
+[[aliases]]
+site = "BRNV"
+plot = "L3"
+tag = "1000"
+identity_tag = "284"
+effective_from = "2023-01-01"
+note = "Accepted explicit 2023 tag-change assertion L3_284_Jun -> L3_1000_Jun after datasheet review; keep visible tag 1000 but resolve it to the 284 identity."
+
+[[aliases]]
+site = "BRNV"
+plot = "L5"
+tag = "986"
+identity_tag = "433"
+effective_from = "2023-01-01"
+note = "Accepted explicit 2023 tag-change assertion L5_433_Pin -> L5_986_Pin after datasheet review; keep visible tag 986 but resolve it to the 433 identity."
+
+[[aliases]]
+site = "BRNV"
+plot = "L6"
+tag = "991"
+identity_tag = "57"
+effective_from = "2023-01-01"
+note = "Accepted explicit 2023 tag-change assertion L6_57_Jun -> L6_991_Jun after datasheet review; keep visible tag 991 but resolve it to the 57 identity."
+
+[[aliases]]
+site = "BRNV"
+plot = "L7"
+tag = "908"
+identity_tag = "33"
+effective_from = "2023-01-01"
+note = "Accepted explicit 2023 tag-change assertion L7_33_Pin -> L7_908_Pin after datasheet review; keep visible tag 908 but resolve it to the 33 identity."
+
+[[aliases]]
+site = "BRNV"
+plot = "R4"
+tag = "5243"
+identity_tag = "5163"
+effective_from = "2023-01-01"
+note = "Approved by Riley 2026-10-03: May 2026 scan page 8 labels both 5243 observations 'same tree as 5163'. Treat 5163 and 5243 as one Acer rubrum plant under identity 5163 from the start of the 5243 history in June 2023. Preserve all observations, including the dead stem, and original public tags; the three recent stems are not duplicate observations. Physical tag 5243 may remain and must be explained on future field sheets. The 5238 connection is recorded as a separate approved decision."
+
+[[aliases]]
+site = "BRNV"
+plot = "R4"
+tag = "5238"
+identity_tag = "5163"
+effective_from = "2023-01-01"
+note = "Approved by Riley 2026-10-03 after reviewing the complementary Acer rubrum histories: June 2023 tag 5238 has DBH 316 mm and health 6; October 2024 tag 5163 has DBH 317 mm and health 8, April 2025 has 317 mm and health 9 with note 'tag should be 5163', and October 2025 has 314 mm and health 8. Resolve the earlier 5238 observation to primary identity 5163, preserving its original public tag and every observation. This is a human-approved identity interpretation, not an explicit archived tag-change assertion."
 
 # Example for future retags:
 #

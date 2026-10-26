@@ -1,0 +1,18 @@
+{
+  "name": "October 2025 pages 1-58 reviewed transcription",
+  "dirs": [
+    "output/llm_transcription/oct_2025_pages_1_5_gemini_3_1_pro_column_guardrails",
+    "output/llm_transcription/oct_2025_pages_6_10_gemini_3_1_pro_column_guardrails",
+    "output/llm_transcription/oct_2025_pages_11_15_gemini_3_1_pro_column_guardrails",
+    "output/llm_transcription/oct_2025_pages_16_20_gemini_3_1_pro_column_guardrails",
+    "output/llm_transcription/oct_2025_pages_21_25_gemini_3_1_pro_column_guardrails",
+    "output/llm_transcription/oct_2025_pages_26_30_gemini_3_1_pro_column_guardrails",
+    "output/llm_transcription/oct_2025_pages_31_35_gemini_3_1_pro_column_guardrails",
+    "output/llm_transcription/oct_2025_page_32_retry_gemini_3_1_flash_lite_preview_column_guardrails",
+    "output/llm_transcription/oct_2025_pages_36_40_gemini_3_1_pro_column_guardrails",
+    "output/llm_transcription/oct_2025_pages_41_45_gemini_3_1_pro_column_guardrails",
+    "output/llm_transcription/oct_2025_pages_46_50_gemini_3_1_pro_column_guardrails",
+    "output/llm_transcription/oct_2025_pages_51_55_gemini_3_1_pro_column_guardrails",
+    "output/llm_transcription/oct_2025_pages_56_58_gemini_3_1_pro_column_guardrails"
+  ]
+}

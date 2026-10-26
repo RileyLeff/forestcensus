@@ -11,6 +11,15 @@ from typing import Any, Iterable
 import pandas as pd
 
 from .config import Config
+from .domain import (
+    DBH_JUMP_MIN_DELTA_MM,
+    DBH_JUMP_MIN_PCT,
+    MIN_MEASURED_DBH_MM,
+    has_direct_observation,
+    note_mentions_tree_absence,
+    size_filter_min_dbh_mm,
+)
+from .tree_ir import TreeDataset
 
 
 class Severity(StrEnum):
@@ -28,7 +37,13 @@ class IssueCode(StrEnum):
     E_INTERPRETED_STATUS = "E_INTERPRETED_STATUS"
     W_ALIVE_HEALTH_CONFLICT = "W_ALIVE_HEALTH_CONFLICT"
     W_DEAD_HEALTH_CONFLICT = "W_DEAD_HEALTH_CONFLICT"
+    W_FOUND_NOTE_CONFLICT = "W_FOUND_NOTE_CONFLICT"
+    W_BELOW_THRESHOLD_DBH = "W_BELOW_THRESHOLD_DBH"
     W_DBH_JUMP = "W_DBH_JUMP"
+    W_TREE_RANKED_DBH_JUMP = "W_TREE_RANKED_DBH_JUMP"
+    W_TREE_STEM_COUNT_CHANGE = "W_TREE_STEM_COUNT_CHANGE"
+    W_TREE_LARGE_STEM_APPEARANCE = "W_TREE_LARGE_STEM_APPEARANCE"
+    W_TREE_LARGE_STEM_DISAPPEARANCE = "W_TREE_LARGE_STEM_DISAPPEARANCE"
     W_TAXON_CONFLICT = "W_TAXON_CONFLICT"
     I_INFERRED_DEAD = "I_INFERRED_DEAD"
     I_ZOMBIE_TREE = "I_ZOMBIE_TREE"
@@ -71,6 +86,7 @@ def validate_census(census: pd.DataFrame, config: Config) -> list[Issue]:
     issues: list[Issue] = []
     issues.extend(_row_level_issues(census, config))
     issues.extend(_dbh_jump_issues(census))
+    issues.extend(_stem_profile_issues(census, config))
     issues.extend(_missingness_issues(census))
     issues.extend(_zombie_issues(census))
     issues.extend(_taxon_conflict_issues(census, config))
@@ -165,10 +181,26 @@ def write_issue_context(
 def _row_level_issues(census: pd.DataFrame, config: Config) -> list[Issue]:
     issues: list[Issue] = []
     known_surveys = {survey.id for survey in config.surveys}
-    valid_statuses = {"observed_alive", "observed_dead", "not_found", "unknown"}
-    valid_interpreted = {"alive", "observed_dead", "missing_pending", "inferred_dead"}
+    valid_statuses = {"observed_alive", "observed_dead", "observed_unknown", "not_found", "unknown"}
+    valid_interpreted = {"alive", "observed_dead", "observed_unknown", "missing_pending", "inferred_dead"}
 
     for row in census.itertuples(index=False):
+        notes = str(row.notes) if pd.notna(row.notes) else ""
+        if has_direct_observation(row.dbh_mm, row.health_observed, row.standing_observed) and note_mentions_tree_absence(notes):
+            issues.append(
+                _issue(
+                    row,
+                    Severity.WARNING,
+                    IssueCode.W_FOUND_NOTE_CONFLICT,
+                    "Direct observation inputs are present but the note mentions missing/not found",
+                    {
+                        "dbh_mm": row.dbh_mm,
+                        "health_observed": row.health_observed,
+                        "standing_observed": row.standing_observed,
+                        "notes": notes,
+                    },
+                )
+            )
         if row.survey_id not in known_surveys:
             issues.append(
                 _issue(
@@ -201,6 +233,20 @@ def _row_level_issues(census: pd.DataFrame, config: Config) -> list[Issue]:
                     IssueCode.E_DBH_NEGATIVE,
                     "DBH is negative",
                     {"dbh_mm": row.dbh_mm},
+                )
+            )
+        minimum_dbh = size_filter_min_dbh_mm(row.genus, row.species, row.taxon_code)
+        if pd.notna(row.dbh_mm) and 0 <= row.dbh_mm < minimum_dbh:
+            issues.append(
+                _issue(
+                    row,
+                    Severity.WARNING,
+                    IssueCode.W_BELOW_THRESHOLD_DBH,
+                    f"DBH is below the {minimum_dbh} mm measurement threshold",
+                    {
+                        "dbh_mm": row.dbh_mm,
+                        "minimum_measured_dbh_mm": minimum_dbh,
+                    },
                 )
             )
         if row.field_status not in valid_statuses:
@@ -276,7 +322,7 @@ def _dbh_jump_issues(census: pd.DataFrame) -> list[Issue]:
                 delta = abs(row.max_dbh_mm - previous.max_dbh_mm)
                 denominator = max(row.max_dbh_mm, previous.max_dbh_mm)
                 pct = delta / denominator if denominator else 0
-                if delta >= 6 and pct > 0.16:
+                if _is_large_dbh_change(row.max_dbh_mm, previous.max_dbh_mm):
                     issues.append(
                         Issue(
                             severity=Severity.WARNING,
@@ -300,6 +346,150 @@ def _dbh_jump_issues(census: pd.DataFrame) -> list[Issue]:
                     )
             previous = row
     return issues
+
+
+def _stem_profile_issues(census: pd.DataFrame, config: Config) -> list[Issue]:
+    issues: list[Issue] = []
+    tree_dataset = _tree_dataset_for_validation(census, config)
+
+    for tree in tree_dataset.trees.values():
+        previous = None
+        measured_surveys = [
+            survey
+            for survey in tree.ordered_surveys()
+            if survey.dbh_profile(MIN_MEASURED_DBH_MM)
+        ]
+        for current in measured_surveys:
+            if previous is not None:
+                issues.extend(_stem_count_change_issues(previous, current, tree))
+                issues.extend(_ranked_dbh_jump_issues(previous, current, tree))
+            previous = current
+    return issues
+
+
+def _tree_dataset_for_validation(census: pd.DataFrame, config: Config) -> TreeDataset:
+    events = census.copy()
+    if "_survey_index" not in events.columns:
+        events["_survey_index"] = events["survey_id"].map(config.survey_index)
+    if "identity_label" not in events.columns:
+        events["identity_label"] = ""
+    return TreeDataset.from_events(events)
+
+
+def _stem_count_change_issues(previous: object, current: object, tree: object) -> list[Issue]:
+    previous_profile = list(previous.dbh_profile(MIN_MEASURED_DBH_MM))
+    current_profile = list(current.dbh_profile(MIN_MEASURED_DBH_MM))
+    previous_count = len(previous_profile)
+    current_count = len(current_profile)
+    if previous_count == current_count:
+        return []
+
+    code = (
+        IssueCode.W_TREE_LARGE_STEM_APPEARANCE
+        if current_count > previous_count
+        else IssueCode.W_TREE_LARGE_STEM_DISAPPEARANCE
+    )
+    message = (
+        "Measured stem rank appeared between adjacent observations"
+        if current_count > previous_count
+        else "Measured stem rank disappeared between adjacent observations"
+    )
+    return [
+        Issue(
+            severity=Severity.WARNING,
+            code=IssueCode.W_TREE_STEM_COUNT_CHANGE,
+            message="Measured stem count changed between adjacent observations",
+            survey_id=current.survey_id,
+            site=tree.site,
+            plot=tree.plot,
+            public_tag=_first_public_tag(current),
+            identity_tag=tree.identity_tag,
+            tree_uid=tree.tree_uid,
+            details={
+                "previous_survey": previous.survey_id,
+                "previous_stem_count": previous_count,
+                "previous_dbh_profile": previous_profile,
+                "current_survey": current.survey_id,
+                "current_stem_count": current_count,
+                "current_dbh_profile": current_profile,
+            },
+        ),
+        Issue(
+            severity=Severity.WARNING,
+            code=code,
+            message=message,
+            survey_id=current.survey_id,
+            site=tree.site,
+            plot=tree.plot,
+            public_tag=_first_public_tag(current),
+            identity_tag=tree.identity_tag,
+            tree_uid=tree.tree_uid,
+            details={
+                "previous_survey": previous.survey_id,
+                "previous_dbh_profile": previous_profile,
+                "current_survey": current.survey_id,
+                "current_dbh_profile": current_profile,
+                "affected_ranks": _affected_stem_ranks(previous_count, current_count),
+            },
+        ),
+    ]
+
+
+def _ranked_dbh_jump_issues(previous: object, current: object, tree: object) -> list[Issue]:
+    issues = []
+    previous_profile = list(previous.dbh_profile(MIN_MEASURED_DBH_MM))
+    current_profile = list(current.dbh_profile(MIN_MEASURED_DBH_MM))
+    shared_rank_count = min(len(previous_profile), len(current_profile))
+    for rank_index in range(shared_rank_count):
+        previous_dbh = previous_profile[rank_index]
+        current_dbh = current_profile[rank_index]
+        if not _is_large_dbh_change(current_dbh, previous_dbh):
+            continue
+        delta = abs(current_dbh - previous_dbh)
+        denominator = max(current_dbh, previous_dbh)
+        pct = delta / denominator if denominator else 0
+        issues.append(
+            Issue(
+                severity=Severity.WARNING,
+                code=IssueCode.W_TREE_RANKED_DBH_JUMP,
+                message="Ranked DBH position changed sharply between adjacent observations",
+                survey_id=current.survey_id,
+                site=tree.site,
+                plot=tree.plot,
+                public_tag=_first_public_tag(current),
+                identity_tag=tree.identity_tag,
+                tree_uid=tree.tree_uid,
+                details={
+                    "rank": rank_index + 1,
+                    "previous_survey": previous.survey_id,
+                    "previous_dbh": previous_dbh,
+                    "previous_dbh_profile": previous_profile,
+                    "current_survey": current.survey_id,
+                    "current_dbh": current_dbh,
+                    "current_dbh_profile": current_profile,
+                    "delta": delta,
+                    "pct": pct,
+                },
+            )
+        )
+    return issues
+
+
+def _first_public_tag(survey: object) -> str:
+    return str(getattr(survey, "public_tag", ""))
+
+
+def _affected_stem_ranks(previous_count: int, current_count: int) -> list[int]:
+    start = min(previous_count, current_count) + 1
+    stop = max(previous_count, current_count)
+    return list(range(start, stop + 1))
+
+
+def _is_large_dbh_change(current_dbh: float, previous_dbh: float) -> bool:
+    delta = abs(current_dbh - previous_dbh)
+    denominator = max(current_dbh, previous_dbh)
+    pct = delta / denominator if denominator else 0
+    return delta >= DBH_JUMP_MIN_DELTA_MM and pct > DBH_JUMP_MIN_PCT
 
 
 def _missingness_issues(census: pd.DataFrame) -> list[Issue]:

@@ -36,7 +36,6 @@ appdot = "spp."
 bic = "bicolor"
 cer = "cerifera"
 cerifera = "cerifera"
-cor = "cerifera"
 flo = "florida"
 florida = "florida"
 mic = "michauxii"
@@ -60,6 +59,9 @@ sty = "styraciflua"
 
 [species_aliases_by_genus.Nyssa]
 sty = "sylvatica"
+
+[species_aliases_by_genus.Morella]
+cor = "cerifera"
 
 [canonical]
 unknown_genus = "Unidentifiable"

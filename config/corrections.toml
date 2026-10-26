@@ -167,6 +167,86 @@ match = { source_file = "2024_spring.csv", source_row = 973, survey_id = "May_20
 set = { dbh_mm = nan }
 
 [[row_corrections]]
+note = "April 2025 H0/263 DBH 0 records a fallen dead tree with no measurable DBH, not a true diameter; strike DBH while retaining dead evidence."
+match = { source_file = "2025_spring.csv", source_row = 566, survey_id = "April_2025", site = "BRNV", plot = "H0", public_tag = "263", dbh_mm = 0, health_observed = 0, notes = "fallen" }
+set = { dbh_mm = nan }
+
+[[row_corrections]]
+note = "April 2025 R3/673 DBH 0 records a fallen/girdled dead tree with no measurable DBH, not a true diameter; strike DBH while retaining dead evidence."
+match = { source_file = "2025_spring.csv", source_row = 727, survey_id = "April_2025", site = "BRNV", plot = "R3", public_tag = "673", dbh_mm = 0, health_observed = 0, notes = "fallen, girdled" }
+set = { dbh_mm = nan }
+
+[[row_corrections]]
+note = "June 2019 L3/200 DBH 44.2 mm is below measurement threshold and followed by a stable 442-451 mm Pinus history; interpreted as decimal-place error, 442 mm."
+match = { source_file = "2023_and_prior.csv", source_row = 3739, survey_id = "June_2019", site = "BRNV", plot = "L3", public_tag = "200", dbh_mm = 44.2 }
+set = { dbh_mm = 442 }
+
+[[row_corrections]]
+note = "June 2019 M6/367 DBH 42.7 mm is below measurement threshold and followed by a stable 427-440 mm Pinus history; interpreted as decimal-place error, 427 mm."
+match = { source_file = "2023_and_prior.csv", source_row = 3807, survey_id = "June_2019", site = "BRNV", plot = "M6", public_tag = "367", dbh_mm = 42.7 }
+set = { dbh_mm = 427 }
+
+[[row_corrections]]
+note = "June 2022 L3/5881 DBH 30 mm is below the 50 mm measurement threshold; strike DBH while preserving the odd alive/new-tree evidence."
+match = { source_file = "2023_and_prior.csv", source_row = 3879, survey_id = "June_2022", site = "BRNV", plot = "L3", public_tag = "5881", dbh_mm = 30, health_observed = 10, notes = "New tree in 2022?" }
+set = { dbh_mm = nan }
+
+[[row_corrections]]
+note = "June 2019 M6/381 DBH 17.7 mm is below measurement threshold and followed by a stable 174-193 mm Juniperus history; interpreted as decimal-place error, 177 mm."
+match = { source_file = "2023_and_prior.csv", source_row = 3212, survey_id = "June_2019", site = "BRNV", plot = "M6", public_tag = "381", dbh_mm = 17.7, notes = "vine in DBH" }
+set = { dbh_mm = 177 }
+
+[[row_corrections]]
+note = "May 2024 H4/108 DBH 20 mm is below measurement threshold and isolated between stable 71-73 mm Liquidambar observations; strike DBH while preserving alive evidence."
+match = { source_file = "2024_spring.csv", source_row = 1089, survey_id = "May_2024", site = "BRNV", plot = "H4", public_tag = "108", dbh_mm = 20, health_observed = 6 }
+set = { dbh_mm = nan }
+
+[[row_corrections]]
+note = "May 2024 L7/5790 DBH 40 mm is below measurement threshold and isolated within a 56-65 mm Morella history; strike DBH while preserving dead evidence."
+match = { source_file = "2024_spring.csv", source_row = 1079, survey_id = "May_2024", site = "BRNV", plot = "L7", public_tag = "5790", dbh_mm = 40, health_observed = 0 }
+set = { dbh_mm = nan }
+
+[[row_corrections]]
+note = "June 2022 M1/856 DBH 125 mm is an isolated live-tree outlier in a stable 414-425 mm Pinus history; interpreted as 425 mm."
+match = { source_file = "2023_and_prior.csv", source_row = 1611, survey_id = "June_2022", site = "BRNV", plot = "M1", public_tag = "856", dbh_mm = 125, health_observed = 4 }
+set = { dbh_mm = 425 }
+
+[[row_corrections]]
+note = "May 2024 M5/2481 DBH 53 mm is an isolated live-tree outlier in a stable 155-170 mm Nyssa history; interpreted as missing leading digit, 153 mm."
+match = { source_file = "2024_spring.csv", source_row = 1190, survey_id = "May_2024", site = "BRNV", plot = "M5", public_tag = "2481", dbh_mm = 53, health_observed = 4 }
+set = { dbh_mm = 153 }
+
+[[row_corrections]]
+note = "June 2020 M0/576 DBH 130 mm is an isolated dead-tree outlier between 351 mm and later 350/308/309 mm observations; interpreted as 350 mm."
+match = { source_file = "2023_and_prior.csv", source_row = 607, survey_id = "June_2020", site = "BRNV", plot = "M0", public_tag = "576", dbh_mm = 130, health_observed = 0, notes = "dead" }
+set = { dbh_mm = 350 }
+
+[[row_corrections]]
+note = "May 2024 L6/5027 DBH 10 mm is below measurement threshold on a dead Juniperus/unidentified tree; strike DBH while preserving dead evidence."
+match = { source_file = "2024_spring.csv", source_row = 475, survey_id = "May_2024", site = "BRNV", plot = "L6", public_tag = "5027", dbh_mm = 10, health_observed = 0, notes = "Juniper" }
+set = { dbh_mm = nan }
+
+[[row_corrections]]
+note = "April 2025 M7/309 DBH 46 mm is below measurement threshold in a dead 153-160 mm Pinus history; could be 146 mm or decomposition, so strike DBH while preserving dead evidence."
+match = { source_file = "2025_spring.csv", source_row = 1355, survey_id = "April_2025", site = "BRNV", plot = "M7", public_tag = "309", dbh_mm = 46, health_observed = 0 }
+set = { dbh_mm = nan }
+
+[[row_corrections]]
+note = "June 2022 L2/223 DBH 247 mm is a likely organizational/source error between stable 170-183 mm modern observations; strike DBH while preserving live health evidence."
+match = { source_file = "2023_and_prior.csv", source_row = 1306, survey_id = "June_2022", site = "BRNV", plot = "L2", public_tag = "223", dbh_mm = 247, health_observed = 2 }
+set = { dbh_mm = nan }
+
+[[row_corrections]]
+note = "June 2023 L2/223 DBH 247 mm repeats the suspicious June 2022 organizational/source error; strike DBH while preserving live health evidence."
+match = { source_file = "2023_and_prior.csv", source_row = 4454, survey_id = "June_2023", site = "BRNV", plot = "L2", public_tag = "223", dbh_mm = 247, health_observed = 7 }
+set = { dbh_mm = nan }
+
+[[row_corrections]]
+note = "May 2024 L2/223 DBH 480 mm is a likely data-entry typo in a stable 170-183 mm Juniperus history; strike DBH while preserving live health evidence."
+match = { source_file = "2024_spring.csv", source_row = 548, survey_id = "May_2024", site = "BRNV", plot = "L2", public_tag = "223", dbh_mm = 480, health_observed = 7 }
+set = { dbh_mm = nan }
+
+[[row_corrections]]
 note = "June 2021 H4/149 slot 2 is one of the smaller Ilex stems; Juniperus label appears to be stale slot/species noise."
 match = { source_file = "2023_and_prior.csv", source_row = 3191, survey_id = "June_2021", site = "BRNV", plot = "H4", public_tag = "149", datasheet_slot = "2", genus = "Juniperus", dbh_mm = 42, health_observed = 10 }
 set = { genus = "Ilex", species = "opaca", taxon_code = "ILEOPA" }
@@ -290,6 +370,318 @@ match = { site = "BRNV", plot = "H4", identity_tag = "149" }
 genus = "Ilex"
 species = "opaca"
 
+[[taxon_overrides]]
+note = "M3/345 is a long-dead Juniperus virginiana after review; earlier Pinus labels are treated as dead-tree species noise."
+match = { site = "BRNV", plot = "M3", identity_tag = "345" }
+genus = "Juniperus"
+species = "virginiana"
+
+[[taxon_overrides]]
+note = "M3/358 is a multi-stem Nyssa sylvatica; no compatible M3 Juniperus was missing in April 2025, so the April Juniperus row is treated as a taxon label slip."
+match = { site = "BRNV", plot = "M3", identity_tag = "358" }
+genus = "Nyssa"
+species = "sylvatica"
+
+[[taxon_overrides]]
+note = "M0/826 is treated as Juniperus virginiana after adjacent-tag review; recent rows, the June 2021 'cedar not pine' note, and the October 2024 species change all support Juniperus."
+match = { site = "BRNV", plot = "M0", identity_tag = "826" }
+genus = "Juniperus"
+species = "virginiana"
+
+[[taxon_overrides]]
+note = "M0/909 accepts the October 2024 species change to Juniperus virginiana after review."
+match = { site = "BRNV", plot = "M0", identity_tag = "909" }
+genus = "Juniperus"
+species = "virginiana"
+
+[[taxon_overrides]]
+note = "M7/5835 accepts the October 2024 species change to Pinus taeda after review."
+match = { site = "BRNV", plot = "M7", identity_tag = "5835" }
+genus = "Pinus"
+species = "taeda"
+
+[[taxon_overrides]]
+note = "R2/603 accepts the October 2024 species change to Nyssa sylvatica after review."
+match = { site = "BRNV", plot = "R2", identity_tag = "603" }
+genus = "Nyssa"
+species = "sylvatica"
+
+[[taxon_overrides]]
+note = "R2/623 is treated as Prunus serotina after review."
+match = { site = "BRNV", plot = "R2", identity_tag = "623" }
+genus = "Prunus"
+species = "serotina"
+
+[[taxon_overrides]]
+note = "R2/639 is kept as Nyssa sylvatica after review despite one Prunus label."
+match = { site = "BRNV", plot = "R2", identity_tag = "639" }
+genus = "Nyssa"
+species = "sylvatica"
+
+[[taxon_overrides]]
+note = "R3/682 accepts the October 2024 NYSSA note and is treated as Nyssa sylvatica after review."
+match = { site = "BRNV", plot = "R3", identity_tag = "682" }
+genus = "Nyssa"
+species = "sylvatica"
+
+[[taxon_overrides]]
+note = "R3/692 accepts the October 2024 Liq.sty note and is treated as Liquidambar styraciflua after review."
+match = { site = "BRNV", plot = "R3", identity_tag = "692" }
+genus = "Liquidambar"
+species = "styraciflua"
+
+[[taxon_overrides]]
+note = "R4/5203 accepts the Liquidambar styraciflua call after review, supported by the April 2025 change note."
+match = { site = "BRNV", plot = "R4", identity_tag = "5203" }
+genus = "Liquidambar"
+species = "styraciflua"
+
+[[taxon_overrides]]
+note = "R4/5215 is treated as Liquidambar styraciflua after review."
+match = { site = "BRNV", plot = "R4", identity_tag = "5215" }
+genus = "Liquidambar"
+species = "styraciflua"
+
+[[taxon_overrides]]
+note = "H0/5840 is treated as Ilex opaca after review; 2024 Nyssa labels are treated as taxon label slips."
+match = { site = "BRNV", plot = "H0", identity_tag = "5840" }
+genus = "Ilex"
+species = "opaca"
+
+[[taxon_overrides]]
+note = "H0/5841 is treated as Ilex opaca after review despite earlier Nyssa labels."
+match = { site = "BRNV", plot = "H0", identity_tag = "5841" }
+genus = "Ilex"
+species = "opaca"
+
+[[taxon_overrides]]
+note = "L6/75 live post-split identity is treated as Pinus taeda after review; Juniperus labels are treated as taxon label slips."
+match = { site = "BRNV", plot = "L6", identity_tag = "75" }
+genus = "Pinus"
+species = "taeda"
+
+[[taxon_overrides]]
+note = "L3/918 is treated as Juniperus virginiana after review; earlier Nyssa dead labels are treated as taxon label slips."
+match = { site = "BRNV", plot = "L3", identity_tag = "918" }
+genus = "Juniperus"
+species = "virginiana"
+
+[[taxon_overrides]]
+note = "H7/877 is treated as Nyssa sylvatica for datasheet prep; October 2025 merge note links the old unidentifiable label into the Nyssa call."
+match = { site = "BRNV", plot = "H7", identity_tag = "877" }
+genus = "Nyssa"
+species = "sylvatica"
+
+[[taxon_overrides]]
+note = "H7/917 is treated as Nyssa sylvatica for datasheet prep; October 2025 merge note links the old unidentifiable label into the Nyssa call."
+match = { site = "BRNV", plot = "H7", identity_tag = "917" }
+genus = "Nyssa"
+species = "sylvatica"
+
+[[taxon_overrides]]
+note = "L1/456 accepts the April 2025 note 'delta to Mor' and is treated as Morella cerifera for datasheet prep."
+match = { site = "BRNV", plot = "L1", identity_tag = "456" }
+genus = "Morella"
+species = "cerifera"
+
+[[taxon_overrides]]
+note = "L1/474 accepts the April 2025 note 'delta to Mor' and is treated as Morella cerifera for datasheet prep."
+match = { site = "BRNV", plot = "L1", identity_tag = "474" }
+genus = "Morella"
+species = "cerifera"
+
+[[taxon_overrides]]
+note = "L1/5050 accepts the April 2025 note 'delta to Jun' and is treated as Juniperus virginiana for datasheet prep."
+match = { site = "BRNV", plot = "L1", identity_tag = "5050" }
+genus = "Juniperus"
+species = "virginiana"
+
+[[taxon_overrides]]
+note = "L1/5053 accepts the April 2025 note 'Delta to Jun' and is treated as Juniperus virginiana for datasheet prep."
+match = { site = "BRNV", plot = "L1", identity_tag = "5053" }
+genus = "Juniperus"
+species = "virginiana"
+
+[[taxon_overrides]]
+note = "L1/5058 accepts the April 2025 note 'Delta to Jun' and is treated as Juniperus virginiana for datasheet prep."
+match = { site = "BRNV", plot = "L1", identity_tag = "5058" }
+genus = "Juniperus"
+species = "virginiana"
+
+[[taxon_overrides]]
+note = "L1/5059 accepts the April 2025 note 'Delta to Jun' and is treated as Juniperus virginiana for datasheet prep."
+match = { site = "BRNV", plot = "L1", identity_tag = "5059" }
+genus = "Juniperus"
+species = "virginiana"
+
+[[taxon_overrides]]
+note = "L3/5877 is treated as Nyssa sylvatica for datasheet prep; recent Nyssa evidence is accepted over unidentifiable labels."
+match = { site = "BRNV", plot = "L3", identity_tag = "5877" }
+genus = "Nyssa"
+species = "sylvatica"
+
+[[taxon_overrides]]
+note = "L5/424 accepts the April 2025 note 'delta to Jun' and is treated as Juniperus virginiana for datasheet prep."
+match = { site = "BRNV", plot = "L5", identity_tag = "424" }
+genus = "Juniperus"
+species = "virginiana"
+
+[[taxon_overrides]]
+note = "L5/426 accepts the April 2025 note 'delta to Pin' and is treated as Pinus taeda for datasheet prep."
+match = { site = "BRNV", plot = "L5", identity_tag = "426" }
+genus = "Pinus"
+species = "taeda"
+
+[[taxon_overrides]]
+note = "L7/5034 accepts the April 2025 note 'delta to Jun' and is treated as Juniperus virginiana for datasheet prep."
+match = { site = "BRNV", plot = "L7", identity_tag = "5034" }
+genus = "Juniperus"
+species = "virginiana"
+
+[[taxon_overrides]]
+note = "L7/5039 is treated as Juniperus virginiana for datasheet prep; recent Juniperus evidence is accepted over unidentifiable labels."
+match = { site = "BRNV", plot = "L7", identity_tag = "5039" }
+genus = "Juniperus"
+species = "virginiana"
+
+[[taxon_overrides]]
+note = "M0/803 accepts the April/October 2025 Nyssa notes and is treated as Nyssa sylvatica for datasheet prep."
+match = { site = "BRNV", plot = "M0", identity_tag = "803" }
+genus = "Nyssa"
+species = "sylvatica"
+
+[[taxon_overrides]]
+note = "M0/822 is treated as Juniperus virginiana for datasheet prep; recent Juniperus evidence is accepted over unidentifiable labels."
+match = { site = "BRNV", plot = "M0", identity_tag = "822" }
+genus = "Juniperus"
+species = "virginiana"
+
+[[taxon_overrides]]
+note = "M2/901 accepts the April 2025 note 'girdle junvir' and is treated as Juniperus virginiana for datasheet prep."
+match = { site = "BRNV", plot = "M2", identity_tag = "901" }
+genus = "Juniperus"
+species = "virginiana"
+
+[[taxon_overrides]]
+note = "M2/2410 accepts the April 2025 note 'girdle junvir' and is treated as Juniperus virginiana for datasheet prep."
+match = { site = "BRNV", plot = "M2", identity_tag = "2410" }
+genus = "Juniperus"
+species = "virginiana"
+
+[[taxon_overrides]]
+note = "M2/2418 accepts the April/October 2025 Juniperus notes and is treated as Juniperus virginiana for datasheet prep."
+match = { site = "BRNV", plot = "M2", identity_tag = "2418" }
+genus = "Juniperus"
+species = "virginiana"
+
+[[taxon_overrides]]
+note = "M2/2419 accepts the April/October 2025 Juniperus notes and is treated as Juniperus virginiana for datasheet prep."
+match = { site = "BRNV", plot = "M2", identity_tag = "2419" }
+genus = "Juniperus"
+species = "virginiana"
+
+[[taxon_overrides]]
+note = "M2/2428 is treated as Juniperus virginiana for datasheet prep; the April 2025 reverse unidentifiable note is treated as evidence not to trust the old unidentified label."
+match = { site = "BRNV", plot = "M2", identity_tag = "2428" }
+genus = "Juniperus"
+species = "virginiana"
+
+[[taxon_overrides]]
+note = "M2/5862 accepts the April 2025 note 'girdle Junvir' and is treated as Juniperus virginiana for datasheet prep."
+match = { site = "BRNV", plot = "M2", identity_tag = "5862" }
+genus = "Juniperus"
+species = "virginiana"
+
+[[taxon_overrides]]
+note = "M2/5863 is treated as Juniperus virginiana for datasheet prep; recent Juniperus evidence is accepted over unidentifiable labels."
+match = { site = "BRNV", plot = "M2", identity_tag = "5863" }
+genus = "Juniperus"
+species = "virginiana"
+
+[[taxon_overrides]]
+note = "M3/5838 accepts the April 2025 Juniperus note and is treated as Juniperus virginiana for datasheet prep."
+match = { site = "BRNV", plot = "M3", identity_tag = "5838" }
+genus = "Juniperus"
+species = "virginiana"
+
+[[taxon_overrides]]
+note = "M4/2444 accepts the April 2025 note 'change to pine' and is treated as Pinus taeda for datasheet prep; tag reassignment questions remain separate."
+match = { site = "BRNV", plot = "M4", identity_tag = "2444" }
+genus = "Pinus"
+species = "taeda"
+
+[[taxon_overrides]]
+note = "M6/5830 accepts the April 2025 note 'change to jun' and is treated as Juniperus virginiana for datasheet prep."
+match = { site = "BRNV", plot = "M6", identity_tag = "5830" }
+genus = "Juniperus"
+species = "virginiana"
+
+[[taxon_overrides]]
+note = "M7/5836 accepts the October 2025 Pinus merge note as a species call for datasheet prep; tag/link decisions remain separate."
+match = { site = "BRNV", plot = "M7", identity_tag = "5836" }
+genus = "Pinus"
+species = "taeda"
+
+[[taxon_overrides]]
+note = "R2/605 accepts the October 2025 Prunus merge note as a species call for datasheet prep; tag/link decisions remain separate."
+match = { site = "BRNV", plot = "R2", identity_tag = "605" }
+genus = "Prunus"
+species = "serotina"
+
+[[taxon_overrides]]
+note = "R2/614 accepts the October 2025 Prunus merge notes as a species call for datasheet prep; tag/link decisions remain separate."
+match = { site = "BRNV", plot = "R2", identity_tag = "614" }
+genus = "Prunus"
+species = "serotina"
+
+[[taxon_overrides]]
+note = "L3/919 keeps the explicit October 2024/2025 unidentifiable species-change call for datasheet prep; the note says species change not Juniperus."
+match = { site = "BRNV", plot = "L3", identity_tag = "919" }
+genus = "Unidentifiable"
+species = "spp."
+
+[[taxon_overrides]]
+note = "L3/998 accepts the recent Pinus taeda species-change evidence for datasheet prep."
+match = { site = "BRNV", plot = "L3", identity_tag = "998" }
+genus = "Pinus"
+species = "taeda"
+
+[[taxon_overrides]]
+note = "L5/5045 accepts the recent Juniperus virginiana species evidence for datasheet prep."
+match = { site = "BRNV", plot = "L5", identity_tag = "5045" }
+genus = "Juniperus"
+species = "virginiana"
+
+[[taxon_overrides]]
+note = "L5/5046 accepts the recent Pinus taeda species evidence for datasheet prep."
+match = { site = "BRNV", plot = "L5", identity_tag = "5046" }
+genus = "Pinus"
+species = "taeda"
+
+[[taxon_overrides]]
+note = "L6/5024 accepts the May 2024 Pine note and recent Pinus taeda evidence for datasheet prep."
+match = { site = "BRNV", plot = "L6", identity_tag = "5024" }
+genus = "Pinus"
+species = "taeda"
+
+[[taxon_overrides]]
+note = "L7/5033 accepts the May 2024 Juniperus note and recent Juniperus virginiana evidence for datasheet prep."
+match = { site = "BRNV", plot = "L7", identity_tag = "5033" }
+genus = "Juniperus"
+species = "virginiana"
+
+[[taxon_overrides]]
+note = "L7/5040 accepts the recent Juniperus virginiana species-change evidence for datasheet prep."
+match = { site = "BRNV", plot = "L7", identity_tag = "5040" }
+genus = "Juniperus"
+species = "virginiana"
+
+[[taxon_overrides]]
+note = "M1/5860 accepts the May 2024 Nyssa note and October 2025 Nyssa sylvatica evidence for datasheet prep."
+match = { site = "BRNV", plot = "M1", identity_tag = "5860" }
+genus = "Nyssa"
+species = "sylvatica"
+
 [[row_exclusions]]
 note = "May 2024 H2/210 duplicate entry: same survey and same 200 mm DBH as the valid living row, with only health 0 differing."
 match = { source_file = "2024_spring.csv", source_row = 1018, survey_id = "May_2024", site = "BRNV", plot = "H2", public_tag = "210", dbh_mm = 200, health_observed = 0, alive_observed = true }
@@ -309,3 +701,288 @@ match = { source_file = "2024_spring.csv", source_row = 344, survey_id = "May_20
 [[row_exclusions]]
 note = "May 2024 H4/149 slot 3 blank Juniperus row duplicates stale placeholder scaffolding next to a measured Ilex slot 3 row."
 match = { source_file = "2024_spring.csv", source_row = 347, survey_id = "May_2024", site = "BRNV", plot = "H4", public_tag = "149", datasheet_slot = "3", genus = "Juniperus" }
+
+[[row_exclusions]]
+note = "October 2025 R2/631 blank Pinus row is a tag-number note artifact ('should be Pin 93 no Pin 6 in p') with no DBH, health, or standing evidence; suppress from canonical and datasheet prep while preserving the source file."
+match = { source_file = "import_recent_format_reviewed.csv", source_row = 83, survey_id = "October_2025", site = "BRNV", plot = "R2", public_tag = "631", datasheet_slot = "1", genus = "Pinus", notes = "should be Pin 93 no Pin 6 in p" }
+
+[[row_exclusions]]
+note = "October 2025 R2/681 blank Ilex row is a tag-number note artifact ('should be Ile. 91 no Ile i') with no DBH, health, or standing evidence; suppress from canonical and datasheet prep while preserving the source file."
+match = { source_file = "import_recent_format_reviewed.csv", source_row = 95, survey_id = "October_2025", site = "BRNV", plot = "R2", public_tag = "681", datasheet_slot = "1", genus = "Ilex", notes = "should be Ile. 91 no Ile i" }
+
+# May 2026 case-specific cleanup approved by Riley on 2026-10-03.
+# Preserve every source row in the reviewed transcription. Numeric nan selectors
+# require a missing value; they do not match a subsequently supplied measurement.
+[[row_corrections]]
+note = "May 2026 L5/913 duplicate merge approved by Riley on 2026-10-03: page 52 N1's scratched-out tag is read as 913, not 443 or 943, in the transcription review log. Main row 48 and N1 both record health 7, standing, no current DBH, and one Juniperus stem; history has one 227-235 mm stem. Retain the main observation and carry the write-in note. Supporting review key 52:15:443|JUN|1 remains in the reviewed source; the key preserves the original transcription, not an alias of historical pine L5/443."
+match = { source_file = "import_recent_format_reviewed.csv", survey_id = "May_2026", site = "BRNV", plot = "L5", public_tag = "913", datasheet_slot = "1", genus = "Juniperus", species = "virginiana", dbh_mm = nan, health_observed = 7, standing_observed = true, notes = "" }
+set = { notes = "previously tagged" }
+
+[[row_exclusions]]
+note = "May 2026 L5/913: Riley approved treating page 52 N1 (original review key 52:15:443|JUN|1, corrected tag 913) as the same observation as main page 52 row 48. Both have health 7, standing, no current DBH, and stem slot 1; no evidence supports an extra stem. Suppress only the repeated write-in in the unified decision phase. Preserve the complete reviewed source and carry its note on the retained main row. This does not reassign historical L5/443 or create L5/943."
+match = { source_file = "import_recent_format_reviewed.csv", survey_id = "May_2026", site = "BRNV", plot = "L5", public_tag = "913", datasheet_slot = "1", genus = "Juniperus", species = "spp.", dbh_mm = nan, health_observed = 7, standing_observed = true, notes = "previously tagged" }
+
+[[row_corrections]]
+note = "May 2026 L6/88 duplicate merge approved by Riley: single-stem history (92 mm in 2019/2020, 96 mm in October 2024); main scan page 53 row 38 and page 57 N5 both record one dead standing Juniperus stem. Retain the main observation and carry forward the write-in note. Supporting review key 57:5:88|JUN|1 remains in the reviewed source."
+match = { source_file = "import_recent_format_reviewed.csv", survey_id = "May_2026", site = "BRNV", plot = "L6", public_tag = "88", datasheet_slot = "1", genus = "Juniperus", species = "virginiana", dbh_mm = nan, health_observed = 0, standing_observed = true, notes = "" }
+set = { notes = "previously tagged" }
+
+[[row_corrections]]
+note = "May 2026 L6/991 duplicate merge approved by Riley: accepted old tag 57 resolves to the same identity; one measured stem historically (56 mm under 57, 54-55 mm under 991). Main scan page 55 row 64 and page 57 N6 both record a dead standing Juniperus stem. Retain the main observation, preserve the old-tag association, and carry forward the write-in note. Supporting review key 57:6:57|JUN|1 remains in the reviewed source."
+match = { source_file = "import_recent_format_reviewed.csv", survey_id = "May_2026", site = "BRNV", plot = "L6", public_tag = "991", datasheet_slot = "1", genus = "Juniperus", species = "virginiana", dbh_mm = nan, health_observed = 0, standing_observed = true, notes = "" }
+set = { notes = "previously tagged" }
+
+[[row_exclusions]]
+note = "May 2026 L6/88: consolidate the repeated page 57 N5 observation (review key 57:5:88|JUN|1) into the main page 53 row 38 observation. Riley authorized merging suspected duplicates after history review; no evidence of a second stem. The write-in note is retained on the main canonical observation; the complete write-in remains in the source."
+match = { source_file = "import_recent_format_reviewed.csv", survey_id = "May_2026", site = "BRNV", plot = "L6", public_tag = "88", datasheet_slot = "1", genus = "Juniperus", species = "spp.", dbh_mm = nan, health_observed = 0, standing_observed = true, notes = "previously tagged" }
+
+[[row_exclusions]]
+note = "May 2026 L6/57: consolidate the repeated old-tag page 57 N6 observation (review key 57:6:57|JUN|1) into main page 55 row 64 under public tag 991 and identity 57. Riley authorized merging suspected duplicates after history review. The October 2024 blank old-tag placeholder does not establish a second stem. Retain the write-in note and complete source evidence."
+match = { source_file = "import_recent_format_reviewed.csv", survey_id = "May_2026", site = "BRNV", plot = "L6", public_tag = "57", datasheet_slot = "1", genus = "Juniperus", species = "spp.", dbh_mm = nan, health_observed = 0, standing_observed = true, notes = "previously tagged" }
+
+[[row_exclusions]]
+note = "May 2026 R2/933: scan page 4 N1 crosses out the tag and taxon; N3 supplies the completed 23 mm, health 4, standing observation. Historical surveys have one stem (24, 29, 20, 28 mm). The cancelled row is source evidence, not an additional stem or a not-found observation. Riley authorized consolidation after checking historical context."
+match = { source_file = "import_recent_format_reviewed.csv", survey_id = "May_2026", site = "BRNV", plot = "R2", public_tag = "933", datasheet_slot = "", genus = "Vaccinium", dbh_mm = nan, health_observed = nan, standing_observed = "", notes = "" }
+
+[[row_exclusions]]
+note = "May 2026 M5/1201: scan page 36 N3 crosses out the tag and has no measurements. No earlier history supports a third stem; N1/N2 are the two measured stems (62/58 mm, health 3/8) with slots corrected by Riley. Preserve those two observations and the cancelled source row, but do not count the cancelled row as a third stem. Riley authorized consolidation after checking historical context."
+match = { source_file = "import_recent_format_reviewed.csv", survey_id = "May_2026", site = "BRNV", plot = "M5", public_tag = "1201", datasheet_slot = "", genus = "Morella", dbh_mm = nan, health_observed = nan, standing_observed = "", notes = "" }
+
+# May 2026 final reconciliation approved by Riley on 2026-10-03.
+[[taxon_overrides]]
+scope = "genus"
+note = "Riley's 2026-10-03 identification-resolution policy: canonical Vaccinium is always Vaccinium spp.; do not infer corymbosum from May VACCOR or assign cerifera via an unrelated Morella abbreviation. Preserve the original taxon in source evidence."
+match = { genus = "Vaccinium" }
+genus = "Vaccinium"
+species = "spp."
+
+[[taxon_overrides]]
+note = "May 2026 M6/5154 is accepted as a miswritten 5145 by Riley on 2026-10-03. Use the established Juniperus virginiana identity's taxonomy; the May species cell is blank, not a new field identification."
+match = { site = "BRNV", plot = "M6", identity_tag = "5145" }
+genus = "Juniperus"
+species = "virginiana"
+
+[[row_exclusions]]
+note = "Riley approved excluding May M1/5952 (scan page 28 N3): correctly transcribed tag, but no historical match, no taxon or measurements, and only '(fallen)'. Preserve source evidence without introducing a canonical plant or mortality event."
+match = { source_file = "import_recent_format_reviewed.csv", survey_id = "May_2026", site = "BRNV", plot = "M1", public_tag = "5952", datasheet_slot = "", genus = "Unidentifiable", dbh_mm = nan, health_observed = nan, standing_observed = "", notes = "(fallen)" }
+
+[[row_exclusions]]
+note = "Riley approved May L2/616 as the previously declining Morella 816. The accepted dead-standing write-in replaces the main page 46 row 48 missing placeholder. Keep the original missing note as source evidence; do not create an extra unobserved stem alongside the recovered observation."
+match = { source_file = "import_recent_format_reviewed.csv", survey_id = "May_2026", site = "BRNV", plot = "L2", public_tag = "816", datasheet_slot = "1", genus = "Morella", dbh_mm = nan, health_observed = nan, standing_observed = "", notes = "missing" }
+
+[[row_corrections]]
+note = "Riley approved reading May L5/509's '0 - previously tagged' note as health 0. Preserve the correctly transcribed tag and standing observation, with historical identity unresolved; this does not imply recruitment or a match to H3/509."
+match = { source_file = "import_recent_format_reviewed.csv", survey_id = "May_2026", site = "BRNV", plot = "L5", public_tag = "509", datasheet_slot = "1", genus = "Morella", dbh_mm = nan, health_observed = nan, standing_observed = true, notes = "0 - previously tagged" }
+set = { health_observed = 0, field_status = "observed_dead" }
+
+[[row_corrections]]
+note = "Riley approved May M6/5154 -> identity 5145. The explicit note 'dead standing' supplies standing true despite the blank checkbox; health 0 plus blank standing does not imply fallen. Original written tag and note are retained."
+match = { source_file = "import_recent_format_reviewed.csv", survey_id = "May_2026", site = "BRNV", plot = "M6", public_tag = "5154", datasheet_slot = "1", genus = "Unidentifiable", dbh_mm = nan, health_observed = 0, standing_observed = "", notes = "dead standing, previously tagged" }
+set = { standing_observed = true }
+
+
+# May presence/standing decisions: exact source contents, never blank-checkbox inference.
+[[row_corrections]]
+note = "Riley approved this desk correction on 2026-10-04. May M5/2479 scan page 35 row 13 has an unchecked standing box and explicit 'Fallen' note; the saved model JSON incorrectly asserted standing true. Both April and October 2025 record dead/fallen. Correct only the May standing value in the unified decision phase; preserve health 0 and the reviewed source evidence."
+match = { source_file = "import_recent_format_reviewed.csv", survey_id = "May_2026", site = "BRNV", plot = "M5", public_tag = "2479", datasheet_slot = "1", genus = "Nyssa", dbh_mm = nan, health_observed = 0, standing_observed = true, notes = "Fallen" }
+set = { standing_observed = false, field_status = "observed_dead" }
+
+[[row_corrections]]
+note = "Riley approved the May H1/96 explicit absence note over contradictory current inputs on 2026-10-03. Treat this entry as not found: clear current health/standing/alive claims, preserve the written source and note, and leave historical death/fallen evidence untouched. Do not turn a missing tree into a confirmed fallen sighting or reverse M7/329's prior fallen history."
+match = { source_file = "import_recent_format_reviewed.csv", survey_id = "May_2026", site = "BRNV", plot = "H1", public_tag = "96", datasheet_slot = "1", genus = "Pinus", dbh_mm = nan, health_observed = 0, standing_observed = true, notes = "missing" }
+set = { health_observed = nan, standing_observed = nan, alive_observed = nan, field_status = "not_found" }
+
+[[row_corrections]]
+note = "Riley approved the May H4/130 explicit absence note over contradictory current inputs on 2026-10-03. Treat this entry as not found: clear current health/standing/alive claims, preserve the written source and note, and leave historical death/fallen evidence untouched. Do not turn a missing tree into a confirmed fallen sighting or reverse M7/329's prior fallen history."
+match = { source_file = "import_recent_format_reviewed.csv", survey_id = "May_2026", site = "BRNV", plot = "H4", public_tag = "130", datasheet_slot = "2", genus = "Unidentifiable", dbh_mm = nan, health_observed = 0, standing_observed = "", notes = "fallen/missing" }
+set = { health_observed = nan, standing_observed = nan, alive_observed = nan, field_status = "not_found" }
+
+[[row_corrections]]
+note = "Riley approved the May M0/585 explicit absence note over contradictory current inputs on 2026-10-03. Treat this entry as not found: clear current health/standing/alive claims, preserve the written source and note, and leave historical death/fallen evidence untouched. Do not turn a missing tree into a confirmed fallen sighting or reverse M7/329's prior fallen history."
+match = { source_file = "import_recent_format_reviewed.csv", survey_id = "May_2026", site = "BRNV", plot = "M0", public_tag = "585", datasheet_slot = "1", genus = "Juniperus", dbh_mm = nan, health_observed = 0, standing_observed = true, notes = "not found" }
+set = { health_observed = nan, standing_observed = nan, alive_observed = nan, field_status = "not_found" }
+
+[[row_corrections]]
+note = "Riley approved the May M0/586 explicit absence note over contradictory current inputs on 2026-10-03. Treat this entry as not found: clear current health/standing/alive claims, preserve the written source and note, and leave historical death/fallen evidence untouched. Do not turn a missing tree into a confirmed fallen sighting or reverse M7/329's prior fallen history."
+match = { source_file = "import_recent_format_reviewed.csv", survey_id = "May_2026", site = "BRNV", plot = "M0", public_tag = "586", datasheet_slot = "1", genus = "Juniperus", dbh_mm = nan, health_observed = 0, standing_observed = "", notes = "not found fallen" }
+set = { health_observed = nan, standing_observed = nan, alive_observed = nan, field_status = "not_found" }
+
+[[row_corrections]]
+note = "Riley approved the May M4/2444 explicit absence note over contradictory current inputs on 2026-10-03. Treat this entry as not found: clear current health/standing/alive claims, preserve the written source and note, and leave historical death/fallen evidence untouched. Do not turn a missing tree into a confirmed fallen sighting or reverse M7/329's prior fallen history."
+match = { source_file = "import_recent_format_reviewed.csv", survey_id = "May_2026", site = "BRNV", plot = "M4", public_tag = "2444", datasheet_slot = "1", genus = "Pinus", dbh_mm = nan, health_observed = 0, standing_observed = true, notes = "NOT Found" }
+set = { health_observed = nan, standing_observed = nan, alive_observed = nan, field_status = "not_found" }
+
+[[row_corrections]]
+note = "Riley approved the May M7/319 explicit absence note over contradictory current inputs on 2026-10-03. Treat this entry as not found: clear current health/standing/alive claims, preserve the written source and note, and leave historical death/fallen evidence untouched. Do not turn a missing tree into a confirmed fallen sighting or reverse M7/329's prior fallen history."
+match = { source_file = "import_recent_format_reviewed.csv", survey_id = "May_2026", site = "BRNV", plot = "M7", public_tag = "319", datasheet_slot = "1", genus = "Juniperus", dbh_mm = nan, health_observed = nan, standing_observed = true, notes = "missing" }
+set = { health_observed = nan, standing_observed = nan, alive_observed = nan, field_status = "not_found" }
+
+[[row_corrections]]
+note = "Riley approved the May M7/329 explicit absence note over contradictory current inputs on 2026-10-03. Treat this entry as not found: clear current health/standing/alive claims, preserve the written source and note, and leave historical death/fallen evidence untouched. Do not turn a missing tree into a confirmed fallen sighting or reverse M7/329's prior fallen history."
+match = { source_file = "import_recent_format_reviewed.csv", survey_id = "May_2026", site = "BRNV", plot = "M7", public_tag = "329", datasheet_slot = "1", genus = "Nyssa", dbh_mm = nan, health_observed = nan, standing_observed = true, notes = "missing" }
+set = { health_observed = nan, standing_observed = nan, alive_observed = nan, field_status = "not_found" }
+
+[[row_corrections]]
+note = "Riley approved extracting unambiguous May standing evidence from notes on 2026-10-03. R3/641: \"fallen\" supplies fallen despite a blank checkbox. Preserve health as recorded; do not infer a zero score from falling. This guarded decision does not apply to absent trees, uncertain/plot-level descriptions, partial breakage, or other surveys."
+match = { source_file = "import_recent_format_reviewed.csv", survey_id = "May_2026", site = "BRNV", plot = "R3", public_tag = "641", datasheet_slot = "2", genus = "Acer", dbh_mm = nan, health_observed = 0, standing_observed = "", notes = "fallen" }
+set = { standing_observed = false, field_status = "observed_dead" }
+
+[[row_corrections]]
+note = "Riley approved extracting unambiguous May standing evidence from notes on 2026-10-03. R4/5215: \"fallen over,\" supplies fallen despite a blank checkbox. Preserve health as recorded; do not infer a zero score from falling. This guarded decision does not apply to absent trees, uncertain/plot-level descriptions, partial breakage, or other surveys."
+match = { source_file = "import_recent_format_reviewed.csv", survey_id = "May_2026", site = "BRNV", plot = "R4", public_tag = "5215", datasheet_slot = "1", genus = "Liquidambar", dbh_mm = nan, health_observed = 0, standing_observed = "", notes = "fallen over," }
+set = { standing_observed = false, field_status = "observed_dead" }
+
+[[row_corrections]]
+note = "Riley approved extracting unambiguous May standing evidence from notes on 2026-10-03. H0/262: \"fallen\" supplies fallen despite a blank checkbox. Preserve health as recorded; do not infer a zero score from falling. This guarded decision does not apply to absent trees, uncertain/plot-level descriptions, partial breakage, or other surveys."
+match = { source_file = "import_recent_format_reviewed.csv", survey_id = "May_2026", site = "BRNV", plot = "H0", public_tag = "262", datasheet_slot = "1", genus = "Nyssa", dbh_mm = nan, health_observed = 0, standing_observed = "", notes = "fallen" }
+set = { standing_observed = false, field_status = "observed_dead" }
+
+[[row_corrections]]
+note = "Riley approved extracting unambiguous May standing evidence from notes on 2026-10-03. H1/230: \"fallen\" supplies fallen despite a blank checkbox. Preserve health as recorded; do not infer a zero score from falling. This guarded decision does not apply to absent trees, uncertain/plot-level descriptions, partial breakage, or other surveys."
+match = { source_file = "import_recent_format_reviewed.csv", survey_id = "May_2026", site = "BRNV", plot = "H1", public_tag = "230", datasheet_slot = "1", genus = "Ilex", dbh_mm = nan, health_observed = 0, standing_observed = "", notes = "fallen" }
+set = { standing_observed = false, field_status = "observed_dead" }
+
+[[row_corrections]]
+note = "Riley approved extracting unambiguous May standing evidence from notes on 2026-10-03. H1/236: \"fallen\" supplies fallen despite a blank checkbox. Preserve health as recorded; do not infer a zero score from falling. This guarded decision does not apply to absent trees, uncertain/plot-level descriptions, partial breakage, or other surveys."
+match = { source_file = "import_recent_format_reviewed.csv", survey_id = "May_2026", site = "BRNV", plot = "H1", public_tag = "236", datasheet_slot = "1", genus = "Pinus", dbh_mm = nan, health_observed = 0, standing_observed = "", notes = "fallen" }
+set = { standing_observed = false, field_status = "observed_dead" }
+
+[[row_corrections]]
+note = "Riley approved extracting unambiguous May standing evidence from notes on 2026-10-03. H2/102: \"fallen / dead\" supplies fallen despite a blank checkbox. Preserve health as recorded; do not infer a zero score from falling. This guarded decision does not apply to absent trees, uncertain/plot-level descriptions, partial breakage, or other surveys."
+match = { source_file = "import_recent_format_reviewed.csv", survey_id = "May_2026", site = "BRNV", plot = "H2", public_tag = "102", datasheet_slot = "1", genus = "Pinus", dbh_mm = nan, health_observed = nan, standing_observed = "", notes = "fallen / dead" }
+set = { standing_observed = false, field_status = "observed_unknown" }
+
+[[row_corrections]]
+note = "Riley approved extracting unambiguous May standing evidence from notes on 2026-10-03. H2/208: \"fallen\" supplies fallen despite a blank checkbox. Preserve health as recorded; do not infer a zero score from falling. This guarded decision does not apply to absent trees, uncertain/plot-level descriptions, partial breakage, or other surveys."
+match = { source_file = "import_recent_format_reviewed.csv", survey_id = "May_2026", site = "BRNV", plot = "H2", public_tag = "208", datasheet_slot = "2", genus = "Pinus", dbh_mm = nan, health_observed = 0, standing_observed = "", notes = "fallen" }
+set = { standing_observed = false, field_status = "observed_dead" }
+
+[[row_corrections]]
+note = "Riley approved extracting unambiguous May standing evidence from notes on 2026-10-03. H5/912: \"Fallen\" supplies fallen despite a blank checkbox. Preserve health as recorded; do not infer a zero score from falling. This guarded decision does not apply to absent trees, uncertain/plot-level descriptions, partial breakage, or other surveys."
+match = { source_file = "import_recent_format_reviewed.csv", survey_id = "May_2026", site = "BRNV", plot = "H5", public_tag = "912", datasheet_slot = "1", genus = "Acer", dbh_mm = nan, health_observed = 0, standing_observed = "", notes = "Fallen" }
+set = { standing_observed = false, field_status = "observed_dead" }
+
+[[row_corrections]]
+note = "Riley approved extracting unambiguous May standing evidence from notes on 2026-10-03. H6/532: \"Fallen\" supplies fallen despite a blank checkbox. Preserve health as recorded; do not infer a zero score from falling. This guarded decision does not apply to absent trees, uncertain/plot-level descriptions, partial breakage, or other surveys."
+match = { source_file = "import_recent_format_reviewed.csv", survey_id = "May_2026", site = "BRNV", plot = "H6", public_tag = "532", datasheet_slot = "1", genus = "Juniperus", dbh_mm = nan, health_observed = 0, standing_observed = "", notes = "Fallen" }
+set = { standing_observed = false, field_status = "observed_dead" }
+
+[[row_corrections]]
+note = "Riley approved extracting unambiguous May standing evidence from notes on 2026-10-03. H7/878: \"Fallen\" supplies fallen despite a blank checkbox. Preserve health as recorded; do not infer a zero score from falling. This guarded decision does not apply to absent trees, uncertain/plot-level descriptions, partial breakage, or other surveys."
+match = { source_file = "import_recent_format_reviewed.csv", survey_id = "May_2026", site = "BRNV", plot = "H7", public_tag = "878", datasheet_slot = "1", genus = "Pinus", dbh_mm = nan, health_observed = 0, standing_observed = "", notes = "Fallen" }
+set = { standing_observed = false, field_status = "observed_dead" }
+
+[[row_corrections]]
+note = "Riley approved extracting unambiguous May standing evidence from notes on 2026-10-03. H7/890: \"Fallen\" supplies fallen despite a blank checkbox. Preserve health as recorded; do not infer a zero score from falling. This guarded decision does not apply to absent trees, uncertain/plot-level descriptions, partial breakage, or other surveys."
+match = { source_file = "import_recent_format_reviewed.csv", survey_id = "May_2026", site = "BRNV", plot = "H7", public_tag = "890", datasheet_slot = "2", genus = "Nyssa", dbh_mm = nan, health_observed = 0, standing_observed = "", notes = "Fallen" }
+set = { standing_observed = false, field_status = "observed_dead" }
+
+[[row_corrections]]
+note = "Riley approved extracting unambiguous May standing evidence from notes on 2026-10-03. H7/897: \"Fallen\" supplies fallen despite a blank checkbox. Preserve health as recorded; do not infer a zero score from falling. This guarded decision does not apply to absent trees, uncertain/plot-level descriptions, partial breakage, or other surveys."
+match = { source_file = "import_recent_format_reviewed.csv", survey_id = "May_2026", site = "BRNV", plot = "H7", public_tag = "897", datasheet_slot = "1", genus = "Unidentifiable", dbh_mm = nan, health_observed = 0, standing_observed = "", notes = "Fallen" }
+set = { standing_observed = false, field_status = "observed_dead" }
+
+[[row_corrections]]
+note = "Riley approved extracting unambiguous May standing evidence from notes on 2026-10-03. M0/5150: \"fallen\" supplies fallen despite a blank checkbox. Preserve health as recorded; do not infer a zero score from falling. This guarded decision does not apply to absent trees, uncertain/plot-level descriptions, partial breakage, or other surveys."
+match = { source_file = "import_recent_format_reviewed.csv", survey_id = "May_2026", site = "BRNV", plot = "M0", public_tag = "5150", datasheet_slot = "2", genus = "Nyssa", dbh_mm = nan, health_observed = 0, standing_observed = "", notes = "fallen" }
+set = { standing_observed = false, field_status = "observed_dead" }
+
+[[row_corrections]]
+note = "Riley approved extracting unambiguous May standing evidence from notes on 2026-10-03. M1/829: \"(fallen)\" supplies fallen despite a blank checkbox. Preserve health as recorded; do not infer a zero score from falling. This guarded decision does not apply to absent trees, uncertain/plot-level descriptions, partial breakage, or other surveys."
+match = { source_file = "import_recent_format_reviewed.csv", survey_id = "May_2026", site = "BRNV", plot = "M1", public_tag = "829", datasheet_slot = "", genus = "Unidentifiable", dbh_mm = nan, health_observed = nan, standing_observed = "", notes = "(fallen)" }
+set = { standing_observed = false, field_status = "observed_unknown" }
+
+[[row_corrections]]
+note = "Riley approved extracting unambiguous May standing evidence from notes on 2026-10-03. M2/2415: \"Fallen / girdle snap\" supplies fallen despite a blank checkbox. Preserve health as recorded; do not infer a zero score from falling. This guarded decision does not apply to absent trees, uncertain/plot-level descriptions, partial breakage, or other surveys."
+match = { source_file = "import_recent_format_reviewed.csv", survey_id = "May_2026", site = "BRNV", plot = "M2", public_tag = "2415", datasheet_slot = "1", genus = "Pinus", dbh_mm = nan, health_observed = 0, standing_observed = "", notes = "Fallen / girdle snap" }
+set = { standing_observed = false, field_status = "observed_dead" }
+
+[[row_corrections]]
+note = "Riley approved extracting unambiguous May standing evidence from notes on 2026-10-03. M2/2422: \"Fallen\" supplies fallen despite a blank checkbox. Preserve health as recorded; do not infer a zero score from falling. This guarded decision does not apply to absent trees, uncertain/plot-level descriptions, partial breakage, or other surveys."
+match = { source_file = "import_recent_format_reviewed.csv", survey_id = "May_2026", site = "BRNV", plot = "M2", public_tag = "2422", datasheet_slot = "1", genus = "Nyssa", dbh_mm = nan, health_observed = 0, standing_observed = "", notes = "Fallen" }
+set = { standing_observed = false, field_status = "observed_dead" }
+
+[[row_corrections]]
+note = "Riley approved extracting unambiguous May standing evidence from notes on 2026-10-03. M3/347: \"fallen\" supplies fallen despite a blank checkbox. Preserve health as recorded; do not infer a zero score from falling. This guarded decision does not apply to absent trees, uncertain/plot-level descriptions, partial breakage, or other surveys."
+match = { source_file = "import_recent_format_reviewed.csv", survey_id = "May_2026", site = "BRNV", plot = "M3", public_tag = "347", datasheet_slot = "3", genus = "Juniperus", dbh_mm = nan, health_observed = 0, standing_observed = "", notes = "fallen" }
+set = { standing_observed = false, field_status = "observed_dead" }
+
+[[row_corrections]]
+note = "Riley approved extracting unambiguous May standing evidence from notes on 2026-10-03. M3/350: \"fallen\" supplies fallen despite a blank checkbox. Preserve health as recorded; do not infer a zero score from falling. This guarded decision does not apply to absent trees, uncertain/plot-level descriptions, partial breakage, or other surveys."
+match = { source_file = "import_recent_format_reviewed.csv", survey_id = "May_2026", site = "BRNV", plot = "M3", public_tag = "350", datasheet_slot = "1", genus = "Nyssa", dbh_mm = nan, health_observed = 0, standing_observed = "", notes = "fallen" }
+set = { standing_observed = false, field_status = "observed_dead" }
+
+[[row_corrections]]
+note = "Riley approved extracting unambiguous May standing evidence from notes on 2026-10-03. M3/360: \"fallen\" supplies fallen despite a blank checkbox. Preserve health as recorded; do not infer a zero score from falling. This guarded decision does not apply to absent trees, uncertain/plot-level descriptions, partial breakage, or other surveys."
+match = { source_file = "import_recent_format_reviewed.csv", survey_id = "May_2026", site = "BRNV", plot = "M3", public_tag = "360", datasheet_slot = "1", genus = "Pinus", dbh_mm = nan, health_observed = 0, standing_observed = "", notes = "fallen" }
+set = { standing_observed = false, field_status = "observed_dead" }
+
+[[row_corrections]]
+note = "Riley approved extracting unambiguous May standing evidence from notes on 2026-10-03. M3/911: \"fallen\" supplies fallen despite a blank checkbox. Preserve health as recorded; do not infer a zero score from falling. This guarded decision does not apply to absent trees, uncertain/plot-level descriptions, partial breakage, or other surveys."
+match = { source_file = "import_recent_format_reviewed.csv", survey_id = "May_2026", site = "BRNV", plot = "M3", public_tag = "911", datasheet_slot = "1", genus = "Juniperus", dbh_mm = nan, health_observed = 0, standing_observed = "", notes = "fallen" }
+set = { standing_observed = false, field_status = "observed_dead" }
+
+[[row_corrections]]
+note = "Riley approved extracting unambiguous May standing evidence from notes on 2026-10-03. L0/172: \"fallen\" supplies fallen despite a blank checkbox. Preserve health as recorded; do not infer a zero score from falling. This guarded decision does not apply to absent trees, uncertain/plot-level descriptions, partial breakage, or other surveys."
+match = { source_file = "import_recent_format_reviewed.csv", survey_id = "May_2026", site = "BRNV", plot = "L0", public_tag = "172", datasheet_slot = "1", genus = "Nyssa", dbh_mm = nan, health_observed = 0, standing_observed = "", notes = "fallen" }
+set = { standing_observed = false, field_status = "observed_dead" }
+
+[[row_corrections]]
+note = "Riley approved extracting unambiguous May standing evidence from notes on 2026-10-03. L0/174: \"fallen\" supplies fallen despite a blank checkbox. Preserve health as recorded; do not infer a zero score from falling. This guarded decision does not apply to absent trees, uncertain/plot-level descriptions, partial breakage, or other surveys."
+match = { source_file = "import_recent_format_reviewed.csv", survey_id = "May_2026", site = "BRNV", plot = "L0", public_tag = "174", datasheet_slot = "1", genus = "Nyssa", dbh_mm = nan, health_observed = nan, standing_observed = "", notes = "fallen" }
+set = { standing_observed = false, field_status = "observed_unknown" }
+
+[[row_corrections]]
+note = "Riley approved extracting unambiguous May standing evidence from notes on 2026-10-03. L1/127: \"fallen\" supplies fallen despite a blank checkbox. Preserve health as recorded; do not infer a zero score from falling. This guarded decision does not apply to absent trees, uncertain/plot-level descriptions, partial breakage, or other surveys."
+match = { source_file = "import_recent_format_reviewed.csv", survey_id = "May_2026", site = "BRNV", plot = "L1", public_tag = "127", datasheet_slot = "1", genus = "Pinus", dbh_mm = nan, health_observed = 0, standing_observed = "", notes = "fallen" }
+set = { standing_observed = false, field_status = "observed_dead" }
+
+[[row_corrections]]
+note = "Riley approved extracting unambiguous May standing evidence from notes on 2026-10-03. L1/132: \"fallen\" supplies fallen despite a blank checkbox. Preserve health as recorded; do not infer a zero score from falling. This guarded decision does not apply to absent trees, uncertain/plot-level descriptions, partial breakage, or other surveys."
+match = { source_file = "import_recent_format_reviewed.csv", survey_id = "May_2026", site = "BRNV", plot = "L1", public_tag = "132", datasheet_slot = "1", genus = "Juniperus", dbh_mm = nan, health_observed = 0, standing_observed = "", notes = "fallen" }
+set = { standing_observed = false, field_status = "observed_dead" }
+
+[[row_corrections]]
+note = "Riley approved extracting unambiguous May standing evidence from notes on 2026-10-03. L1/5063: \"fallen\" supplies fallen despite a blank checkbox. Preserve health as recorded; do not infer a zero score from falling. This guarded decision does not apply to absent trees, uncertain/plot-level descriptions, partial breakage, or other surveys."
+match = { source_file = "import_recent_format_reviewed.csv", survey_id = "May_2026", site = "BRNV", plot = "L1", public_tag = "5063", datasheet_slot = "1", genus = "Unidentifiable", dbh_mm = nan, health_observed = 0, standing_observed = "", notes = "fallen" }
+set = { standing_observed = false, field_status = "observed_dead" }
+
+[[row_corrections]]
+note = "Riley approved extracting unambiguous May standing evidence from notes on 2026-10-03. L1/137: \"fallen dead\" supplies fallen despite a blank checkbox. Preserve health as recorded; do not infer a zero score from falling. This guarded decision does not apply to absent trees, uncertain/plot-level descriptions, partial breakage, or other surveys."
+match = { source_file = "import_recent_format_reviewed.csv", survey_id = "May_2026", site = "BRNV", plot = "L1", public_tag = "137", datasheet_slot = "1", genus = "Pinus", dbh_mm = nan, health_observed = 0, standing_observed = "", notes = "fallen dead" }
+set = { standing_observed = false, field_status = "observed_dead" }
+
+[[row_corrections]]
+note = "Riley approved extracting unambiguous May standing evidence from notes on 2026-10-03. L2/227: \"fallen\" supplies fallen despite a blank checkbox. Preserve health as recorded; do not infer a zero score from falling. This guarded decision does not apply to absent trees, uncertain/plot-level descriptions, partial breakage, or other surveys."
+match = { source_file = "import_recent_format_reviewed.csv", survey_id = "May_2026", site = "BRNV", plot = "L2", public_tag = "227", datasheet_slot = "1", genus = "Nyssa", dbh_mm = nan, health_observed = 0, standing_observed = "", notes = "fallen" }
+set = { standing_observed = false, field_status = "observed_dead" }
+
+[[row_corrections]]
+note = "Riley approved extracting unambiguous May standing evidence from notes on 2026-10-03. L2/216: \"fallen, previously tagged\" supplies fallen despite a blank checkbox. Preserve health as recorded; do not infer a zero score from falling. This guarded decision does not apply to absent trees, uncertain/plot-level descriptions, partial breakage, or other surveys."
+match = { source_file = "import_recent_format_reviewed.csv", survey_id = "May_2026", site = "BRNV", plot = "L2", public_tag = "216", datasheet_slot = "", genus = "Unidentifiable", dbh_mm = nan, health_observed = 0, standing_observed = "", notes = "fallen, previously tagged" }
+set = { standing_observed = false, field_status = "observed_dead" }
+
+[[row_corrections]]
+note = "Riley approved extracting unambiguous May standing evidence from notes on 2026-10-03. L5/704: \"fallen\" supplies fallen despite a blank checkbox. Preserve health as recorded; do not infer a zero score from falling. This guarded decision does not apply to absent trees, uncertain/plot-level descriptions, partial breakage, or other surveys."
+match = { source_file = "import_recent_format_reviewed.csv", survey_id = "May_2026", site = "BRNV", plot = "L5", public_tag = "704", datasheet_slot = "3", genus = "Morella", dbh_mm = nan, health_observed = 0, standing_observed = "", notes = "fallen" }
+set = { standing_observed = false, field_status = "observed_dead" }
+
+[[row_corrections]]
+note = "Riley approved extracting unambiguous May standing evidence from notes on 2026-10-03. L6/76: \"fallen\" supplies fallen despite a blank checkbox. Preserve health as recorded; do not infer a zero score from falling. This guarded decision does not apply to absent trees, uncertain/plot-level descriptions, partial breakage, or other surveys."
+match = { source_file = "import_recent_format_reviewed.csv", survey_id = "May_2026", site = "BRNV", plot = "L6", public_tag = "76", datasheet_slot = "1", genus = "Juniperus", dbh_mm = nan, health_observed = 0, standing_observed = "", notes = "fallen" }
+set = { standing_observed = false, field_status = "observed_dead" }
+
+[[row_corrections]]
+note = "Riley approved extracting unambiguous May standing evidence from notes on 2026-10-03. L7/11: \"folded, fallen\" supplies fallen despite a blank checkbox. Preserve health as recorded; do not infer a zero score from falling. This guarded decision does not apply to absent trees, uncertain/plot-level descriptions, partial breakage, or other surveys."
+match = { source_file = "import_recent_format_reviewed.csv", survey_id = "May_2026", site = "BRNV", plot = "L7", public_tag = "11", datasheet_slot = "1", genus = "Pinus", dbh_mm = nan, health_observed = 0, standing_observed = "", notes = "folded, fallen" }
+set = { standing_observed = false, field_status = "observed_dead" }
+
+[[row_corrections]]
+note = "Riley approved extracting unambiguous May standing evidence from notes on 2026-10-03. L7/498: \"fallen\" supplies fallen despite a blank checkbox. Preserve health as recorded; do not infer a zero score from falling. This guarded decision does not apply to absent trees, uncertain/plot-level descriptions, partial breakage, or other surveys."
+match = { source_file = "import_recent_format_reviewed.csv", survey_id = "May_2026", site = "BRNV", plot = "L7", public_tag = "498", datasheet_slot = "1", genus = "Morella", dbh_mm = nan, health_observed = 0, standing_observed = "", notes = "fallen" }
+set = { standing_observed = false, field_status = "observed_dead" }
+
+[[row_corrections]]
+note = "Riley approved extracting unambiguous May standing evidence from notes on 2026-10-03. R4/5211: \"upright but leaning on another tree\" supplies standing despite a blank checkbox. Preserve health as recorded; do not infer a zero score from falling. This guarded decision does not apply to absent trees, uncertain/plot-level descriptions, partial breakage, or other surveys."
+match = { source_file = "import_recent_format_reviewed.csv", survey_id = "May_2026", site = "BRNV", plot = "R4", public_tag = "5211", datasheet_slot = "1", genus = "Unidentifiable", dbh_mm = nan, health_observed = 0, standing_observed = "", notes = "upright but leaning on another tree" }
+set = { standing_observed = true, field_status = "observed_dead" }

@@ -1,4 +1,4 @@
-"""Tree-level taxonomy overrides for resolved canonical identities."""
+"""Accepted tree taxonomy and genus-level identification resolution."""
 
 from __future__ import annotations
 
@@ -17,7 +17,9 @@ def apply_taxon_overrides(events: pd.DataFrame, config: Config) -> pd.DataFrame:
     if "correction_notes" not in resolved.columns:
         resolved["correction_notes"] = ""
 
-    for override in getattr(config, "taxon_overrides", ()):
+    # Identification-resolution policies also cover taxa assigned by tree decisions.
+    overrides = sorted(getattr(config, "taxon_overrides", ()), key=lambda item: item.scope == "genus")
+    for override in overrides:
         _apply_taxon_override(resolved, override, config)
 
     return resolved
@@ -38,6 +40,18 @@ def _apply_taxon_override(df: pd.DataFrame, override: TaxonOverride, config: Con
 
 
 def _validate_taxon_override(override: TaxonOverride) -> None:
+    if override.scope == "genus":
+        if (
+            set(override.match) != {"genus"}
+            or override.match["genus"] != override.genus
+            or override.species != "spp."
+        ):
+            raise CorrectionUnsafeSelectorError(
+                "Genus resolution must match exactly its unchanged genus and set species to spp."
+            )
+        return
+    if override.scope != "tree":
+        raise CorrectionUnsafeSelectorError(f"Unknown taxon override scope: {override.scope}")
     missing = REQUIRED_TREE_SELECTOR_COLUMNS.difference(override.match)
     if missing:
         columns = ", ".join(sorted(missing))

@@ -1,0 +1,8 @@
+[profiles.juan]
+description = """
+Handwriting calibration for Juan. In the example image, the two digits on the
+left are 7s and the two digits on the right are 1s. Use this only as local
+digit-style context for ambiguous 1/7 cells; do not transcribe the example image
+as census data.
+"""
+examples = ["assets/handwriting/juan_7s_left_1s_right.png"]

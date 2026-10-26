@@ -42,3 +42,13 @@ end = "2025-04-29"
 id = "October_2025"
 start = "2025-10-09"
 end = "2025-10-10"
+
+[[surveys]]
+id = "May_2026"
+start = "2026-05-12"
+end = "2026-05-15"
+
+[[surveys]]
+id = "October_2026"
+start = "2026-10-04"
+end = "2026-10-05"

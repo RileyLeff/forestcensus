@@ -7,7 +7,9 @@ import hashlib
 import pandas as pd
 
 from .config import Config
+from .domain import passes_size_filter
 from .schema import OUTPUT_COLUMNS
+from .tree_ir import TreeDataset, TreeRecord
 
 
 def assemble_events(events: pd.DataFrame, config: Config) -> pd.DataFrame:
@@ -27,15 +29,21 @@ def assemble_events(events: pd.DataFrame, config: Config) -> pd.DataFrame:
         for site, plot, tag in zip(df["site"], df["plot"], df["identity_tag"])
     ]
     df["_survey_index"] = df["survey_id"].map(config.survey_index)
-    df["stem_rank"] = _rank_stems(df)
     df["interpreted_status"] = _initial_interpreted_status(df)
+    df["stem_rank"] = pd.Series(pd.NA, index=df.index, dtype="Int64")
 
-    for tree_uid, indices in df.groupby("tree_uid", sort=False).groups.items():
-        _apply_missingness(df, list(indices), config)
+    tree_dataset = TreeDataset.from_events(df)
+    df = _drop_nonqualifying_below_threshold_trees(df, tree_dataset)
+    tree_dataset = TreeDataset.from_events(df)
+    tree_dataset.assign_stem_ranks(df)
+    for tree in tree_dataset.trees.values():
+        _apply_missingness(df, tree, config)
 
-    zombie_uids = _compute_zombies(df)
+    zombie_uids = _compute_zombies(tree_dataset)
     df["zombie_ever"] = df["tree_uid"].isin(zombie_uids)
-    df["alive_interpreted"] = df["interpreted_status"].eq("alive")
+    df["alive_interpreted"] = df["interpreted_status"].map(
+        {"alive": True, "observed_dead": False, "inferred_dead": False}
+    ).astype("boolean")
 
     df = df.sort_values(
         ["_survey_index", "site", "plot", "public_tag", "stem_rank", "source_file", "source_row"],
@@ -50,40 +58,47 @@ def _tree_uid(site: str, plot: str, identity_tag: str) -> str:
     return hashlib.sha1(payload).hexdigest()[:16]
 
 
-def _rank_stems(df: pd.DataFrame) -> pd.Series:
-    ranks = pd.Series(index=df.index, dtype="Int64")
-    grouped = df.groupby(["tree_uid", "survey_id"], sort=False)
-    for _, group in grouped:
-        sort_frame = group.assign(
-            _dbh=group["dbh_mm"].fillna(-1),
-            _health=group["health_observed"].fillna(-1),
-        ).sort_values(
-            ["_dbh", "_health", "source_file", "source_row"],
-            ascending=[False, False, True, True],
-            kind="mergesort",
-        )
-        ranks.loc[sort_frame.index] = range(1, len(sort_frame) + 1)
-    return ranks
-
-
 def _initial_interpreted_status(df: pd.DataFrame) -> pd.Series:
     return df["field_status"].map(
         {
             "observed_alive": "alive",
             "observed_dead": "observed_dead",
+            "observed_unknown": "observed_unknown",
             "not_found": "missing_pending",
             "unknown": "missing_pending",
         }
     ).fillna("missing_pending")
 
 
-def _apply_missingness(df: pd.DataFrame, indices: list[int], config: Config) -> None:
-    tree = df.loc[indices].sort_values("_survey_index")
-    survey_status = (
-        tree.groupby("_survey_index", sort=True)["field_status"]
-        .apply(_tree_survey_field_status)
-        .to_dict()
+def _drop_nonqualifying_below_threshold_trees(
+    df: pd.DataFrame,
+    tree_dataset: TreeDataset,
+) -> pd.DataFrame:
+    nonqualifying_tree_uids = {
+        str(tree_uid)
+        for tree_uid, tree_rows in df.groupby("tree_uid", sort=False)
+        if _is_nonqualifying_below_threshold_tree(tree_rows)
+    }
+    if not nonqualifying_tree_uids:
+        return df
+    return df.loc[~df["tree_uid"].isin(nonqualifying_tree_uids)].copy()
+
+
+def _is_nonqualifying_below_threshold_tree(tree_rows: pd.DataFrame) -> bool:
+    measured = tree_rows.loc[pd.to_numeric(tree_rows["dbh_mm"], errors="coerce").notna()]
+    if measured.empty:
+        return False
+    return not any(
+        passes_size_filter(row.dbh_mm, row.genus, row.species, row.taxon_code)
+        for row in measured.itertuples()
     )
+
+
+def _apply_missingness(df: pd.DataFrame, tree: TreeRecord, config: Config) -> None:
+    survey_status = {
+        survey.survey_index: survey.field_status
+        for survey in tree.ordered_surveys()
+    }
     ordered = sorted(survey_status)
     run: list[int] = []
     for survey_index in ordered + [None]:
@@ -97,7 +112,7 @@ def _apply_missingness(df: pd.DataFrame, indices: list[int], config: Config) -> 
 
 def _close_missing_run(
     df: pd.DataFrame,
-    tree: pd.DataFrame,
+    tree: TreeRecord,
     run: list[int],
     survey_status: dict[int, str],
     config: Config,
@@ -111,34 +126,24 @@ def _close_missing_run(
     ]
     if "observed_alive" in later_statuses:
         return
-    mask = tree["_survey_index"].isin(run)
-    df.loc[tree.loc[mask].index, "interpreted_status"] = "inferred_dead"
+    row_indices = [
+        row_index
+        for survey in tree.surveys
+        if survey.survey_index in run
+        for row_index in survey.row_indices
+    ]
+    df.loc[row_indices, "interpreted_status"] = "inferred_dead"
 
 
-def _tree_survey_field_status(statuses: pd.Series) -> str:
-    values = set(statuses.dropna())
-    if "observed_alive" in values:
-        return "observed_alive"
-    if "observed_dead" in values:
-        return "observed_dead"
-    if "not_found" in values:
-        return "not_found"
-    return "unknown"
-
-
-def _compute_zombies(df: pd.DataFrame) -> set[str]:
+def _compute_zombies(tree_dataset: TreeDataset) -> set[str]:
     zombies: set[str] = set()
-    tree_status = (
-        df.groupby(["tree_uid", "_survey_index"], sort=True)["field_status"]
-        .apply(_tree_survey_field_status)
-        .reset_index()
-    )
-    for tree_uid, group in tree_status.groupby("tree_uid", sort=False):
+    for tree in tree_dataset.trees.values():
         seen_observed_dead = False
-        for status in group.sort_values("_survey_index")["field_status"]:
+        for survey in tree.ordered_surveys():
+            status = survey.field_status
             if status == "observed_dead":
                 seen_observed_dead = True
             elif status == "observed_alive" and seen_observed_dead:
-                zombies.add(tree_uid)
+                zombies.add(tree.tree_uid)
                 break
     return zombies

@@ -1,11 +1,15 @@
 from __future__ import annotations
 
+from dataclasses import replace
 from datetime import date
+import json
 from pathlib import Path
 
 import pandas as pd
 
+from forestcensus.assembly import assemble_events
 from forestcensus.config import load_config
+from forestcensus.decisions import apply_decisions, build_configured_decision_ledger
 from forestcensus.identity import apply_identity_operations
 
 
@@ -69,6 +73,111 @@ note = "Retag for test"
     resolved = apply_identity_operations(events, config)
     assert resolved.loc[0, "identity_tag"] == "508"
     assert resolved.loc[1, "identity_tag"] == "112"
+
+
+def test_approved_r4_alias_preserves_three_stems_and_source_tags() -> None:
+    config = load_config()
+    aliases = tuple(
+        alias for alias in config.identity_aliases
+        if (alias.site, alias.plot, alias.tag) == ("BRNV", "R4", "5243")
+    )
+    assert len(aliases) == 1
+    config = replace(
+        config,
+        identity_aliases=aliases,
+        row_corrections=(),
+        row_exclusions=(),
+        row_reassignments=(),
+        split_operations=(),
+        taxon_overrides=(),
+    )
+    rows = []
+    for survey_id, observed_date, dbhs, healths in [
+        ("October_2025", date(2025, 10, 9), [314, 134, 70], [8, 8, 0]),
+        ("May_2026", date(2026, 5, 12), [None, None, None], [9, 8, 0]),
+    ]:
+        for tag, slot, dbh, health in zip(
+            ["5163", "5243", "5243"], ["1", "1", "2"], dbhs, healths
+        ):
+            rows.append(_event(
+                source_row=len(rows) + 2,
+                survey_id=survey_id,
+                date=observed_date,
+                zone="R",
+                plot="R4",
+                public_tag=tag,
+                identity_tag=tag,
+                tree_number=tag,
+                datasheet_slot=slot,
+                genus="Acer",
+                species="rubrum",
+                taxon_code="ACERUB",
+                dbh_mm=dbh,
+                health_observed=health,
+                alive_observed=health > 0,
+                field_status="observed_alive" if health > 0 else "observed_dead",
+            ))
+    rows.extend([
+        _event(plot="R4", public_tag="5238", identity_tag="5238"),
+        _event(plot="R3", public_tag="5243", identity_tag="5243"),
+        _event(plot="R4", public_tag="5243", identity_tag="5243"),
+    ])
+    events = pd.DataFrame(rows)
+    original = events.copy(deep=True)
+    resolved = apply_decisions(events, config)
+
+    pd.testing.assert_frame_equal(events, original)
+    pd.testing.assert_frame_equal(
+        resolved.drop(columns=["identity_tag", "identity_label", "correction_notes"]),
+        original.drop(columns=["identity_tag", "correction_notes"]),
+    )
+    assert resolved.iloc[:6]["identity_tag"].tolist() == ["5163"] * 6
+    assert resolved.iloc[6:]["identity_tag"].tolist() == ["5238", "5243", "5243"]
+    assert resolved.iloc[:6]["identity_label"].tolist() == ["R4/5163"] * 6
+
+    assembled = assemble_events(resolved, config)
+    merged = assembled.loc[assembled["identity_tag"].eq("5163")]
+    assert set(merged["tree_uid"]) == {"b1559c5076c63b50"}
+    for _, survey in merged.groupby("survey_id"):
+        assert len(survey) == 3
+        assert sorted(survey["stem_rank"]) == [1, 2, 3]
+        assert survey["public_tag"].value_counts().to_dict() == {"5243": 2, "5163": 1}
+        assert survey["field_status"].eq("observed_dead").sum() == 1
+    assert len(assembled) == len(events)
+
+    ledger = build_configured_decision_ledger(config)
+    assert len(ledger) == 1
+    assert ledger.iloc[0]["operation"] == "alias_identity_window"
+    assert json.loads(ledger.iloc[0]["parameters"]) == {"identity_tag": "5163"}
+
+
+def test_approved_red_maple_history_resolves_to_5163_with_original_tags():
+    config = load_config()
+    config = replace(
+        config,
+        identity_aliases=tuple(alias for alias in config.identity_aliases if alias.plot == "R4"),
+        row_corrections=(), row_exclusions=(), row_reassignments=(),
+        split_operations=(), taxon_overrides=(),
+    )
+    events = pd.DataFrame([
+        _event(
+            plot="R4", zone="R", public_tag=tag, identity_tag=tag, tree_number=tag,
+            genus="Acer", species="rubrum", taxon_code="ACERUB",
+            survey_id="June_2023", date=date(2023, 6, 15), source_row=index + 2,
+            dbh_mm=dbh, health_observed=health,
+            field_status="observed_alive" if health else "observed_dead",
+        )
+        for index, (tag, dbh, health) in enumerate([
+            ("5238", 316, 6), ("5243", 133, 8), ("5243", None, 0),
+        ])
+    ])
+    census = assemble_events(apply_decisions(events, config), config)
+    assert len(census) == 3
+    assert set(census["tree_uid"]) == {"b1559c5076c63b50"}
+    assert census["public_tag"].tolist() == ["5238", "5243", "5243"]
+    assert census["stem_rank"].tolist() == [1, 2, 3]
+    assert census.iloc[0]["dbh_mm"] == 316
+    assert census.iloc[0]["health_observed"] == 6
 
 
 def test_row_reassignment_can_change_visible_and_identity_tags(tmp_path: Path) -> None:

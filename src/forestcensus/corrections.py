@@ -137,7 +137,8 @@ def _match_mask(df: pd.DataFrame, match: dict[str, object]) -> pd.Series:
             raise CorrectionUnsafeSelectorError(f"Correction match refers to unknown column {column!r}")
         if column in NUMERIC_COLUMNS:
             actual = pd.to_numeric(df[column], errors="coerce")
-            mask &= actual.eq(float(expected))
+            expected_number = float(expected)
+            mask &= actual.isna() if pd.isna(expected_number) else actual.eq(expected_number)
         elif column in DATE_COLUMNS:
             actual = pd.to_datetime(df[column]).dt.date
             mask &= actual.eq(date.fromisoformat(str(expected)))

@@ -9,40 +9,78 @@ from typing import Callable
 
 import pandas as pd
 
-from .config import Config
-from .corrections import apply_corrections
-from .identity import apply_identity_operations
+from .config import Config, SourceInput
+from .decisions import apply_decisions
+from .domain import has_direct_observation
 from .schema import EVENT_COLUMNS
-from .taxonomy import apply_taxon_overrides
-
-NOT_FOUND_RE = re.compile(
-    r"(couldn['’]?t\s+find|could\s+not\s+find|not\s+found|unfound|missing)",
-    re.IGNORECASE,
-)
 
 
-def load_historical_events(raw_dir: str | Path, config: Config) -> pd.DataFrame:
+def load_raw_historical_events(raw_dir: str | Path, config: Config) -> pd.DataFrame:
     raw_dir = Path(raw_dir)
-    adapters: dict[str, Callable[[Path, Config], pd.DataFrame]] = {
-        "2023_and_prior.csv": adapt_2023_and_prior,
-        "2024_spring.csv": adapt_2024_spring,
-        "2024_fall.csv": adapt_2024_fall,
-        "2025_spring.csv": adapt_2025_spring,
-    }
     frames = []
-    for filename, adapter in adapters.items():
-        path = raw_dir / filename
-        if not path.exists():
-            raise FileNotFoundError(path)
-        frames.append(adapter(path, config))
+    if config.source_inputs:
+        for source in config.source_inputs:
+            path = _resolve_source_path(source, raw_dir, config)
+            if not path.exists():
+                if source.required:
+                    raise FileNotFoundError(path)
+                continue
+            frames.append(_adapt_configured_source(path, config, source))
+    else:
+        adapters: dict[str, Callable[[Path, Config], pd.DataFrame]] = {
+            "2023_and_prior.csv": adapt_2023_and_prior,
+            "2024_spring.csv": adapt_2024_spring,
+            "2024_fall.csv": adapt_2024_fall,
+            "2025_spring.csv": adapt_2025_spring,
+        }
+        for filename, adapter in adapters.items():
+            path = raw_dir / filename
+            if not path.exists():
+                raise FileNotFoundError(path)
+            frames.append(adapter(path, config))
     events = pd.concat(frames, ignore_index=True)
     events["identity_tag"] = events["public_tag"]
     events["identity_label"] = ""
     events["correction_notes"] = ""
-    events = apply_corrections(events, config)
-    events = apply_identity_operations(events, config)
-    events = apply_taxon_overrides(events, config)
     return events[EVENT_COLUMNS]
+
+
+def load_historical_events(
+    raw_dir: str | Path,
+    config: Config,
+    *,
+    apply_configured_decisions: bool = True,
+) -> pd.DataFrame:
+    events = load_raw_historical_events(raw_dir, config)
+    if apply_configured_decisions:
+        events = apply_decisions(events, config)
+    return events[EVENT_COLUMNS]
+
+
+def _resolve_source_path(source: SourceInput, raw_dir: Path, config: Config) -> Path:
+    if source.path.is_absolute():
+        return source.path
+    if source.base == "raw_dir":
+        return raw_dir / source.path
+    if source.base == "config":
+        return config.config_dir / source.path
+    if source.base == "project":
+        return config.config_dir.parent / source.path
+    raise ValueError(f"Unknown source base {source.base!r} for {source.id}")
+
+
+def _adapt_configured_source(path: Path, config: Config, source: SourceInput) -> pd.DataFrame:
+    if source.adapter == "2023_and_prior":
+        frame = adapt_2023_and_prior(path, config)
+    elif source.adapter == "2024_spring":
+        frame = adapt_2024_spring(path, config)
+    elif source.adapter == "2024_fall":
+        frame = adapt_2024_fall(path, config)
+    elif source.adapter == "recent_import":
+        frame = adapt_recent_import(path, config, origin=source.origin)
+    else:
+        raise ValueError(f"Unknown source adapter {source.adapter!r} for {source.id}")
+    return frame
 
 
 def adapt_2023_and_prior(path: Path, config: Config) -> pd.DataFrame:
@@ -116,6 +154,10 @@ def adapt_2024_fall(path: Path, config: Config) -> pd.DataFrame:
 
 
 def adapt_2025_spring(path: Path, config: Config) -> pd.DataFrame:
+    return adapt_recent_import(path, config, origin="historical")
+
+
+def adapt_recent_import(path: Path, config: Config, *, origin: str) -> pd.DataFrame:
     df = _read_csv(path)
     out = pd.DataFrame()
     out["source_row"] = df.index + 2
@@ -124,7 +166,7 @@ def adapt_2025_spring(path: Path, config: Config) -> pd.DataFrame:
     out["date"] = _parse_mixed_dates(df["date"])
     out["site"] = df["site"].map(_clean_text).replace("", "BRNV")
     out["zone"] = df["zone"].map(_clean_text).str.upper()
-    out["plot"] = df["plot"].map(_clean_plot)
+    out["plot"] = [_recent_plot(zone, plot) for zone, plot in zip(out["zone"], df["plot"])]
     out["tree_number"] = df["tree_number"].map(_clean_int_string)
     out["public_tag"] = out["tree_number"]
     out["datasheet_slot"] = df["trunk_number"].map(_clean_int_string)
@@ -140,7 +182,7 @@ def adapt_2025_spring(path: Path, config: Config) -> pd.DataFrame:
     out["standing_observed"] = df["standing"].map(_to_bool)
     out["notes"] = df.get("notes", "").map(_clean_text)
     out["field_status"] = out.apply(_classify_status, axis=1)
-    out["origin"] = "historical"
+    out["origin"] = origin
     return _drop_bad_tree_numbers(out)
 
 
@@ -215,6 +257,13 @@ def _plot_from_zone_number(zone: object, plot: object) -> str:
     return f"{zone_text}{plot_text}"
 
 
+def _recent_plot(zone: object, plot: object) -> str:
+    plot_text = _clean_plot(plot)
+    if len(plot_text) >= 2 and plot_text[0] in {"L", "M", "H", "R"}:
+        return plot_text
+    return _plot_from_zone_number(zone, plot)
+
+
 def _clean_int_string(value: object) -> str:
     number = _to_number(value)
     if pd.isna(number):
@@ -279,14 +328,13 @@ def _taxon_code(genus: str, species: str) -> str:
 
 
 def _classify_status(row: pd.Series) -> str:
-    notes = _clean_text(row.get("notes"))
     dbh = row.get("dbh_mm")
     health = row.get("health_observed")
     alive = row.get("alive_observed")
     standing = row.get("standing_observed")
-    has_measurement = pd.notna(dbh) or pd.notna(health) or standing is not None
 
-    if notes and NOT_FOUND_RE.search(notes):
+    # Presence is independent of health; conflicting prose is diagnostic evidence.
+    if not has_direct_observation(dbh, health, standing):
         return "not_found"
     if pd.notna(health) and health > 0:
         return "observed_alive"
@@ -294,11 +342,9 @@ def _classify_status(row: pd.Series) -> str:
         return "observed_alive"
     if pd.notna(health) and health == 0:
         return "observed_dead"
-    if alive is False and has_measurement:
-        return "observed_dead"
     if alive is False:
-        return "not_found"
-    return "unknown"
+        return "observed_dead"
+    return "observed_unknown"
 
 
 def _drop_bad_tree_numbers(df: pd.DataFrame) -> pd.DataFrame:

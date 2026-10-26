@@ -1,0 +1,47 @@
+[[inputs]]
+id = "legacy_2023_and_prior"
+path = "2023_and_prior.csv"
+base = "raw_dir"
+adapter = "2023_and_prior"
+origin = "historical"
+required = true
+
+[[inputs]]
+id = "spring_2024"
+path = "2024_spring.csv"
+base = "raw_dir"
+adapter = "2024_spring"
+origin = "historical"
+required = true
+
+[[inputs]]
+id = "fall_2024"
+path = "2024_fall.csv"
+base = "raw_dir"
+adapter = "2024_fall"
+origin = "historical"
+required = true
+
+[[inputs]]
+id = "spring_2025"
+path = "2025_spring.csv"
+base = "raw_dir"
+adapter = "recent_import"
+origin = "historical"
+required = true
+
+[[inputs]]
+id = "october_2025_reviewed_llm"
+path = "output/llm_transcription/oct_2025_reviewed/import_recent_format_reviewed.csv"
+base = "project"
+adapter = "recent_import"
+origin = "llm_reviewed"
+required = false
+
+[[inputs]]
+id = "may_2026_reviewed_llm"
+path = "output/llm_transcription/may_2026_reviewed/import_recent_format_reviewed.csv"
+base = "project"
+adapter = "recent_import"
+origin = "llm_reviewed"
+required = false

@@ -1,0 +1,199 @@
+{
+  "survey_id": "May_2026",
+  "pages": [
+    {
+      "source_page": 5,
+      "plot": "R3",
+      "source_json_sha256": "796ed09c5416dee7d7e948c222bace9c6819843a1d5f773b71c7e42bd37fbe21",
+      "source_row_label": "21",
+      "source_text": "2nd stem 0/10 stand",
+      "reason": "Riley approved recovering the explicit second-stem observation on 2026-10-04. Main row 21's note supplies health 0 and standing true. This is a second observation of Nyssa 677, not a new tree or a measured DBH. The original row, note, scan, and review edits remain unchanged.",
+      "newly_tracked_rows": [
+        {
+          "row_label": "row-21-stem-2", "tag_text": "677", "species_text": "NYSSYL",
+          "stem_text": "2", "dbh_mm": null, "health_observed": 0,
+          "standing_observed": true, "poison_ivy_observed": null,
+          "notes": "Main row 21: 2nd stem 0/10 stand", "flags": []
+        }
+      ]
+    },
+    {
+      "source_page": 9,
+      "plot": "H0",
+      "source_json_sha256": "16be89bf914267448272174ca23debfd8e3402516ac562fce25a2c97f4e4c9fa",
+      "source_row_label": "21",
+      "source_text": "3rd stem also dead stand",
+      "reason": "Riley approved recovering the explicit third-stem observation on 2026-10-04. Main row 21's note supplies health 0 and standing true. This is a third observation of Nyssa 274, not a new tree or a measured DBH. The original row, note, scan, and review edits remain unchanged.",
+      "newly_tracked_rows": [
+        {
+          "row_label": "row-21-stem-3", "tag_text": "274", "species_text": "NYSSYL",
+          "stem_text": "3", "dbh_mm": null, "health_observed": 0,
+          "standing_observed": true, "poison_ivy_observed": null,
+          "notes": "Main row 21: 3rd stem also dead stand", "flags": []
+        }
+      ]
+    },
+    {
+      "source_page": 8,
+      "plot": "R4",
+      "source_json_sha256": "7f246780d0bea9b4ac2fc222405633d534a33702990aa5dcbe4e4b39c387e309",
+      "source_text": "5218 standing dead Nyssa",
+      "reason": "Riley approved recovering ten observations from Problems and Info and the extra stem in Main row 52 on 2026-10-03. The source JSON hash guards the whole page, including row 52's note 'double & 2nd stem (4,S, nopi)'. Labels identify actual note locations, not printed N slots. No current DBHs are given. Note-based stem slots and unreported species/standing remain unspecified; 5262 has two historical stems but only one May note. The crossed-out bottom annotation and 5163/5243 identity link are not resolved here.",
+      "newly_tracked_rows": [
+        {
+          "row_label": "notes-1",
+          "tag_text": "5218",
+          "species_text": "NYS",
+          "stem_text": "",
+          "dbh_mm": null,
+          "health_observed": 0,
+          "standing_observed": true,
+          "poison_ivy_observed": null,
+          "notes": "5218 standing dead Nyssa",
+          "flags": []
+        },
+        {
+          "row_label": "notes-2",
+          "tag_text": "735",
+          "species_text": "ILE",
+          "stem_text": "",
+          "dbh_mm": null,
+          "health_observed": 4,
+          "standing_observed": true,
+          "poison_ivy_observed": null,
+          "notes": "735 - standing Ilex, 4",
+          "flags": []
+        },
+        {
+          "row_label": "notes-3",
+          "tag_text": "5253",
+          "species_text": "",
+          "stem_text": "",
+          "dbh_mm": null,
+          "health_observed": 6,
+          "standing_observed": true,
+          "poison_ivy_observed": null,
+          "notes": "5253 - standing, 6",
+          "flags": []
+        },
+        {
+          "row_label": "notes-4",
+          "tag_text": "5250",
+          "species_text": "NYS",
+          "stem_text": "",
+          "dbh_mm": null,
+          "health_observed": 4,
+          "standing_observed": null,
+          "poison_ivy_observed": null,
+          "notes": "5250 - Nyssa, 4",
+          "flags": []
+        },
+        {
+          "row_label": "notes-5",
+          "tag_text": "5251",
+          "species_text": "NYS",
+          "stem_text": "",
+          "dbh_mm": null,
+          "health_observed": 4,
+          "standing_observed": null,
+          "poison_ivy_observed": null,
+          "notes": "5251, Nyssa - 4",
+          "flags": []
+        },
+        {
+          "row_label": "notes-6",
+          "tag_text": "5264",
+          "species_text": "VACSPP",
+          "stem_text": "",
+          "dbh_mm": null,
+          "health_observed": 2,
+          "standing_observed": null,
+          "poison_ivy_observed": null,
+          "notes": "5264 - Vaccinium, - 2",
+          "flags": []
+        },
+        {
+          "row_label": "notes-7",
+          "tag_text": "5246",
+          "species_text": "NYS",
+          "stem_text": "",
+          "dbh_mm": null,
+          "health_observed": 0,
+          "standing_observed": true,
+          "poison_ivy_observed": null,
+          "notes": "5246, Nyssa, 0 stand",
+          "flags": []
+        },
+        {
+          "row_label": "notes-8",
+          "tag_text": "5263",
+          "species_text": "VACSPP",
+          "stem_text": "",
+          "dbh_mm": null,
+          "health_observed": 7,
+          "standing_observed": null,
+          "poison_ivy_observed": null,
+          "notes": "5263 - vacc 7, sta",
+          "flags": ["standing abbreviation unclear; preserved in source note"]
+        },
+        {
+          "row_label": "notes-9",
+          "tag_text": "5262",
+          "species_text": "VACSPP",
+          "stem_text": "",
+          "dbh_mm": null,
+          "health_observed": 5,
+          "standing_observed": null,
+          "poison_ivy_observed": null,
+          "notes": "5262 - vaccinium, 5",
+          "flags": ["two historical stems; note does not identify a stem or supply a second observation"]
+        },
+        {
+          "row_label": "notes-10",
+          "tag_text": "5260",
+          "species_text": "NYS",
+          "stem_text": "",
+          "dbh_mm": null,
+          "health_observed": 7,
+          "standing_observed": true,
+          "poison_ivy_observed": null,
+          "notes": "5260 - nyssa, 7 stand",
+          "flags": []
+        },
+        {
+          "row_label": "row-52-stem-2",
+          "tag_text": "5247",
+          "species_text": "NYSSYL",
+          "stem_text": "2",
+          "dbh_mm": null,
+          "health_observed": 4,
+          "standing_observed": true,
+          "poison_ivy_observed": false,
+          "notes": "Main row 52: double & 2nd stem (4,S, nopi)",
+          "flags": []
+        }
+      ]
+    },
+    {
+      "source_page": 57,
+      "plot": "L6",
+      "source_json_sha256": "683c11c21ab3cff35b4cf5b4ab76a72920fd9ab86ff66fc15dfe190854cd558b",
+      "source_text": "100-JUN-1-NA-0-std-previously tagged",
+      "reason": "Riley approved capturing the overflow observation in Problems and Info as a normal Newly Tracked row. notes-1 identifies its actual source location, not a printed N slot. Species and poison ivy were not specified.",
+      "newly_tracked_rows": [
+        {
+          "row_label": "notes-1",
+          "tag_text": "100",
+          "species_text": "JUN",
+          "stem_text": "1",
+          "dbh_mm": null,
+          "health_observed": 0,
+          "standing_observed": true,
+          "poison_ivy_observed": null,
+          "notes": "previously tagged",
+          "flags": []
+        }
+      ]
+    }
+  ]
+}

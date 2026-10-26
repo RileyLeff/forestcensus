@@ -100,3 +100,88 @@ def test_identity_tag_not_public_tag_controls_tree_uid() -> None:
     assembled = assemble_events(events, config)
     assert assembled["public_tag"].nunique() == 2
     assert assembled["tree_uid"].nunique() == 1
+
+
+def test_non_morella_tree_qualifies_at_twenty_mm() -> None:
+    config = load_config(Path("config"))
+    events = _events(
+        [
+            {
+                "survey_id": "June_2021",
+                "date": date(2021, 6, 15),
+                "field_status": "observed_alive",
+                "dbh_mm": 20,
+                "health_observed": 8,
+            },
+            {
+                "survey_id": "June_2022",
+                "date": date(2022, 6, 16),
+                "field_status": "observed_alive",
+                "dbh_mm": 22,
+                "health_observed": 8,
+            },
+        ]
+    )
+
+    assembled = assemble_events(events, config)
+
+    assert len(assembled) == 2
+
+
+def test_morella_cerifera_requires_fifty_mm_to_qualify() -> None:
+    config = load_config(Path("config"))
+    events = _events(
+        [
+            {
+                "survey_id": "June_2021",
+                "date": date(2021, 6, 15),
+                "field_status": "observed_alive",
+                "genus": "Morella",
+                "species": "cerifera",
+                "taxon_code": "MORCER",
+                "dbh_mm": 42,
+                "health_observed": 8,
+            },
+            {
+                "survey_id": "June_2022",
+                "date": date(2022, 6, 16),
+                "field_status": "observed_alive",
+                "genus": "Morella",
+                "species": "cerifera",
+                "taxon_code": "MORCER",
+                "dbh_mm": 49,
+                "health_observed": 8,
+            },
+        ]
+    )
+
+    assembled = assemble_events(events, config)
+
+    assert assembled.empty
+
+
+def test_below_threshold_rows_remain_when_tree_has_qualifying_history() -> None:
+    config = load_config(Path("config"))
+    events = _events(
+        [
+            {
+                "survey_id": "June_2021",
+                "date": date(2021, 6, 15),
+                "field_status": "observed_alive",
+                "dbh_mm": 60,
+                "health_observed": 8,
+            },
+            {
+                "survey_id": "June_2022",
+                "date": date(2022, 6, 16),
+                "field_status": "observed_dead",
+                "dbh_mm": 42,
+                "health_observed": 0,
+            },
+        ]
+    )
+
+    assembled = assemble_events(events, config)
+
+    assert len(assembled) == 2
+    assert set(assembled["dbh_mm"]) == {42, 60}

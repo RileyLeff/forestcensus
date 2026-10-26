@@ -1,0 +1,34 @@
+# Tree-level resolutions record reviewed invariant violations that are not
+# simple source-row corrections. They do not edit raw data.
+#
+# Example:
+#
+# [[tree_resolutions]]
+# kind = "reviewed"
+# note = "Reviewed with source sheets; DBH discontinuity is accepted as fallen/decomposing tree evidence."
+# tree = { site = "BRNV", plot = "L6", identity_tag = "85" }
+# codes = ["max_dbh_jump", "ranked_dbh_jump"]
+
+[[tree_resolutions]]
+kind = "reviewed_keep_true_multistem"
+note = "Datasheet review 2026-05-11: M1/458 is a real two-stem Morella; equal October 2025 DBH is plausible convergence/rounding and should not suppress a stem."
+tree = { site = "BRNV", plot = "M1", identity_tag = "458" }
+codes = ["probable_duplicate_stem_artifact"]
+
+[[tree_resolutions]]
+kind = "reviewed_keep_true_multistem"
+note = "Datasheet review 2026-05-11: M1/842 has a long two-stem Nyssa history with similar DBHs; October 2025 equal DBH does not justify duplicate suppression."
+tree = { site = "BRNV", plot = "M1", identity_tag = "842" }
+codes = ["probable_duplicate_stem_artifact", "near_duplicate_stem_artifact"]
+
+[[tree_resolutions]]
+kind = "reviewed_keep_true_multistem"
+note = "Datasheet review 2026-05-11: M4/5396 is a real three-stem Morella; April 2025 equal 55 mm stems are supported by the October 2024 three-stem profile."
+tree = { site = "BRNV", plot = "M4", identity_tag = "5396" }
+codes = ["probable_duplicate_stem_artifact"]
+
+[[tree_resolutions]]
+kind = "reviewed_preserve_missing_stem_evidence"
+note = "Datasheet review 2026-05-11: L2/227 is a dead two-stem Nyssa; stem 2 should remain on the datasheet from April 2025 dead/fallen evidence, and later not-found/not-reported absence is evidence rather than a reason to drop the stem."
+tree = { site = "BRNV", plot = "L2", identity_tag = "227" }
+codes = ["blank_missing_stem_backfill_candidate", "qualifying_rank_gap", "new_persistent_large_stem"]
