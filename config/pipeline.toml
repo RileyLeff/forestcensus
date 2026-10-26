@@ -1,0 +1,6 @@
+[missingness]
+not_found_threshold_surveys = 2
+
+[output]
+parquet = "output/forest_census.parquet"
+manifest = "output/manifest.json"

@@ -1,0 +1,2 @@
+# Source hashes and row guards depend on original bytes, including line endings.
+data/raw/** -text

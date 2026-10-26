@@ -1,0 +1,937 @@
+Plot,Tree Number,Species,Circumference,DBH (mm),Health (dead=0),alive:1 or dead:0,Measuring,notes
+H0,99,??,691.150383789755,220,0,0,DBH tape,dead
+H0,300,Pinus Taeda,819.955682586936,261,10,1,DBH tape,
+H0,299,Acer pensylvanicum,499.513231920777,159,9,1,DBH tape,
+H0,298,Acer sp,442.964564156161,141,9,1,DBH tape,
+H0,297,Acer pensylvanicum,697.433569096934,222,10,1,DBH tape,
+H0,296,Pinus taeda,863.937979737193,275,9,1,DBH tape,
+H0,295,Ilex opaca,411.548637620263,131,10,1,DBH tape,
+H0,294,Ilex opaca,354.999969855647,113,10,1,DBH tape,
+H0,293,Acer pensylvanicum,439.822971502571,140,10,1,DBH tape,
+H0,292,Ilex opaca,549.778714378214,175,10,1,DBH tape,
+H0,291,Liquidambar styraciflua,757.12382951514,241,10,1,DBH tape,
+H0,290,Pinus taeda,1558.22995618054,496,10,1,DBH tape,
+H0,289,Pinus taeda,1649.33614313464,525,10,1,DBH tape,
+H0,288,Nyssa sylavatica,609.46897479642,194,10,1,DBH tape,
+H0,287,Nyssa sylavatica,722.566310325652,230,10,1,DBH tape,
+H0,286,Pinus taeda,989.601685880785,315,9,1,DBH tape,
+H0,285,Nyssa sylvatica,967.610537305656,308,10,1,DBH tape,
+H0,284,??,929.911425462579,296,0,0,DBH tape,"fallen over, dead"
+H0,283,Acer rubrum,810.530904626167,258,10,1,DBH tape,
+H0,282,Nyssa sylvatica,521.504380495906,166,10,1,DBH tape,
+H0,281,Nyssa sylvatica,188.495559215388,60,10,1,DBH tape,
+H0,281_2,,188.495559215388,60,,1,DBH tape,
+H0,280,Pinus taeda,1090.13265079566,347,10,1,DBH tape,
+H0,279,Pinus taeda,1749.86710804951,557,10,1,DBH tape,
+H0,278,Nyssa sylvatica,188.495559215388,60,10,1,DBH tape,
+H0,277,Nyssa sylvatica,141.371669411541,45,10,1,DBH tape,
+H0,276,Pinus taeda,1721.59277416721,548,10,1,DBH tape,
+H0,275,Nyssa sylvatica,197.920337176157,63,10,1,DBH tape,
+H0,275_2,,169.646003293849,54,,1,DBH tape,
+H0,275_3,,166.504410640259,53,,1,DBH tape,
+H0,274,Nyssa sylvatica,251.327412287183,80,10,1,DBH tape,in cluster with with 275
+H0,273,Nyssa sylvatica,458.67252742411,146,10,1,DBH tape,
+H0,272,Pinus taeda,1077.5662801813,343,10,1,DBH tape,
+H0,271,Nyssa sylvatica,672.300827868216,214,10,1,DBH tape,
+H0,270,Pinus taeda,1030.44239037745,328,10,1,DBH tape,
+H0,269,Pinus taeda,1787.56621989259,569,10,1,DBH tape,
+H0,268,Nyssa sylvatica,603.18578948924,192,10,1,DBH tape,
+H0,267,Nyssa sylvatica,600.04419683565,191,10,1,DBH tape,
+H0,266,Pinus taeda,1332.03528512207,424,10,1,DBH tape,
+H0,265,Nyssa sylvatica,461.8141200777,147,10,1,DBH tape,
+H0,264,Pinus taeda,848.230016469244,270,10,1,DBH tape,
+H0,263,Nyssa sylvatica,433.539786195391,138,0,0,DBH tape,dead
+H0,262,Nyssa sylvatica?,622.035345410779,198,0,0,DBH tape,dead
+H0,261,Nyssa sylvatica?,238.761041672824,76,10,1,DBH tape,
+H0,260,Nyssa sylvatica,829.380460547705,264,10,1,DBH tape,
+H0,259,Nyssa sylvatica,119.380520836412,38,9,1,DBH tape,
+H0,258,Pinus taeda,1363.45121165797,434,10,1,DBH tape,
+H0,257,Nyssa sylvatica,490.088453960008,156,10,1,DBH tape,
+H0,257_2,,260.752190247953,83,,1,DBH tape,
+H0,256,Nyssa sylvatica,260.752190247953,83,9,1,DBH tape,
+H0,255,Pinus taeda,1162.38928182822,370,9,1,DBH tape,
+H1,98,??,521.504380495906,166,0,0,DBH tape,dead
+H1,97,??,163.362817986669,52,0,0,DBH tape,dead
+H1,96,Pinus taeda,317.300858012569,101,0,0,DBH tape,dead
+H1,91,??,603.18578948924,192,0,0,DBH tape,"fallen over, dead"
+H1,200,??,216.769893097696,69,0,0,DBH tape,dead
+H1,199,Nyssa sylvatica (?),298.45130209103,95,0,0,DBH tape,dead
+H1,198,??,166.504410640259,53,0,0,DBH tape,dead
+H1,197,??,254.469004940773,81,0,0,DBH tape,dead
+H1,107,??,508.938009881546,162,0,0,DBH tape,fallen over
+H1,106,not Pinus taeda ,160.221225333079,51,0,0,DBH tape,dead
+H1,105,not Pinus taeda ,210.486707790516,67,0,0,DBH tape,dead
+H1,105_2,,128.805298797182,41,,0,DBH tape,dead
+H1,254,Pinus taeda,1369.73439696515,436,10,1,DBH tape,
+H1,253,Nyssa sylvatica,458.67252742411,146,10,1,DBH tape,
+H1,252,Pinus taeda,951.902574037707,303,10,1,DBH tape,
+H1,251,Pinus taeda,1291.19458062541,411,10,1,DBH tape,outside plot
+H1,250,??,219.911485751286,70,10,1,DBH tape,
+H1,249,Pinus taeda,895.353906273091,285,0,0,DBH tape,dead
+H1,248,Nyssa sylvatica,367.566340470006,117,9,1,DBH tape,
+H1,247,Nyssa sylvatica,556.061899685393,177,10,1,DBH tape,
+H1,246,Nyssa sylvatica,238.761041672824,76,10,1,DBH tape,
+H1,245,Nyssa sylvatica,788.539756051038,251,10,1,DBH tape,
+H1,244,Nyssa sylvatica,241.902634326414,77,9,1,DBH tape,
+H1,243,Pinus taeda,1218.93794959284,388,10,1,DBH tape,
+H1,242,Nyssa sylvatica,361.283155162826,115,10,1,DBH tape,
+H1,241,Nyssa sylvatica,238.761041672824,76,10,1,DBH tape,
+H1,240,Pinus taeda,1011.59283445591,322,10,1,DBH tape,
+H1,239,Pinus taeda,342.433599241287,109,10,1,DBH tape,
+H1,238,Pinus taeda,1108.9822067172,353,9,1,DBH tape,
+H1,237,Pinus taeda,1102.69902141002,351,10,1,DBH tape,
+H1,236,Pinus taeda,1256.63706143592,400,0,0,DBH tape,dead
+H1,235,Pinus taeda,609.46897479642,194,10,1,DBH tape,
+H1,234,Pinus taeda,970.752129959246,309,10,1,DBH tape,
+H1,233,Nyssa sylvatica,1108.9822067172,353,10,1,DBH tape,
+H1,232,Pinus taeda,1256.63706143592,400,10,1,DBH tape,
+H1,231,Ilex opaca,185.353966561798,59,10,1,DBH tape,
+H1,230,Ilex opaca,182.212373908208,58,10,1,DBH tape,
+H1,229,Ilex opaca,257.610597594363,82,10,1,DBH tape,
+H1,228,Ilex opaca,263.893782901543,84,10,1,DBH tape,
+H1,227,Pinus taeda,1853.53966561798,590,10,1,DBH tape,
+H1,226,Nyssa sylvatica,540.353936417444,172,10,1,DBH tape,
+H1,225,Pinus taeda,744.557458900781,237,9,1,DBH tape,
+H1,224,Nyssa sylvatica,144.51326206513,46,8,1,DBH tape,
+H1,223,Nyssa sylvatica,666.017642561036,212,10,1,DBH tape,
+H1,222,Pinus taeda,1058.71672425976,337,8,1,DBH tape,
+H1,221,Nyssa sylvatica,515.221195188726,164,9,0,DBH tape,"no needles, dead"
+H1,220,Nyssa sylvatica,691.150383789755,220,10,1,DBH tape,
+H1,219,Nyssa sylvatica,697.433569096934,222,10,1,DBH tape,
+H1,218,Pinus taeda,760.26542216873,242,8,1,DBH tape,
+H1,217,Pinus taeda,816.814089933346,260,0,0,DBH tape,dead
+H1,216,Pinus taeda,1423.14147207618,453,10,1,DBH tape,
+H1,215,Nyssa sylvatica,348.716784548467,111,10,1,DBH tape,
+H1,214,Pinus taeda,1269.20343205028,404,10,1,DBH tape,
+H1,213,Nyssa sylvatica,562.345084992573,179,10,1,DBH tape,
+H1,212,Nyssa sylvatica,361.283155162826,115,10,1,DBH tape,
+H1,211,Pinus taeda,1369.73439696515,436,10,1,DBH tape,
+H1,209,Pinus taeda,977.035315266426,311,9,1,DBH tape,
+H2,104,not Pinus taeda,405.265452313083,129,0,0,DBH tape,dead
+H2,103,Pinus taeda,433.539786195391,138,0,0,DBH tape,dead
+H2,102,Pinus taeda,461.8141200777,147,0,0,DBH tape,dead
+H2,210,Nyssa sylvatica,634.601716025138,202,10,1,DBH tape,
+H2,208,Pinus taeda,1470.26536188002,468,10,1,DBH tape,
+H2,207,Nyssa sylvatica,336.150413934108,107,10,1,DBH tape,
+H2,206,Nyssa sylvatica,333.008821280518,106,9,1,DBH tape,
+H2,205,Nyssa sylvatica,644.026493985908,205,10,1,DBH tape,
+H2,204,Pinus taeda,1407.43350880823,448,10,1,DBH tape,
+H2,203,Pinus taeda,1423.14147207618,453,10,1,DBH tape,
+H2,202,Pinus taeda,1159.24768917463,369,9,1,DBH tape,
+H2,201,Pinus taeda,530.929158456675,169,9,1,DBH tape,
+H2,196,Pinus taeda,1021.01761241668,325,10,1,DBH tape,
+H2,195,Nyssa sylvatica,326.725635973339,104,10,1,DBH tape,
+H2,194,Pinus taeda,898.495498926681,286,10,1,DBH tape,
+H2,193,Pinus taeda,1407.43350880823,448,10,1,DBH tape,
+H2,192,Nyssa sylvatica,194.778744522567,62,10,1,DBH tape,
+H2,192_2,,153.9380400259,49,10,1,DBH tape,
+H2,191,Nyssa sylvatica,270.176968208722,86,10,1,DBH tape,
+H2,190,Nyssa sylvatica,329.867228626928,105,10,1,DBH tape,
+H2,189,Nyssa sylvatica,279.601746169492,89,10,1,DBH tape,
+H2,188,Nyssa sylvatica,251.327412287183,80,10,1,DBH tape,
+H2,187,Nyssa sylvatica,260.752190247953,83,10,1,DBH tape,
+H2,186,Nyssa sylvatica,295.309709437441,94,10,1,DBH tape,
+H2,185,Nyssa sylvatica,402.123859659494,128,10,1,DBH tape,
+H2,184,Nyssa sylvatica,505.796417227957,161,10,1,DBH tape,
+H2,183,Pinus taeda,1055.57513160617,336,10,1,DBH tape,
+H2,182,Pinus taeda,977.035315266426,311,10,1,DBH tape,
+H2,181,Nyssa sylvatica,289.026524130261,92,9,1,DBH tape,
+H2,180,Pinus taeda,801.106126665397,255,9,1,DBH tape,
+H2,179,Nyssa sylvatica,191.637151868977,61,10,1,DBH tape,
+H2,178,Nyssa sylvatica,207.345115136926,66,10,1,DBH tape,
+H2,177,Pinus taeda,1159.24768917463,369,10,1,DBH tape,
+H2,176,Pinus taeda,1162.38928182822,370,10,1,DBH tape,
+H2,175,Nyssa sylvatica,603.18578948924,192,10,1,DBH tape,
+H3,101,Pinus taeda,458.67252742411,146,0,0,DBH tape,"fallen log, dead"
+H3,575,not Pinus taeda,424.115008234622,135,0,0,DBH tape,dead
+H3,512,??,245.044226980004,78,0,0,DBH tape,"feeling paper bark, dead"
+H3,512_2,,194.778744522567,62,0,0,DBH tape,dead
+H3,511,Pinus taeda,207.345115136926,66,0,0,DBH tape,dead
+H3,510,Pinus taeda,317.300858012569,101,0,0,DBH tape,dead
+H3,509,Pinus taeda,895.353906273091,285,0,0,DBH tape,dead
+H3,174,Pinus taeda,970.752129959246,309,10,1,DBH tape,
+H3,173,Pinus taeda,1325.75209981489,422,10,1,DBH tape,
+H3,172,Pinus taeda,1372.87598961874,437,10,1,DBH tape,
+H3,171,Pinus taeda,1090.13265079566,347,10,1,DBH tape,
+H3,170,Pinus taeda,703.716754404114,224,0,0,DBH tape,dead
+H3,169,Pinus taeda,1071.28309487412,341,10,1,DBH tape,
+H3,168,Nyssa sylvatica,917.34505484822,292,10,1,DBH tape,
+H3,167,Pinus taeda,1240.92909816797,395,10,1,DBH tape,
+H3,166,Ilex opaca,424.115008234622,135,10,1,DBH tape,
+H3,165,Ilex opaca,188.495559215388,60,10,1,DBH tape,
+H3,164,Pinus taeda,1517.38925168387,483,10,1,DBH tape,
+H3,163,Pinus taeda,1184.38043040335,377,10,1,DBH tape,
+H3,162,Ilex opaca,292.168116783851,93,10,1,DBH tape,
+H3,161,Pinus taeda,763.40701482232,243,9,1,DBH tape,
+H3,160,Pinus taeda,1573.93791944849,501,10,1,DBH tape,
+H3,159,Nyssa sylvatica,1303.76095123976,415,10,1,DBH tape,outside west string
+H3,158,Pinus taeda,1102.69902141002,351,10,1,DBH tape,
+H3,157,Pinus taeda,1357.16802635079,432,10,1,DBH tape,likely? untagged
+H3,156,Pinus taeda,1036.72557568463,330,9,1,DBH tape,
+H3,155,Nyssa sylvatica,879.645943005142,280,10,1,DBH tape,
+H3,154,Pinus taeda,772.831792783089,246,10,1,DBH tape,
+H3,153,Nyssa sylvatica,436.681378848981,139,10,1,DBH tape,
+H4,152,Acer rubrum,311.01767270539,99,10,1,DBH tape,
+H4,151,Acer rubrum,320.442450666159,102,10,1,DBH tape,
+H4,151_2,,0,0,0,0,DBH tape,dead
+H4,150,Pinus taeda,210.486707790516,67,9,1,DBH tape,
+H4,149,Ilex opaca,1222.07954224643,389,10,1,DBH tape,scratched tag hard to read
+H4,148,Pinus taeda,210.486707790516,67,10,1,DBH tape,
+H4,147,Liquidambar styraciflua,204.203522483337,65,10,1,DBH tape,
+H4,146,Pinus taeda,157.07963267949,50,0,0,DBH tape,dead
+H4,145,Liquidambar styraciflua,1168.6724671354,372,10,1,DBH tape,
+H4,144,Pinus taeda,427.256600888212,136,10,1,DBH tape,
+H4,143,Liquidambar styraciflua,282.743338823081,90,9,1,DBH tape,
+H4,142,Liquidambar styraciflua,342.433599241287,109,9,1,DBH tape,
+H4,141,Pinus taeda,1655.61932844182,527,8,1,DBH tape,very thin canopy 
+H4,140,Acer rubrum,285.884931476671,91,10,1,DBH tape,
+H4,139,Liquidambar styraciflua,254.469004940773,81,9,1,DBH tape,
+H4,138,Liquidambar styraciflua,848.230016469244,270,10,1,DBH tape,
+H4,137,Pinus taeda,618.893752757189,197,9,1,DBH tape,thin canopy
+H4,136,Nyssa sylvatica,285.884931476671,91,10,1,DBH tape,
+H4,135,Ilex opaca,304.73448739821,97,10,1,DBH tape,
+H4,134,Liquidambar styraciflua,333.008821280518,106,10,1,DBH tape,
+H4,133,Pinus taeda,1363.45121165797,434,0,0,DBH tape,dead
+H4,132,Pinus taeda,1146.68131856027,365,0,0,DBH tape,dead
+H4,131,Acer rubrum,873.362757697962,278,0,0,DBH tape,"same bark, dead"
+H4,130,not pine,779.114978090269,248,0,0,DBH tape,"same bark, dead"
+H4,129,Liquidambar styraciflua,502.654824574367,160,8,1,DBH tape,
+H4,128,Pinus taeda,1548.80517821977,493,10,1,DBH tape,
+H4,127,Ilex opaca,367.566340470006,117,10,1,DBH tape,
+H4,126,Pinus taeda,775.973385436679,247,10,1,DBH tape,
+H4,125,Pinus taeda,1624.20340190592,517,10,1,DBH tape,
+H4,124,Liquidambar styraciflua,530.929158456675,169,9,1,DBH tape,
+H4,123,Nyssa sylvatica,436.681378848981,139,10,1,DBH tape,
+H4,122,Liquidambar styraciflua,307.8760800518,98,10,1,DBH tape,
+H4,121,Acer rubrum,411.548637620263,131,10,1,DBH tape,
+H4,120,Acer rubrum,496.371639267187,158,0,0,DBH tape,dead
+H4,119,Acer rubrum,753.98223686155,240,10,1,DBH tape,
+H4,118,Pinus taeda,1303.76095123976,415,10,1,DBH tape,
+H4,117,Nyssa sylvatica,298.45130209103,95,10,1,DBH tape,
+H4,116,Pinus taeda,914.20346219463,291,10,1,DBH tape,
+H4,115,Pinus taeda,1043.00876099181,332,9,1,DBH tape,
+H4,114,Acer rubrum,464.955712731289,148,9,1,DBH tape,
+H4,113,Pinus taeda,1803.27418316054,574,9,1,DBH tape,fallen log 
+H4,112,Pinus taeda,546.637121724624,174,0,0,DBH tape,dead
+H4,111,Ilex opaca,512.079602535136,163,10,1,DBH tape,
+H4,110,Ilex opaca,113.097335529233,36,10,1,DBH tape,
+H4,109,Ilex opaca,97.3893722612836,31,10,1,DBH tape,
+H4,108,Liquidambar styraciflua,254.469004940773,81,9,1,DBH tape,
+H5,573,Pinus taeda,1130.97335529233,360,9,1,DBH tape,
+H5,572,Liquidambar styraciflua,241.902634326414,77,0,0,DBH tape,dead
+H5,571,Ilex opaca,348.716784548467,111,10,1,DBH tape,outside plot string
+H5,570,Pinus taeda,1445.1326206513,460,9,1,DBH tape,outside plot string
+H5,569,Pinus taeda,958.185759344887,305,9,1,DBH tape,
+H5,568,Pinus taeda,895.353906273091,285,10,1,DBH tape,
+H5,567,Nyssa sylvatica,637.743308678728,203,10,1,DBH tape,outside polot strings
+H5,566,Pinus taeda,304.73448739821,97,0,0,DBH tape,dead
+H5,565,Pinus taeda,1008.45124180232,321,8,1,DBH tape,
+H5,564,Ilex opaca,311.01767270539,99,10,1,DBH tape,
+H5,563,Nyssa sylvatica,508.938009881546,162,10,1,DBH tape,
+H5,562,Pinus taeda,1146.68131856027,365,7,1,DBH tape,
+H5,561,Pinus taeda,515.221195188726,164,8,1,DBH tape,poor canopy cond.
+H5,560,Pinus taeda,1184.38043040335,377,9,1,DBH tape,
+H5,559,Acer rubrum,1272.34502470387,405,0,0,DBH tape,dead
+H5,558,Pinus taeda,1240.92909816797,395,9,1,DBH tape,
+H5,557,Nyssa sylvatica,323.584043319749,103,9,1,DBH tape,outsdie strings
+H5,556,Pinus taeda,647.168086639497,206,9,1,DBH tape,
+H5,555,Pinus taeda,1266.06183939669,403,9,1,DBH tape,
+H5,554,Nyssa sylvatica,345.575191894877,110,10,1,DBH tape,
+H5,553,Pinus taeda,970.752129959246,309,9,1,DBH tape,
+H5,552,Pinus taeda,1291.19458062541,411,8,1,DBH tape,poor canopy cond.
+H5,551,Ilex opaca,125.663706143592,40,8,1,DBH tape,
+H5,550,Pinus taeda,179.070781254618,57,9,1,DBH tape,
+H5,549,Pinus taeda,1401.15032350105,446,9,1,DBH tape,
+H5,548,Pinus taeda,1187.52202305694,378,9,1,DBH tape,
+H6,547,Nyssa sylvatica,232.477856365645,74,9,1,DBH tape,
+H6,546,Pinus taeda,772.831792783089,246,10,1,DBH tape,
+H6,545,Pinus taeda,1401.15032350105,446,9,1,DBH tape,
+H6,544,Nyssa sylvatica,433.539786195391,138,10,1,DBH tape,
+H6,543,Pinus taeda,948.760981384117,302,9,1,DBH tape,
+H6,542,Nyssa sylvatica,882.787535658732,281,10,1,DBH tape,
+H6,541,Juniperus virginiana,166.504410640259,53,10,1,DBH tape,found and ided
+H6,540,Ilex opaca,153.9380400259,49,8,1,DBH tape,
+H6,539,Juniperus virginiana,232.477856365645,74,10,1,DBH tape,
+H6,538,Pinus taeda,1460.84058391925,465,10,1,DBH tape,
+H6,537,Nyssa sylvatica,201.061929829747,64,0,0,DBH tape,dead
+H6,536,Nyssa sylvatica,185.353966561798,59,9,1,DBH tape,
+H6,535,Pinus taeda,1200.0883936713,382,10,1,DBH tape,
+H6,534,Nyssa sylvatica,706.858347057703,225,10,1,DBH tape,
+H6,533,Nyssa sylvatica,691.150383789755,220,10,1,DBH tape,
+H6,532,Juniperus virginiana,219.911485751286,70,0,0,DBH tape,dead
+H6,531,Nyssa sylvatica,697.433569096934,222,10,1,DBH tape,
+H6,530,Nyssa sylvatica,201.061929829747,64,3,0,DBH tape,"poor canopy cond., dead"
+H6,529,Pinus taeda,1090.13265079566,347,10,1,DBH tape,
+H6,528,Ilex opaca,254.469004940773,81,10,1,DBH tape,
+H6,527,Pinus taeda,1118.40698467797,356,10,1,DBH tape,
+H6,526,Pinus taeda,1090.13265079566,347,0,0,DBH tape,dead
+H6,525,Nyssa sylvatica,480.663675999238,153,10,1,DBH tape,
+H6,524,??,496.371639267187,158,0,0,DBH tape,"likely pinus, dead"
+H6,523,Pinus taeda,427.256600888212,136,0,0,DBH tape,"top fell on litter basket, dead"
+H6,522,not pine,395.840674352314,126,0,0,DBH tape,dead
+H6,521,Ilex opaca,229.336263712055,73,9,1,DBH tape,
+H6,520,Pinus taeda,1360.30961900438,433,0,0,DBH tape,dead
+H6,519,Nyssa sylvatica,464.955712731289,148,10,1,DBH tape,
+H6,518,Pinus taeda,427.256600888212,136,10,1,DBH tape,
+H6,517,Pinus taeda,1262.9202467431,402,0,0,DBH tape,dead
+H6,516,maple (?),766.54860747591,244,0,0,DBH tape,dead
+H7,898,Pinus taeda,1190.66361571053,379,10,1,DBH tape,
+H7,897,??,304.73448739821,97,0,0,DBH tape,dead
+H7,896,Pinus taeda,1096.41583610284,349,10,1,DBH tape,
+H7,895,Nyssa sylvatica,543.495529071034,173,9,1,DBH tape,
+H7,894,?,612.61056745001,195,0,0,DBH tape,dead
+H7,893,Pinus taeda,1162.38928182822,370,9,1,DBH tape,
+H7,892,Pinus taeda,1291.19458062541,411,10,1,DBH tape,
+H7,891,Pinus taeda,1564.51314148772,498,10,1,DBH tape,
+H7,890,Nyssa sylvatica,640.884901332318,204,0,0,DBH tape,dead
+H7,890_2,,260.752190247953,83,,,,
+H7,889,Nyssa sylvatica,320.442450666159,102,9,1,DBH tape,
+H7,888,??,562.345084992573,179,0,0,DBH tape,dead
+H7,887,Pinus taeda,194.778744522567,62,10,1,DBH tape,
+H7,886,Pinus taeda,571.769862953342,182,10,1,DBH tape,
+H7,885,Pinus taeda,285.884931476671,91,0,0,DBH tape,dead
+H7,884,Pinus taeda,1485.97332514797,473,10,1,DBH tape,
+H7,883,oak (?),245.044226980004,78,9,1,DBH tape,
+H7,882,Juniperus virginiana,141.371669411541,45,10,1,DBH tape,
+H7,881,Pinus taeda,1068.14150222053,340,10,1,DBH tape,
+H7,880,Nyssa sylvatica,436.681378848981,139,10,1,DBH tape,
+H7,879,Nyssa sylvatica,750.840644207961,239,10,1,DBH tape,
+H7,878,Pinus taeda,936.194610769758,298,0,0,DBH tape,dead
+H7,877,??,530.929158456675,169,0,0,DBH tape,dead
+M0,828,Juniperus virginiana,524.645973149495,167,9,1,DBH tape,
+M0,827,Pinus taeda,1140.3981332531,363,9,1,DBH tape,
+M0,826,Pinus taeda,1545.66358556618,492,10,1,DBH tape,outside
+M0,825,Pinus taeda,926.769832808989,295,6,1,DBH tape,
+M0,824,Pinus taeda,1036.72557568463,330,9,1,DBH tape,
+M0,823,Pinus taeda,279.601746169492,89,8,1,DBH tape,outside plot
+M0,822,??,323.584043319749,103,0,0,DBH tape,dead
+M0,821,Nyssa sylvatica,373.849525777185,119,10,1,DBH tape,
+M0,820,Nyssa sylvatica,578.053048260522,184,10,1,DBH tape,
+M0,819,Nyssa sylvatica,348.716784548467,111,10,1,DBH tape,
+M0,818,Nyssa sylvatica,549.778714378214,175,10,1,DBH tape,
+M0,817,Nyssa sylvatica,361.283155162826,115,10,1,DBH tape,
+M0,817_2,,260.752190247953,83,,,,
+M0,816,Pinus taeda,345.575191894877,110,0,0,DBH tape,dead
+M0,815,Pinus taeda,829.380460547705,264,8,1,DBH tape,
+M0,814,Pinus taeda,549.778714378214,175,0,0,DBH tape,dead
+M0,813,Ilex opaca,179.070781254618,57,0,0,DBH tape,dead
+M0,812,Ilex opaca,370.707933123596,118,10,1,DBH tape,
+M0,811,Pinus taeda,1335.17687777566,425,8,1,DBH tape,
+M0,810,Pinus taeda,1281.76980266464,408,10,1,DBH tape,Id by branching pattern
+M0,809,Juniperus virginana,329.867228626928,105,0,0,DBH tape,dead
+M0,808,Nyssa sylvatica,505.796417227957,161,0,0,DBH tape,dead
+M0,807,Pinus taeda,1303.76095123976,415,10,1,DBH tape,
+M0,806,Ilex opaca,295.309709437441,94,10,1,DBH tape,barely alive
+M0,805,Ilex opaca,392.699081698724,125,2,0,DBH tape,dead
+M0,804,Nyssa sylvatica,144.51326206513,46,3,0,DBH tape,dead
+M0,803,Nyssa sylvatica,546.637121724624,174,10,1,DBH tape,
+M0,803_2,,383.274303737955,122,,,,
+M0,802,Nyssa sylvatica ,254.469004940773,81,0,0,DBH tape,dead
+M0,801,Pinus taeda,1281.76980266464,408,9,1,DBH tape,
+M0,588,??,464.955712731289,148,0,0,DBH tape,"big Ilex? or morella, dead"
+M0,587,Juniperus virginiana,383.274303737955,122,0,0,DBH tape,dead
+M0,586,Juniperus virginiana,267.035375555132,85,0,0,DBH tape,dead
+M0,585,Juniperus virginiana,213.628300444106,68,0,0,DBH tape,dead
+M0,584,Pinus taeda,1586.50429006285,505,0,0,DBH tape,dead
+M0,583,??,304.73448739821,97,0,0,DBH tape,dead
+M0,582,Pinus taeda,625.176938064369,199,0,0,DBH tape,dead
+M0,581,Nyssa sylvatica ,163.362817986669,52,0,0,DBH tape,dead
+M0,580,Nyssa sylvatica ,672.300827868216,214,6,1,DBH tape,
+M0,579,Nyssa sylvatica ,364.424747816416,116,10,1,DBH tape,
+M0,578,Nyssa sylvatica ,411.548637620263,131,10,1,DBH tape,
+M0,577,Juniperus virginiana,461.8141200777,147,5,1,DBH tape,
+M0,576,Pinus taeda,408.407044966673,130,0,0,DBH tape,dead
+M0,515,Pinus taeda,1102.69902141002,351,0,0,DBH tape,dead
+M0,514,Pinus taeda,1143.53972590668,364,0,0,DBH tape,dead
+M0,513,Ilex opaca,1090.13265079566,347,10,1,DBH tape,
+M0,500,Nyssa sylvatica,364.424747816416,116,8,1,DBH tape,
+M1,899,Pinus taeda,1300.61935858617,414,10,1,DBH tape,
+M1,876,Nyssa sylvatica,295.309709437441,94,7,1,DBH tape,outside plot 
+M1,875,Nyssa sylvatica,150.79644737231,48,9,1,DBH tape,later second string found on ground
+M1,874,Juniperus virginiana,210.486707790516,67,0,0,DBH tape,dead
+M1,873,Nyssa sylvatica,741.415866247191,236,3,0,DBH tape,dead
+M1,872,Juniperus virginiana,571.769862953342,182,10,1,DBH tape,
+M1,871,Nyssa sylvatica,364.424747816416,116,9,1,DBH tape,
+M1,870,Nyssa sylvatica,342.433599241287,109,9,1,DBH tape,
+M1,870_2,,439.822971502571,140,,,DBH tape,
+M1,869,Juniperus virginiana,210.486707790516,67,0,0,DBH tape,dead
+M1,868,Pinus taeda,1143.53972590668,364,1,0,DBH tape,"losing top bark,dead"
+M1,867,Nyssa sylvatica,207.345115136926,66,1,0,DBH tape,dead
+M1,866,Nyssa sylvatica,157.07963267949,50,7,1,DBH tape,
+M1,865,Juniperus virginiana,194.778744522567,62,0,0,DBH tape,dead
+M1,864,Pinus taeda,1341.46006308284,427,10,1,DBH tape,
+M1,863,Juniperus virginiana,194.778744522567,62,0,0,DBH tape,dead
+M1,862,Juniperus virginiana,216.769893097696,69,10,1,DBH tape,
+M1,862_2,,433.539786195391,138,,,DBH tape,
+M1,861,Nyssa sylvatica,508.938009881546,162,10,1,DBH tape,
+M1,860,Juniperus virginiana,860.796387083603,274,9,1,DBH tape,
+M1,859,Juniperus virginiana,329.867228626928,105,0,0,DBH tape,dead
+M1,858,Juniperus virginiana,499.513231920777,159,9,1,DBH tape,
+M1,857,Juniperus virginiana,505.796417227957,161,10,1,DBH tape,
+M1,856,Pinus taeda,1319.46891450771,420,10,1,DBH tape,
+M1,855,Nyssa sylvatica,446.106156809751,142,10,1,DBH tape,
+M1,854,Juniperus virginiana,753.98223686155,240,10,1,DBH tape,
+M1,853,Pinus taeda,797.964534011807,254,9,1,DBH tape,
+M1,852,Juniperus virginiana,304.73448739821,97,0,0,DBH tape,dead
+M1,851,Nyssa sylvatica,339.292006587698,108,9,1,DBH tape,
+M1,850,Juniperus virginiana,452.38934211693,144,0,0,DBH tape,dead
+M1,849,Nyssa sylvatica,609.46897479642,194,10,1,DBH tape,
+M1,848,Pinus taeda,1369.73439696515,436,9,1,DBH tape,
+M1,847,Nyssa sylvatica,298.45130209103,95,8,1,DBH tape,poor condition
+M1,846,Nyssa sylvatica,424.115008234622,135,10,1,DBH tape,
+M1,845,Pinus taeda,1322.6105071613,421,9,1,DBH tape,
+M1,844,Pinus taeda,1454.55739861207,463,10,1,DBH tape,
+M1,843,Juniperus virginiana,345.575191894877,110,0,0,DBH tape,dead
+M1,842,Nyssa sylvatica,235.619449019234,75,9,1,DBH tape,
+M1,842_2,,235.619449019234,75,,,DBH tape,
+M1,841,Nyssa sylvatica,556.061899685393,177,10,1,DBH tape,
+M1,840,Nyssa sylvatica,694.291976443344,221,9,1,DBH tape,
+M1,839,Juniperus virginiana,442.964564156161,141,0,0,DBH tape,dead
+M1,838,Pinus taeda,741.415866247191,236,9,1,DBH tape,outside E string
+M1,837,Pinus taeda,1099.55742875643,350,10,1,DBH tape,outside E string
+M1,836,Juniperus virginiana,358.141562509236,114,0,0,DBH tape,"outside E string, dead"
+M1,835,Nyssa sylvatica,333.008821280518,106,9,1,DBH tape,
+M1,834,Nyssa sylvatica,175.929188601028,56,9,1,DBH tape,
+M1,833,Juniperus virginiana,207.345115136926,66,0,0,DBH tape,dead
+M1,832,Nyssa sylvatica,345.575191894877,110,9,1,DBH tape,
+M1,831,Pinus taeda,1225.22113490002,390,10,1,DBH tape,
+M1,830,Pinus taeda,1090.13265079566,347,9,1,DBH tape,
+M1,829,Juniperus virginiana,364.424747816416,116,0,0,DBH tape,
+M2,2408,Pinus taeda,,325,7,1,DBH tape,
+M2,2409,Nyssa sylvatica,625.176938064369,199,9,1,DBH tape,
+M2,2410,??,197.920337176157,63,0,0,DBH tape,dead
+M2,2411,Pinus taeda,1055.57513160617,336,9,1,DBH tape,
+M2,2412,Nyssa sylvatica,235.619449019234,75,10,1,DBH tape,
+M2,2413,??,197.920337176157,63,0,0,DBH tape,dead
+M2,2414,Nyssa sylvatica,769.690200129499,245,10,1,DBH tape,
+M2,2415,Pinus taeda,807.389311972577,257,10,1,DBH tape,
+M2,2416,Pinus taeda,1105.84061406361,352,10,1,DBH tape,
+M2,2417,??,653.451271946677,208,0,0,DBH tape,dead
+M2,2418,??,260.752190247953,83,0,0,DBH tape,dead
+M2,2419,??,461.8141200777,147,0,0,DBH tape,dead
+M2,2420,Pinus taeda,119.380520836412,38,9,1,DBH tape,
+M2,2421,Nyssa sylvatica,493.230046613597,157,10,1,DBH tape,
+M2,2421_2,,653.451271946677,208,,1,DBH tape,
+M2,2422,Nyssa sylvatica,166.504410640259,53,0,0,DBH tape,dead
+M2,2423,Pinus taeda,1401.15032350105,446,10,1,DBH tape,
+M2,2424,Pinus taeda,1209.51317163207,385,10,1,DBH tape,
+M2,2425,Nyssa sylvatica,578.053048260522,184,10,1,DBH tape,
+M2,2425_2,,750.840644207961,239,,1,DBH tape,
+M2,2425_3,,848.230016469244,270,,1,DBH tape,
+M2,2426,Juniperus virginiana,405.265452313083,129,5,1,DBH tape,
+M2,2427,Pinus taeda,1162.38928182822,370,10,1,DBH tape,
+M2,2428,Juniperus virginiana,518.362787842316,165,0,0,DBH tape,dead
+M2,2429,Juniperus virginiana,141.371669411541,45,0,0,DBH tape,dead
+M2,2430,Nyssa sylvatica,411.548637620263,131,10,1,DBH tape,
+M2,2431,Pinus taeda,1218.93794959284,388,10,1,DBH tape,
+M2,2432,Nyssa sylvatica,524.645973149495,167,10,1,DBH tape,
+M2,2433,Pinus taeda,1203.22998632489,383,10,1,DBH tape,
+M2,2434,Pinus taeda,986.460093227195,314,10,1,DBH tape,
+M2,2435,Pinus taeda,1168.6724671354,372,9,1,DBH tape,
+M2,2436,Juniperus virginiana,314.159265358979,100,5,1,DBH tape,
+M2,2437,Juniperus virginiana,273.318560862312,87,10,1,DBH tape,
+M2,2438,Pinus taeda,1284.91139531823,409,10,1,DBH tape,
+M2,2439,Nyssa sylvatica,486.946861306418,155,10,1,DBH tape,
+M2,2439_2,,430.398193541802,137,,1,DBH tape,
+M2,2440,??,524.645973149495,167,0,0,DBH tape,dead
+M2,2441,Pinus taeda,1193.80520836412,380,10,1,DBH tape,
+M2,2442,Pinus taeda,1021.01761241668,325,10,1,DBH tape,
+M3,364,Pinus taeda,1300.61935858617,414,10,1,DBH tape,outside plot
+M3,361,Nyssa sylvatica,585.907029894496,186.5,10,1,DBH tape,
+M3,360,Pinus taeda,1639.91136517387,522,10,1,DBH tape,
+M3,359,Juniperus virginiana,499.513231920777,159,2,0,DBH tape,dead
+M3,358,Nyssa sylvatica,315.730061685774,100.5,10,1,DBH tape,
+M3,358_2,,606.32738214283,193,,1,DBH tape,
+M3,357,Juniperus viginiana,581.194640914112,185,10,1,DBH tape,
+M3,356,Juniperus viginiana,622.035345410779,198,8,1,DBH tape,
+M3,355,Pinus taeda,1492.25651045515,475,9,1,DBH tape,
+M3,354,Pinus taeda,1269.20343205028,404,10,1,DBH tape,
+M3,353,Juniperus viginiana,634.601716025138,202,10,1,DBH tape,outside
+M3,352,Pinus taeda,1231.5043202072,392,10,1,DBH tape,
+M3,351,Pinus taeda,1162.38928182822,370,10,1,DBH tape,
+M3,350,Nyssa syvlatica,497.942435593982,158.5,0,0,DBH tape,dead
+M3,349,Pinus taeda,1619.17685366018,515.4,10,1,DBH tape,
+M3,348,Pinus taeda,474.694649957418,151.1,10,1,DBH tape,
+M3,347,Juniperus viginiana,411.548637620263,131,9,1,DBH tape,
+M3,347_2,,370.707933123596,118,,1,DBH tape,
+M3,346,Pinus taeda,1328.89369246848,423,9,1,DBH tape,
+M3,345,Pinus taeda,389.557489045134,124,0,0,DBH tape,dead
+M3,344,Nyssa sylvatica,480.663675999238,153,9,1,DBH tape,
+M3,343,Pinus taeda,879.645943005142,280,0,0,DBH tape,dead
+M3,342,Nyssa sylvatica,339.292006587698,108,10,1,DBH tape,
+M3,341,Pinus taeda,1467.12376922643,467,10,1,DBH tape,
+M3,340,Pinus taeda,386.415896391545,123,0,0,DBH tape,dead
+M3,339,Nyssa sylvatica,389.557489045134,124,9,1,DBH tape,
+M3,338,Nyssa sylvatica,540.353936417444,172,9,1,DBH tape,
+M4,2443,Juniperus virginiana,351.858377202057,112,9,1,DBH tape,
+M4,2444,??,609.46897479642,194,0,0,DBH tape,dead
+M4,2445,Pinus taeda,964.468944652067,307,0,0,DBH tape,dead
+M4,2446,Nyssa sylvatica,637.743308678728,203,10,1,DBH tape,
+M4,2447,Pinus taeda,1366.59280431156,435,10,1,DBH tape,
+M4,2448,Juniperus virginiana,354.999969855647,113,0,0,DBH tape,dead
+M4,2449,Nyssa sylvatica,590.619418874881,188,10,1,DBH tape,
+M4,2450,Pinus taeda,1451.41580595848,462,10,1,DBH tape,
+M4,2451,Pinus taeda,1250.35387612874,398,10,1,DBH tape,
+M4,2452,??,442.964564156161,141,0,0,DBH tape,dead
+M4,2453,Pinus taeda,1687.03525497772,537,10,1,DBH tape,
+M4,2454,Pinus taeda,1564.51314148772,498,10,1,DBH tape,
+M4,2455,Pinus taeda,631.460123371548,201,5,1,DBH tape,
+M4,2456,Pinus taeda,320.442450666159,102,0,0,DBH tape,dead
+M4,2457,Pinus taeda,816.814089933346,260,8,1,DBH tape,
+M4,2458,Pinus taeda,1237.78750551438,394,10,1,DBH tape,
+M4,2459,Nyssa sylvatica,794.822941358218,253,10,1,DBH tape,
+M4,2459_2,,304.73448739821,97,,1,DBH tape,
+M4,2460,Pinus taeda,986.460093227195,314,10,1,DBH tape,
+M4,2461,Pinus taeda,1140.3981332531,363,0,0,DBH tape,dead
+M4,2462,Nyssa sylvatica,508.938009881546,162,9,1,DBH tape,
+M5,2500,Nyssa sylvatica,483.805268652828,154,9,1,DBH tape,
+M5,2498,Juniperus virginiana,430.398193541802,137,10,1,DBH tape,not found
+M5,2497,Pinus taeda,964.468944652067,307,0,0,DBH tape,dead
+M5,2496,Juniperus virginiana,640.884901332318,204,10,1,DBH tape,
+M5,2495,Pinus taeda,763.40701482232,243,0,0,DBH tape,dead
+M5,2494,Juniperus virginiana,197.920337176157,63,0,0,DBH tape,dead
+M5,2493,Pinus taeda,1398.00873084746,445,10,1,DBH tape,untagged nyssa
+M5,2492,Nyssa sylvatica,223.053078404875,71,8,1,DBH tape,
+M5,2491,Pinus taeda,1231.5043202072,392,10,1,DBH tape,
+M5,2490,Pinus taeda,1096.41583610284,349,9,1,DBH tape,
+M5,2489,Pinus taeda,760.26542216873,242,9,1,DBH tape,
+M5,2488,Pinus taeda,1149.82291121386,366,10,1,DBH tape,
+M5,2487,Juniperus virginiana,480.663675999238,153,9,1,DBH tape,
+M5,2486,Pinus taeda,634.601716025138,202,10,1,DBH tape,
+M5,2485,Pinus taeda,958.185759344887,305,0,0,DBH tape,dead
+M5,2484,Pinus taeda,945.619388730528,301,0,0,DBH tape,correct size + dead no tag
+M5,2483,Pinus taeda,1445.1326206513,460,10,1,DBH tape,
+M5,2482,Juniperus virginiana,172.787595947439,55,10,1,DBH tape,
+M5,2481,Nyssa sylvatica,518.362787842316,165,10,1,DBH tape,
+M5,2480,Nyssa sylvatica,314.159265358979,100,0,0,DBH tape,dead
+M5,2479,Nyssa sylvatica,411.548637620263,131,0,0,DBH tape,dead
+M5,2478,Pinus taeda,1445.1326206513,460,10,1,DBH tape,
+M5,2477,Pinus taeda,838.805238508475,267,0,0,DBH tape,
+M5,2476,Nyssa sylvatica,562.345084992573,179,7,1,DBH tape,barely alive 
+M5,2475,Pinus taeda,1127.83176263874,359,0,0,DBH tape,dead
+M5,2474,Pinus taeda,518.362787842316,165,0,0,DBH tape,dead
+M5,2473,Pinus taeda,1463.98217657284,466,0,0,DBH tape,dead
+M5,2472,Nyssa sylvatica,175.929188601028,56,0,0,DBH tape,dead
+M5,2471,Pinus taeda,1206.37157897848,384,0,0,DBH tape,dead
+M5,2470,Pinus taeda,951.902574037707,303,0,0,DBH tape,"tag in ground, dead"
+M5,2469,Nyssa sylvatica,279.601746169492,89,9,1,DBH tape,
+M6,400,Nyssa sylvatica,,56,9,1,DBH tape,
+M6,399,Juniperus virginiana,175.929188601028,56,10,1,DBH tape,
+M6,398,Juniperus virginiana,2356.19449019234,750,0,0,DBH tape,dead
+M6,397,Pinus taeda,848.230016469244,270,9,1,DBH tape,
+M6,396,Pinus taeda,1534.66801127861,488.5,10,1,DBH tape,
+M6,395,Nyssa sylvatica,196.349540849362,62.5,0,0,DBH tape,dead
+M6,394,Nyssa sylvatica,631.460123371548,201,8,1,DBH tape,
+M6,393,Juniperus virginiana,285.884931476671,91,0,0,DBH tape,dead
+M6,392,Pinus taeda,1416.858286769,451,0,0,DBH tape,dead
+M6,391,Nyssa sylvatica,417.831822927442,133,9,1,DBH tape,
+M6,390,Nyssa sylvatica,386.415896391545,123,8,1,DBH tape,
+M6,389,Pinus taeda,1146.68131856027,365,,1,DBH tape,
+M6,388,Juniperus virginiana,570.199066626548,181.5,10,1,DBH tape,
+M6,387,Juniperus virginiana,333.008821280518,106,0,0,DBH tape,dead
+M6,386,Juniperus virginiana,326.725635973339,104,9,1,DBH tape,
+M6,385,Juniperus virginiana,260.752190247953,83,0,0,DBH tape,dead
+M6,385_2,,97.3893722612836,31,,0,DBH tape,dead
+M6,384,Pinus taeda,709.999939711293,226,9,1,DBH tape,
+M6,383,Juniperus virginiana,304.73448739821,97,0,0,DBH tape,dead
+M6,382,Juniperus virginiana,274.889357189107,87.5,0,0,DBH tape,dead
+M6,381,Juniperus virginiana,55.6061899685393,17.7,10,1,DBH tape,
+M6,380,Juniperus virginiana,463.384916404495,147.5,10,1,DBH tape,
+M6,379,Juniperus virginiana,267.035375555132,85,0,0,DBH tape,dead
+M6,378,Pinus taeda,1135.68574427271,361.5,10,1,DBH tape,
+M6,377,Nyssa sylvatica,345.575191894877,110,10,1,DBH tape,
+M6,376,Nyssa sylvatica,359.712358836031,114.5,8,1,DBH tape,poor
+M6,375,Pinus taeda,455.53093477052,145,9,1,DBH tape,
+M6,374,Nyssa sylvatica,15.8650429006285,5.05,7,1,DBH tape,poor
+M6,373,Juniperus virginiana,342.433599241287,109,10,1,DBH tape,outside the plot
+M6,372,Nyssa sylvatica,326.725635973339,104,5,1,DBH tape,outside the plot
+M6,371,Nyssa sylvatica,532.49995478347,169.5,10,1,DBH tape,
+M6,370,Pinus taeda,1228.36272755361,391,10,1,DBH tape,
+M6,369,Pinus taeda,1041.43796466502,331.5,10,1,DBH tape,
+M6,368,Juniperus virginiana,376.991118430775,120,10,1,DBH tape,
+M6,367,Pinus taeda,134.146006308284,42.7,10,1,DBH tape,
+M6,366,Juniperus virginiana,246.615023306799,78.5,10,1,DBH tape,
+M6,365,Pinus taeda,1496.96889943554,476.5,10,1,DBH tape,
+M6,363,Juniperus virginiana,567.057473972958,180.5,10,1,DBH tape,
+M6,362,Juniperus virginiana,486.946861306418,155,10,1,DBH tape,
+M7,337,Pinus taeda,,336,10,1,DBH tape,
+M7,336,Nyssa sylvatica,,775,0,0,DBH tape,
+M7,335,Nyssa sylvatica,,110,10,1,DBH tape,
+M7,334,Juniperus virginiana,480.663675999238,153,0,0,DBH tape,dead
+M7,333,Nyssa sylvatica,207.345115136926,66,8,1,DBH tape,
+M7,332,Juniperus virginiana,567.057473972958,180.5,8,1,DBH tape,
+M7,331,Nyssa sylvatica,486.946861306418,155,10,1,DBH tape,
+M7,331_2,,534.070751110265,170,,1,DBH tape,
+M7,330,Pinus taeda,1239.35830184117,394.5,10,1,DBH tape,
+M7,329,Nyssa sylvatica,370.707933123596,118,0,0,DBH tape,dead
+M7,328,Juniperus virginiana,403.694655986288,128.5,10,1,DBH tape,
+M7,327,Pinus taeda,1350.88484104361,430,0,0,DBH tape,dead
+M7,326,Juniperus virginiana,229.336263712055,73,0,0,DBH tape,dead
+M7,325,Juniperus virginiana,345.575191894877,110,10,1,DBH tape,
+M7,324,Juniperus virginiana,260.752190247953,83,0,0,DBH tape,dead
+M7,323,Juniperus virginiana,369.137136796801,117.5,9,1,DBH tape,
+M7,322,Pinus taeda,917.34505484822,292,10,1,DBH tape,
+M7,321,Pinus taeda,1555.08836352695,495,10,1,DBH tape,
+M7,320,Juniperus virginiana,750.840644207961,239,10,1,DBH tape,
+M7,319,Juniperus virginiana,350.287580875262,111.5,0,0,DBH tape,dead
+M7,318,Nyssa sylvatica,245.044226980004,78,0,0,DBH tape,dead
+M7,317,Pinus taeda,604.756585816035,192.5,10,1,DBH tape,
+M7,316,Juniperus virginiana,395.840674352314,126,0,0,DBH tape,dead
+M7,315,Juniperus virginiana,389.557489045134,124,0,0,DBH tape,dead
+M7,314,Pinus taeda,1583.36269740926,504,10,1,DBH tape,
+M7,313,Pinus taeda,1049.29194629899,334,10,1,DBH tape,
+M7,312,Juniperus virginiana,706.858347057703,225,10,1,DBH tape,
+M7,311,Pinus taeda,1399.57952717425,445.5,10,1,DBH tape,
+M7,310,Juniperus virginiana,376.991118430775,120,0,0,DBH tape,dead
+M7,309,Pinus taeda,502.654824574367,160,0,0,DBH tape,dead
+M7,308,Pinus taeda,1064.99990956694,339,0,0,DBH tape,dead
+L0,194,Juniperus virginiana,172.787595947439,55,0,0,DBH tape,dead
+L0,193,Juniperus virginiana,282.743338823081,90,10,1,DBH tape,
+L0,192,Juniperus virginiana,135.088484104361,43,4,1,DBH tape,
+L0,191,Juniperus virginiana,213.628300444106,68,3,1,DBH tape,
+L0,190,Juniperus virginiana,468.097305384879,149,10,1,DBH tape,
+L0,189,Juniperus virginiana,1201.6591899981,382.5,10,1,DBH tape,
+L0,188,Juniperus virginiana,322.013246992954,102.5,10,1,DBH tape,
+L0,188_2,,307.8760800518,98,,,DBH tape,
+L0,187,Pinus taeda,1162.38928182822,370,9,1,DBH tape,
+L0,186,Juniperus virginiana,248.185819633594,79,0,0,DBH tape,dead
+L0,185,Juniperus virginiana,282.743338823081,90,9,1,DBH tape,
+L0,184,Juniperus virginiana,326.725635973339,104,10,1,DBH tape,
+L0,183,Juniperus virginiana,524.645973149495,167,10,1,DBH tape,
+L0,182,Juniperus virginiana,502.654824574367,160,10,1,DBH tape,
+L0,181,Juniperus virginiana,204.203522483337,65,0,0,DBH tape,dead
+L0,180,Juniperus virginiana,565.486677646163,180,10,1,DBH tape,
+L0,179,Pinus taeda,1149.82291121386,366,10,1,DBH tape,
+L0,178,Juniperus virginiana,194.778744522567,62,10,1,DBH tape,
+L0,177,Pinus taeda,659.734457253857,210,0,0,DBH tape,dead
+L0,176,Juniperus virginiana,408.407044966673,130,9,1,DBH tape,
+L0,175,Pinus taeda,840.37603483527,267.5,0,0,DBH tape,dead
+L0,174,Nyssa sylvatica,285.884931476671,91,0,0,DBH tape,"unfound, dead"
+L0,173,Juniperus virginiana,263.893782901543,84,0,0,DBH tape,dead
+L0,172,Nyssa sylvatica,483.805268652828,154,0,0,DBH tape,dead
+L0,171,Pinus taeda,841.946831162065,268,0,0,DBH tape,dead
+L0,170,Nyssa sylvatica,229.336263712055,73,8,1,DBH tape,
+L0,169,Juniperus virginiana,307.8760800518,98,10,1,DBH tape,
+L0,168,Pinus taeda,1112.12379937079,354,0,0,DBH tape,dead
+L0,167,Juniperus virginiana,317.300858012569,101,10,1,DBH tape,
+L0,166,Juniperus virginiana,458.67252742411,146,10,1,DBH tape,
+L0,165,Juniperus virginiana,248.185819633594,79,10,1,DBH tape,
+L0,164,Juniperus virginiana,375.42032210398,119.5,10,1,DBH tape,
+L0,163,Pinus taeda,1325.75209981489,422,0,0,DBH tape,dead
+L0,162,Juniperus virginiana,194.778744522567,62,10,1,DBH tape,
+L0,161,Juniperus virginiana,447.676953136546,142.5,10,1,DBH tape,
+L0,160,Pinus taeda,1077.5662801813,343,0,0,DBH tape,dead
+L0,159,Juniperus virginiana,311.01767270539,99,9,1,DBH tape,
+L0,158,Juniperus virginiana,593.761011528471,189,10,1,DBH tape,
+L0,157,Pinus taeda,939.336203423348,299,0,0,DBH tape,dead
+L0,156,Juniperus virginiana,339.292006587698,108,10,1,DBH tape,
+L0,155,Pinus taeda,320.442450666159,102,8,1,DBH tape,
+L0,154,Nyssa sylvatica,314.159265358979,100,0,0,DBH tape,dead
+L0,153,Pinus taeda,936.194610769758,298,0,0,DBH tape,dead
+L0,152,Pinus taeda,1145.11052223348,364.5,0,0,DBH tape,dead
+L0,151,Juniperus virginiana,463.384916404495,147.5,9,1,DBH tape,
+L0,150,Pinus taeda,973.893722612836,310,10,1,DBH tape,
+L1,149,Juniperus virginiana,450.818545790135,143.5,10,1,DBH tape,
+L1,148,Juniperus virginiana,256.039801267568,81.5,0,0,DBH tape,"unfound,dead"
+L1,147,Juniperus virginiana,267.035375555132,85,0,0,DBH tape,dead
+L1,146,Juniperus virginiana,885.929128312322,282,10,1,DBH tape,
+L1,145,Juniperus virginiana,507.367213554752,161.5,10,1,DBH tape,
+L1,144,Nyssa sylvatica,201.061929829747,64,0,0,DBH tape,"unfound, dead"
+L1,143,Pinus taeda,1033.58398303104,329,0,0,DBH tape,dead
+L1,142,Juniperus virginiana,251.327412287183,80,0,0,DBH tape,"falling, dead"
+L1,141,Juniperus virginiana,354.999969855647,113,7,1,DBH tape,fallen
+L1,140,Juniperus virginiana,219.911485751286,70,0,0,DBH tape,"fallen, dead"
+L1,139,Juniperus virginiana,405.265452313083,129,9,1,DBH tape,fallen
+L1,138,Pinus taeda,722.566310325652,230,0,0,DBH tape,dead
+L1,137,Pinus taeda,1281.76980266464,408,0,0,DBH tape,dead
+L1,136,Juniperus virginiana,219.911485751286,70,9,1,DBH tape,
+L1,135,Juniperus virginiana,409.977841293468,130.5,10,1,DBH tape,
+L1,134,Juniperus virginiana,361.283155162826,115,10,1,DBH tape,
+L1,133,Juniperus virginiana,267.035375555132,85,0,0,DBH tape,dead
+L1,132,Juniperus virginiana,562.345084992573,179,10,1,DBH tape,
+L1,131,Juniperus virginiana,389.557489045134,124,10,1,DBH tape,
+L1,130,Pinus taeda,920.486647501809,293,0,0,DBH tape,dead
+L1,129,Juniperus virginiana,480.663675999238,153,7,1,DBH tape,
+L1,128,Pinus taeda,1300.61935858617,414,7,1,DBH tape,
+L1,127,Pinus taeda,345.575191894877,110,0,0,DBH tape,dead
+L1,126,Pinus taeda,1093.27424344925,348,0,0,DBH tape,dead
+L1,125,Pinus taeda,1046.1503536454,333,0,0,DBH tape,dead
+L1,124,Juniperus virginiana,392.699081698724,125,8,1,DBH tape,
+L1,123,Juniperus virginiana,376.991118430775,120,10,1,DBH tape,
+L1,122,Juniperus virginiana,257.610597594363,82,5,1,DBH tape,
+L1,121,Pinus taeda,446.106156809751,142,0,0,DBH tape,dead
+L1,120,Juniperus virginiana,442.964564156161,141,10,1,DBH tape,untagged
+L1,119,Juniperus virginiana,241.902634326414,77,5,1,DBH tape,
+L1,118,Juniperus virginiana,556.061899685393,177,10,1,DBH tape,
+L1,117,Pinus taeda,750.840644207961,239,0,0,DBH tape,dead
+L1,116,Juniperus virginiana,816.814089933346,260,10,1,DBH tape,
+L1,115,Pinus taeda,364.424747816416,116,7,1,DBH tape,
+L1,114,Juniperus virginiana,548.207918051419,174.5,10,1,DBH tape,
+L1,113,Pinus taeda,1176.52644876938,374.5,0,0,DBH tape,dead
+L1,112,Juniperus virginiana,414.690230273853,132,10,1,DBH tape,
+L1,111,Pinus taeda,823.097275240526,262,0,0,DBH tape,dead
+L1,110,Pinus taeda,1064.99990956694,339,9,1,DBH tape,
+L1,109,Juniperus virginiana,691.150383789755,220,10,1,DBH tape,
+L1,108,Pinus taeda,1000.59726016835,318.5,8,1,DBH tape,
+L1,107,Juniperus virginiana,254.469004940773,81,9,1,DBH tape,
+L2,242,Juniperus virginiana,430.398193541802,137,10,1,DBH tape,
+L2,241,Pinus taeda,1096.41583610284,349,0,0,DBH tape,dead
+L2,240,Nyssa sylvatica,446.106156809751,142,9,1,DBH tape,
+L2,239,Nyssa sylvatica,408.407044966673,130,10,1,DBH tape,
+L2,238,Juniperus virginiana,336.150413934108,107,0,0,DBH tape,dead
+L2,237,Pinus taeda,1275.48661735746,406,10,1,DBH tape,
+L2,236,Juniperus virginiana,197.920337176157,63,0,0,DBH tape,dead
+L2,235,Pinus taeda,1058.71672425976,337,10,1,DBH tape,
+L2,234,Pinus taeda,158.650429006285,50.5,0,0,DBH tape,dead
+L2,233,??,172.787595947439,55,0,0,DBH tape,dead
+L2,232,Juniperus virginiana,367.566340470006,117,10,1,DBH tape,
+L2,231,Juniperus virginiana,212.057504117311,67.5,10,1,DBH tape,
+L2,230,Juniperus virginiana,383.274303737955,122,7,1,DBH tape,
+L2,229,Juniperus virginiana,386.415896391545,123,10,1,DBH tape,
+L2,228,Pinus taeda,966.039740978861,307.5,9,1,DBH tape,
+L2,227,Nyssa sylvatica,358.141562509236,114,7,1,DBH tape,
+L2,227_2,,326.725635973339,104,10,1,DBH tape,
+L2,226,Juniperus virginiana,241.902634326414,77,10,1,DBH tape,
+L2,225,Pinus taeda,973.893722612836,310,0,0,DBH tape,dead
+L2,224,Juniperus virginiana,345.575191894877,110,0,0,DBH tape,dead
+L2,223,Juniperus virginiana,534.070751110265,170,10,1,DBH tape,
+L2,222,Pinus taeda,769.690200129499,245,9,1,DBH tape,
+L2,221,Pinus taeda,835.663645854885,266,0,0,DBH tape,dead
+L2,220,??,183.783170235003,58.5,0,0,DBH tape,dead
+L2,219,Juniperus virginiana,490.088453960008,156,0,0,DBH tape,dead
+L2,218,Pinus taeda,1357.16802635079,432,10,1,DBH tape,
+L2,217,Juniperus virginiana,628.318530717959,200,10,1,DBH tape,
+L2,216,Pinus taeda,988.03088955399,314.5,0,0,DBH tape,dead
+L2,215,Pinus taeda,1165.53087448181,371,0,0,DBH tape,dead
+L2,214,Juniperus virginiana,334.579617607313,106.5,10,1,DBH tape,
+L2,213,Pinus taeda,1107.4114103904,352.5,0,0,DBH tape,dead
+L2,212,Juniperus virginiana,251.327412287183,80,9,1,DBH tape,
+L2,211,Pinus taeda,570.199066626548,181.5,8,1,DBH tape,
+L2,210,??,298.45130209103,95,0,0,DBH tape,unfound
+L2,209,Juniperus virginiana,235.619449019234,75,10,1,DBH tape,
+L2,208,Pinus taeda,1218.93794959284,388,0,0,DBH tape,dead
+L2,207,Pinus taeda,373.849525777185,119,0,0,DBH tape,dead
+L2,206,Pinus taeda,609.46897479642,194,0,0,DBH tape,dead
+L2,205,Pinus taeda,1206.37157897848,384,0,0,DBH tape,dead
+L2,204,Juniperus virginiana,502.654824574367,160,10,1,DBH tape,
+L2,203,Pinus taeda,764.977811149115,243.5,8,1,DBH tape,
+L2,202,Juniperus virginiana,436.681378848981,139,10,1,DBH tape,
+L2,201,Juniperus virginiana,216.769893097696,69,0,0,DBH tape,dead
+L2,198,Pinus taeda,879.645943005142,280,0,0,DBH tape,dead
+L2,197,Pinus taeda,775.973385436679,247,0,0,DBH tape,dead
+L2,196,Juniperus virginiana,650.309679293087,207,10,1,DBH tape,
+L2,195,Pinus taeda,1244.07069082156,396,0,0,DBH tape,dead
+L3,307,Nyssa sylvatica,439.822971502571,140,0,0,DBH tape,dead
+L3,306,Pinus taeda,870.221165044373,277,0,0,DBH tape,dead
+L3,305,Juniperus virginiana,439.822971502571,140,10,1,DBH tape,
+L3,304,Juniperus virginiana,436.681378848981,139,10,1,DBH tape,
+L3,303,Juniperus virginiana,207.345115136926,66,0,0,DBH tape,dead
+L3,302,Nyssa sylvatica,177.499984927823,56.5,0,0,DBH tape,dead
+L3,301,Nyssa sylvatica,329.867228626928,105,0,0,DBH tape,dead
+L3,200,Pinus taeda,138.858395288669,44.2,10,1,DBH tape,
+L3,199,Juniperus virginiana,323.584043319749,103,10,1,DBH tape,
+L3,300,Juniperus virginiana,241.902634326414,77,10,1,DBH tape,pushed over by tree
+L3,299,Juniperus virginiana,389.557489045134,124,10,1,DBH tape,
+L3,298,Juniperus virginiana,194.778744522567,62,0,0,DBH tape,"dead, pushed over by tree"
+L3,297,Juniperus virginiana,175.929188601028,56,0,0,DBH tape,dead
+L3,296,Juniperus virginiana,347.145988221672,110.5,10,1,DBH tape,
+L3,295,Pinus taeda,1096.41583610284,349,9,1,DBH tape,
+L3,294,Pinus taeda,1239.35830184117,394.5,10,1,DBH tape,
+L3,293,Juniperus virginiana,895.353906273091,285,10,1,DBH tape,
+L3,292,Pinus taeda,706.858347057703,225,0,0,DBH tape,dead
+L3,291,Juniperus virginiana,251.327412287183,80,9,1,DBH tape,
+L3,290,Juniperus virginiana,223.053078404875,71,0,0,DBH tape,dead
+L3,289,Juniperus virginiana,157.07963267949,50,0,0,DBH tape,dead
+L3,288,Pinus taeda,1090.13265079566,347,0,0,DBH tape,dead
+L3,287,Pinus taeda,1036.72557568463,330,0,0,DBH tape,dead
+L3,286,Juniperus virginiana,543.495529071034,173,10,1,DBH tape,
+L3,285,Juniperus virginiana,210.486707790516,67,7,1,DBH tape,
+L3,284,Juniperus virginiana,276.460153515902,88,0,0,DBH tape,dead
+L3,283,Juniperus virginiana,290.597320457056,92.5,10,1,DBH tape,
+L3,282,Juniperus virginiana,469.668101711674,149.5,10,1,DBH tape,
+L3,281,Nyssa sylvatica,496.371639267187,158,7,1,DBH tape,
+L3,280,Juniperus virginiana,455.53093477052,145,10,1,DBH tape,
+L3,279,Pinus taeda,1437.27863901733,457.5,0,0,DBH tape,dead
+L3,278,Juniperus virginiana,398.982267005904,127,10,1,DBH tape,
+L3,277,Nyssa sylvatica,263.893782901543,84,0,0,DBH tape,dead
+L3,276,Juniperus virginiana,329.867228626928,105,5,1,DBH tape,
+L3,275,Juniperus virginiana,656.592864600267,209,10,1,DBH tape,
+L3,274,Nyssa sylvatica,494.800842940392,157.5,8,1,DBH tape,
+L4,273,Pinus taeda,791.681348704628,252,9,1,DBH tape,untagged
+L4,272,Pinus taeda,1134.11494794592,361,0,0,DBH tape,"just outside plot, dead"
+L4,271,Juniperus virginiana,455.53093477052,145,10,1,DBH tape,leaning
+L4,270,Pinus taeda,402.123859659494,128,0,0,DBH tape,dead
+L4,269,Juniperus virginiana,543.495529071034,173,0,0,DBH tape,dead
+L4,268,Juniperus virginiana,290.597320457056,92.5,10,1,DBH tape,?
+L4,267,Nyssa sylvatica,392.699081698724,125,0,0,DBH tape,"outside string, dead"
+L4,266,Pinus taeda,1083.84946548848,345,0,0,DBH tape,"?, dead"
+L4,265,Juniperus virginiana,471.238898038469,150,9,1,DBH tape,
+L4,264,Pinus taeda,1288.05298797182,410,0,0,DBH tape,dead
+L4,263,Juniperus virginiana,433.539786195391,138,10,1,DBH tape,
+L4,262,Pinus taeda,1463.98217657284,466,10,1,DBH tape,
+L4,261,Pinus taeda,1036.72557568463,330,9,1,DBH tape,
+L4,260,Pinus taeda,967.610537305656,308,10,1,DBH tape,
+L4,259,Nyssa sylvatica,201.061929829747,64,0,0,DBH tape,dead
+L4,258,Pinus taeda,1005.30964914873,320,10,1,DBH tape,
+L4,257,Juniperus virginiana,571.769862953342,182,7,1,DBH tape,untagged 
+L4,256,Juniperus virginiana,345.575191894877,110,10,1,DBH tape,
+L4,255,Pinus taeda,735.132680940012,234,10,1,DBH tape,
+L4,254,Pinus taeda,595.331807855266,189.5,0,0,DBH tape,dead
+L4,253,Pinus taeda,684.867198482575,218,0,0,DBH tape,dead
+L4,252,Pinus taeda,989.601685880785,315,10,1,DBH tape,
+L4,251,Juniperus virginiana,213.628300444106,68,10,1,DBH tape,
+L4,250,Juniperus virginiana,353.429173528852,112.5,10,1,DBH tape,
+L4,249,??,314.159265358979,100,0,0,DBH tape,dead
+L4,248,Pinus taeda,267.035375555132,85,10,1,DBH tape,
+L4,247,Juniperus virginiana,986.460093227195,314,8,1,DBH tape,
+L4,246,Juniperus virginiana,424.115008234622,135,10,1,DBH tape,
+L4,245,Pinus taeda,1052.43353895258,335,9,1,DBH tape,
+L4,244,Nyssa sylvatica,474.380490692059,151,0,0,DBH tape,dead
+L4,243,Pinus taeda,1043.00876099181,332,0,0,DBH tape,dead
+L5,401,Juniperus virginiana,251.327412287183,80,0,0,DBH tape,dead
+L5,402,Juniperus virginiana,375.42032210398,119.5,0,0,DBH tape,dead
+L5,403,Juniperus virginiana,502.654824574367,160,10,1,DBH tape,
+L5,404,Juniperus virginiana,298.45130209103,95,0,0,DBH tape,dead
+L5,405,Juniperus virginiana,273.318560862312,87,10,1,DBH tape,
+L5,406,Pinus taeda,895.353906273091,285,3,0,DBH tape,"no needles , dead"
+L5,407,Juniperus virginiana,559.203492338983,178,10,1,DBH tape,
+L5,408,Juniperus virginiana,565.486677646163,180,0,0,DBH tape,dead
+L5,409,Juniperus virginiana,446.106156809751,142,0,0,DBH tape,dead
+L5,410,Juniperus virginiana,196.663700114721,62.6,0,0,DBH tape,dead
+L5,411,Juniperus virginiana,314.159265358979,100,0,0,DBH tape,dead
+L5,412,??,270.176968208722,86,0,0,DBH tape,dead
+L5,413,Juniperus virginiana,267.035375555132,85,0,0,DBH tape,dead
+L5,414,Nyssa sylvatica,295.309709437441,94,6,1,DBH tape,
+L5,415,Pinus taeda,1064.99990956694,339,10,1,DBH tape,
+L5,416,Pinus taeda,461.8141200777,147,10,1,DBH tape,
+L5,417,Juniperus virginiana,345.575191894877,110,0,0,DBH tape,dead
+L5,418,Juniperus virginiana,307.8760800518,98,0,0,DBH tape,dead
+L5,419,Pinus taeda,970.752129959246,309,0,0,DBH tape,dead
+L5,420,Pinus taeda,1118.40698467797,356,10,1,DBH tape,
+L5,421,Juniperus virginiana,251.327412287183,80,10,1,DBH tape,
+L5,422,Juniperus virginiana,769.690200129499,245,10,1,DBH tape,
+L5,423,Pinus taeda,807.389311972577,257,9,1,DBH tape,
+L5,424,Pinus taeda,298.45130209103,95,10,1,DBH tape,
+L5,425,Pinus taeda,706.858347057703,225,10,1,DBH tape,
+L5,426,Juniperus virginiana,694.291976443344,221,0,0,DBH tape,dead
+L5,427,??,251.327412287183,80,0,0,DBH tape,dead
+L5,428,Pinus taeda,490.088453960008,156,9,1,DBH tape,
+L5,429,Juniperus virginiana,367.566340470006,117,10,1,DBH tape,
+L5,430,Pinus taeda,955.044166691297,304,0,0,DBH tape,dead
+L5,431,Juniperus virginiana,351.858377202057,112,10,1,DBH tape,
+L5,432,Pinus taeda,669.159235214626,213,10,1,DBH tape,
+L5,433,Pinus taeda,750.840644207961,239,0,0,DBH tape,dead
+L5,434,Juniperus virginiana,376.991118430775,120,9,1,DBH tape,
+L5,435,Pinus taeda,1061.85831691335,338,9,1,DBH tape,
+L5,436,Pinus taeda,370.707933123596,118,9,1,DBH tape,
+L5,437,Pinus taeda,863.937979737193,275,0,0,DBH tape,dead
+L5,438,Pinus taeda,1476.5485471872,470,10,1,DBH tape,
+L5,439,Juniperus virginiana,398.982267005904,127,10,1,DBH tape,
+L5,440,Juniperus virginiana,728.849495632832,232,10,1,DBH tape,
+L5,441,Juniperus virginiana,537.212343763855,171,10,1,DBH tape,
+L5,442,Juniperus virginiana,398.982267005904,127,10,1,DBH tape,
+L5,443,Pinus taeda,1319.46891450771,420,0,0,DBH tape,dead
+L5,444,Pinus taeda,490.088453960008,156,0,0,DBH tape,dead
+L5,445,Pinus taeda,480.663675999238,153,0,0,DBH tape,dead
+L6,106,Pinus taeda,1060.28752058656,337.5,10,1,DBH tape,
+L6,105,Juniperus virginiana,408.407044966673,130,0,0,DBH tape,dead
+L6,104,Juniperus virginiana,190.066355542182,60.5,0,0,DBH tape,dead
+L6,103,??,911.06186954104,290,0,0,DBH tape,dead
+L6,102,Juniperus virginiana,405.265452313083,129,10,1,DBH tape,
+L6,101,Juniperus virginiana,449.24774946334,143,0,0,DBH tape,dead
+L6,100,Juniperus virginiana,144.51326206513,46,0,0,DBH tape,dead
+L6,99,Nyssa sylvatica,753.98223686155,240,9,1,DBH tape,
+L6,98,Juniperus virginiana,455.53093477052,145,9,1,DBH tape,
+L6,97,Pinus taeda,565.486677646163,180,0,0,DBH tape,dead
+L6,96,Juniperus virginiana,361.283155162826,115,0,0,DBH tape,dead
+L6,95,Pinus taeda,1099.55742875643,350,8,1,DBH tape,
+L6,94,Juniperus virginiana,519.933584169111,165.5,9,1,DBH tape,
+L6,93,Juniperus virginiana,447.676953136546,142.5,10,1,DBH tape,
+L6,92,Nyssa sylvatica,323.584043319749,103,0,0,DBH tape,dead
+L6,91,Juniperus virginiana,270.176968208722,86,0,0,DBH tape,dead
+L6,90,Juniperus virginiana,157.07963267949,50,0,0,DBH tape,dead
+L6,89,Juniperus virginiana,303.163691071415,96.5,9,1,DBH tape,
+L6,88,Juniperus virginiana,289.026524130261,92,0,0,DBH tape,dead
+L6,87,Juniperus virginiana,204.203522483337,65,0,0,DBH tape,dead
+L6,86,Juniperus virginiana,714.712328691678,227.5,10,1,DBH tape,
+L6,85,Pinus taeda,1130.97335529233,360,9,1,DBH tape,
+L6,84,Juniperus virginiana,402.123859659494,128,10,1,DBH tape,
+L6,83,Juniperus virginiana,309.446876378595,98.5,8,1,DBH tape,
+L6,82,Juniperus virginiana,135.088484104361,43,0,0,DBH tape,dead
+L6,81,Juniperus virginiana,120.951317163207,38.5,0,0,DBH tape,dead
+L6,80,Juniperus virginiana,188.495559215388,60,0,0,DBH tape,dead
+L6,79,Juniperus virginiana,273.318560862312,87,8,1,DBH tape,
+L6,78,Pinus taeda,1039.86716833822,331,8,1,DBH tape,
+L6,77,Juniperus virginiana,706.858347057703,225,10,1,DBH tape,
+L6,76,Juniperus virginiana,358.141562509236,114,10,1,DBH tape,
+L6,75,Pinus taeda,1319.46891450771,420,0,0,DBH tape,dead
+L6,74,Juniperus virginiana,475.951287018854,151.5,10,1,DBH tape,
+L6,73,Juniperus virginiana,405.265452313083,129,10,1,DBH tape,
+L6,72,Nyssa sylvatica,329.867228626928,105,0,0,DBH tape,dead
+L6,71,Juniperus virginiana,744.557458900781,237,10,1,DBH tape,
+L6,70,Juniperus virginiana,243.473430653209,77.5,8,1,DBH tape,
+L6,69,Juniperus virginiana,510.8229654737,162.6,9,1,DBH tape,
+L6,68,Pinus taeda,1649.33614313464,525,10,1,DBH tape,
+L6,67,Juniperus virginiana,417.831822927442,133,0,0,DBH tape,dead
+L6,66,Pinus taeda,1104.26981773681,351.5,0,0,DBH tape,dead
+L6,65,Juniperus virginiana,314.159265358979,100,0,0,DBH tape,dead
+L6,64,Pinus taeda,1253.49546878233,399,0,0,DBH tape,
+L6,63,Juniperus virginiana,354.999969855647,113,10,1,DBH tape,
+L6,61,Pinus taeda,568.628270299753,181,7,1,DBH tape,
+L6,60,Juniperus virginiana,565.486677646163,180,10,1,DBH tape,
+L6,59,Juniperus virginiana,175.929188601028,56,0,0,DBH tape,dead
+L6,58,Juniperus virginiana,260.752190247953,83,0,0,DBH tape,dead
+L6,57,??,175.929188601028,56,0,0,DBH tape,dead
+L6,56,Juniperus virginiana,1222.07954224643,389,0,0,DBH tape,dead
+L6,55,Juniperus virginiana,455.53093477052,145,8,1,DBH tape,
+L6,54,Juniperus virginiana,298.45130209103,95,0,0,DBH tape,dead
+L6,53,Juniperus virginiana,367.566340470006,117,0,0,DBH tape,dead
+L6,52,Pinus taeda,794.822941358218,253,7,1,DBH tape,
+L6,51,Juniperus virginiana,175.929188601028,56,0,0,DBH tape,dead
+L6,50,Juniperus virginiana,212.057504117311,67.5,9,1,DBH tape,
+L6,49,Juniperus virginiana,612.61056745001,195,10,1,DBH tape,
+L6,48,Juniperus virginiana,260.752190247953,83,0,0,DBH tape,dead
+L6,47,Nyssa sylvatica,270.176968208722,86,0,0,DBH tape,dead
+L6,46,Pinus taeda,1499.79633282377,477.4,3,0,DBH tape,"no needles, dead"
+L6,45,Juniperus virginiana,439.822971502571,140,0,0,DBH tape,dead
+L6,44,Juniperus virginiana,241.902634326414,77,10,1,DBH tape,
+L6,43,??,666.017642561036,212,0,0,DBH tape,dead
+L6,42,Juniperus virginiana,455.53093477052,145,0,0,DBH tape,dead
+L7,39,Pinus taeda,1008.45124180232,321,0,0,DBH tape,"outside plot, dead"
+L7,38,Juniperus virginiana,373.849525777185,119,0,0,DBH tape,dead
+L7,37,Juniperus virginiana,122.522113490002,39,0,0,DBH tape,dead
+L7,36,Juniperus virginiana,232.477856365645,74,10,1,DBH tape,
+L7,35,Pinus taeda,1115.26539202438,355,8,1,DBH tape,outside plot
+L7,34,Juniperus virginiana,464.955712731289,148,9,1,DBH tape,outside plot
+L7,33,Pinus taeda,1325.75209981489,422,0,0,DBH tape,dead
+L7,32,Juniperus virginiana,188.495559215388,60,9,1,DBH tape,falling over
+L7,31,Juniperus virginiana,373.849525777185,119,9,1,DBH tape,falling over
+L7,30,Juniperus virginiana,581.194640914112,185,10,1,DBH tape,
+L7,29,Juniperus virginiana,395.840674352314,126,10,1,DBH tape,
+L7,28,Juniperus virginiana,386.415896391545,123,10,1,DBH tape,
+L7,27,Juniperus virginiana,345.575191894877,110,9,1,DBH tape,
+L7,26,Juniperus virginiana,380.132711084365,121,10,1,DBH tape,
+L7,25,Juniperus virginiana,345.575191894877,110,0,0,DBH tape,dead
+L7,24,Juniperus virginiana,329.867228626928,105,0,0,DBH tape,dead
+L7,23,Juniperus virginiana,340.862802914493,108.5,0,0,DBH tape,dead
+L7,22,Pinus taeda,1046.1503536454,333,0,0,DBH tape,dead
+L7,21,Juniperus virginiana,179.070781254618,57,10,1,DBH tape,
+L7,20,Pinus taeda,964.468944652067,307,10,1,DBH tape,
+L7,19,Juniperus virginiana,157.07963267949,50,0,0,DBH tape,dead
+L7,18,Juniperus virginiana,282.743338823081,90,8,1,DBH tape,
+L7,17,Juniperus virginiana,667.274279622472,212.4,10,1,DBH tape,
+L7,16,Juniperus virginiana,326.725635973339,104,0,0,DBH tape,dead
+L7,15,Juniperus virginiana,311.01767270539,99,0,0,DBH tape,dead
+L7,14,Juniperus virginiana,166.504410640259,53,8,1,DBH tape,
+L7,13,Juniperus virginiana,603.18578948924,192,10,1,DBH tape,
+L7,12,Pinus taeda,508.938009881546,162,0,0,DBH tape,dead
+L7,11,Pinus taeda,848.230016469244,270,0,0,DBH tape,dead
+L7,10,Juniperus virginiana,447.676953136546,142.5,0,0,DBH tape,dead
+L7,9,Pinus taeda,1149.82291121386,366,0,0,DBH tape,dead
+L7,8,Juniperus virginiana,502.654824574367,160,10,1,DBH tape,
+L7,7,Juniperus virginiana,1074.42468752771,342,6,1,DBH tape,
+L7,6,Pinus taeda,540.353936417444,172,0,0,DBH tape,dead
+L7,5,Juniperus virginiana,389.557489045134,124,9,1,DBH tape,
+L7,4,Juniperus virginiana,282.743338823081,90,0,0,DBH tape,dead
+L7,3,Juniperus virginiana,304.73448739821,97,10,1,DBH tape,
+L7,2,Juniperus virginiana,329.867228626928,105,7,1,DBH tape,

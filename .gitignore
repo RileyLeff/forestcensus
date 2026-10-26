@@ -1,10 +1,22 @@
-# Python-generated files
+.venv/
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+credentials*.json
+service-account*.json
+.DS_Store
+.playwright-mcp/
+.handoff/
+tmp/
+.pytest_cache/
 __pycache__/
-*.py[oc]
-build/
-dist/
-wheels/
-*.egg-info
-
-# Virtual environments
-.venv
+*.py[cod]
+output/
+review-ui/.svelte-kit/
+review-ui/build/
+review-ui/node_modules/
+canonical-ui/.svelte-kit/
+canonical-ui/build/
+canonical-ui/node_modules/

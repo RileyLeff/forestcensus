@@ -1,0 +1,118 @@
+version = "october-2026-v4"
+survey_id = "October_2026"
+recent_surveys = ["October_2025", "May_2026"]
+expected_plots = ["H0", "H1", "H2", "H3", "H4", "H5", "H6", "H7", "M0", "M1", "M2", "M3", "M4", "M5", "M6", "M7", "L0", "L1", "L2", "L3", "L4", "L5", "L6", "L7", "R1", "R2", "R3", "R4"]
+missing_surveys_to_omit = 2
+omit_dead_fallen = true
+recheck_standing_conflicts = true
+evergreen_genera = ["Pinus", "Juniperus", "Morella", "Ilex"]
+decision_reference = "config/identity.toml; docs/october_2026_datasheet_requirements.md"
+difficulty_sources = ["output/llm_transcription/may_2026_all_gemini37_printed_manifest/page_metadata.csv"]
+
+# Supplement historical context only; these must match the published input hashes.
+[hsp_sources]
+October_2025 = "output/llm_transcription/oct_2025_reviewed/import_recent_format_reviewed.csv"
+May_2026 = "output/llm_transcription/may_2026_reviewed/import_recent_format_reviewed.csv"
+
+# Operational recording labels, not new identity transformations.
+[primary_tags]
+"L0/171" = "905"
+"L0/177" = "989"
+"L1/130" = "927"
+"L1/144" = "924"
+"L2/210" = "928"
+"L2/816" = "816"
+"L2/5380" = "5380"
+"L3/284" = "1000"
+"L5/433" = "986"
+"L6/57" = "991"
+"L7/33" = "908"
+"M6/5145" = "5145"
+"R4/5163" = "5163"
+
+# These approved historical splits are not extra stems of the present plant.
+# Keep them in plot guidance and the coverage ledger, not ambiguous tag rows.
+[historical_identity_checks]
+"L6/74_old_juniper" = "The current 74 is a pine (~400 mm). Older records under 74 describe a separate juniper."
+"L6/75_old_dead_pinus" = "The current 75 is a pine (~160 mm). Older records under 75 describe a separate dead pine of 420 mm."
+"M5/orphan_2497_nyssa_2019" = "The current 2497 is a pine (~290 mm). 2019 records of a three-stem Nyssa under 2497 are unexplained and may describe a different tree."
+"M5/orphan_2498_nyssa_2019" = "The current 2498 is a juniper (~140 mm). A 2019 record of a Nyssa under 2498 is unexplained and may describe a different tree."
+"M5/orphan_2500_pinus_2019" = "The current 2500 is a Nyssa (~145 mm). A 2019 record of a pine under 2500 is unexplained and may describe a different tree."
+
+[[field_notes]]
+plot = "R4"
+tags = ["5163", "5243", "5238"]
+reference = "config/identity.toml: aliases 5243 and 5238 -> 5163"
+text = "5163 (red maple) has three stems; the ~70 mm stem was recorded dead in October 2025 and May 2026. Records also list this plant under tags 5243 and 5238."
+
+[[field_notes]]
+plot = "L1"
+tags = ["891"]
+reference = "docs/may_2026_review_layout.md: unlinked history queue"
+text = "891 (wax myrtle) was recorded dead standing in May and hasn't been matched to an earlier record."
+
+[[field_notes]]
+plot = "L5"
+tags = ["913", "443"]
+reference = "docs/may_2026_review_layout.md: final reconciliation"
+text = "913 is one juniper (~235 mm); May's extra scratched-out entry was 913 again, not pine 443."
+
+[[field_notes]]
+plot = "L5"
+tags = ["509", "786"]
+reference = "docs/may_2026_review_layout.md: final reconciliation"
+text = "509 (wax myrtle) and 786 (juniper) were recorded dead standing in May and haven't been matched to earlier records."
+
+[[field_notes]]
+plot = "L2"
+tags = ["733", "5038", "5380"]
+reference = "config/identity.toml: May 2026 row reassignments"
+text = "May's 733 entry ('same as 5038') is believed to be the second stem of 5380 (wax myrtle), so 5380 has two stems."
+
+[[rechecks]]
+id = "h1-219-220-plant-identity"
+plot = "H1"
+tree_uids = ["af42e89b68ba58c0", "ab717280f9f129dc"]
+context = "The May notes on 219 and 220 each refer to the other as a double stem."
+question = "Are tags 219 and 220 on two stems of one plant, or on separate plants?"
+reference = "May 2026 scan page 11 rows 15-16"
+
+[[rechecks]]
+id = "l2-228-partial-fall"
+plot = "L2"
+tree_uids = ["1ed753a8877a269e"]
+context = "Pine 228 was dead standing in October 2025; May's note says 'fallen above girdle'."
+question = "Is the tagged trunk still standing below the break, or has the entire trunk fallen?"
+reference = "May 2026 scan page 45 row 26"
+
+[[rechecks]]
+id = "r4-5262-stem-count"
+plot = "R4"
+tree_uids = ["58f480603dac1df8"]
+context = "Vaccinium 5262 had two stems (27 and 24 mm); only one health score was recorded in May."
+question = "How many stems remain on this plant, and is the smaller, previously dead stem still standing?"
+reference = "May 2026 scan page 8 notes-9; October 2025 history"
+
+[[rechecks]]
+id = "l2-816-physical-tag"
+plot = "L2"
+tree_uids = ["28dbbac68b0682aa"]
+context = "May's 616 entry is believed to be wax myrtle 816 (previous DBH 59 mm)."
+question = "What number is actually on the attached tag?"
+reference = "config/identity.toml: May 616 -> identity 816"
+
+[[rechecks]]
+id = "m6-5145-physical-tag"
+plot = "M6"
+tree_uids = ["902a0f6f055c4f33"]
+context = "May's 5154 entry is believed to be juniper 5145 (previous DBH 40 mm), recorded dead standing."
+question = "What number is actually on the attached tag?"
+reference = "config/identity.toml: May 5154 -> identity 5145"
+
+[[rechecks]]
+id = "l6-574-physical-tags"
+plot = "L6"
+tree_uids = ["d98b93de96d6db4e"]
+context = "Wax myrtle 574 was alive and described as previously tagged in May, but its earlier history is unmatched."
+question = "What numbers are on this plant's tags, and does it carry more than one tag?"
+reference = "May 2026 scan page 57 N1"

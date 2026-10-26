@@ -1,0 +1,73 @@
+{
+  "description": "Display geometry only, visually checked against the original 300 dpi scans. No transcription values or review decisions are changed.",
+  "pages": [
+    {
+      "source_page": 5,
+      "image_sha256": "6d8714fd278fa9f53a335a285ebf9d94c41801068510e4553489b6f398f9aa8e",
+      "columns": [],
+      "rows": [
+        {"source_row_label": "row-21-stem-2", "source_id_text": "677|NYSSYL|2", "box": {"x": 1430, "y": 1775, "width": 920, "height": 85, "skew_y": -0.01}}
+      ]
+    },
+    {
+      "source_page": 9,
+      "image_sha256": "0efc524fa8fd5017a355005cf341738a15741ab070df6e1f109f8fde49711c4a",
+      "columns": [],
+      "rows": [
+        {"source_row_label": "row-21-stem-3", "source_id_text": "274|NYSSYL|3", "box": {"x": 1430, "y": 1775, "width": 920, "height": 85, "skew_y": -0.01}}
+      ]
+    },
+    {
+      "source_page": 8,
+      "image_sha256": "4a872a8cd4bbb62136b38d586a7ec18d5fdf337b5da556f6f877c657e22cab5a",
+      "columns": [],
+      "rows": [
+        {"source_row_label": "notes-1", "source_id_text": "5218|NYS|", "box": {"x": 230, "y": 2300, "width": 940, "height": 95}},
+        {"source_row_label": "notes-2", "source_id_text": "735|ILE|", "box": {"x": 225, "y": 2395, "width": 910, "height": 90}},
+        {"source_row_label": "notes-3", "source_id_text": "5253||", "box": {"x": 245, "y": 2485, "width": 890, "height": 90}},
+        {"source_row_label": "notes-4", "source_id_text": "5250|NYS|", "box": {"x": 1175, "y": 2290, "width": 1000, "height": 95}},
+        {"source_row_label": "notes-5", "source_id_text": "5251|NYS|", "box": {"x": 1175, "y": 2385, "width": 1000, "height": 95}},
+        {"source_row_label": "notes-6", "source_id_text": "5264|VACSPP|", "box": {"x": 1175, "y": 2480, "width": 1000, "height": 85}},
+        {"source_row_label": "notes-7", "source_id_text": "5246|NYS|", "box": {"x": 1200, "y": 2565, "width": 1050, "height": 95, "skew_y": -0.03}},
+        {"source_row_label": "notes-8", "source_id_text": "5263|VACSPP|", "box": {"x": 1200, "y": 2660, "width": 960, "height": 100, "skew_y": -0.035}},
+        {"source_row_label": "notes-9", "source_id_text": "5262|VACSPP|", "box": {"x": 275, "y": 2990, "width": 760, "height": 90, "skew_y": -0.075}},
+        {"source_row_label": "notes-10", "source_id_text": "5260|NYS|", "box": {"x": 275, "y": 3085, "width": 850, "height": 105, "skew_y": -0.10}},
+        {"source_row_label": "row-52-stem-2", "source_id_text": "5247|NYSSYL|2", "box": {"x": 1430, "y": 1170, "width": 910, "height": 95, "skew_y": -0.012}}
+      ]
+    },
+    {
+      "source_page": 19,
+      "image_sha256": "03208e3bf5b7894272a86c985f940c20bbd7749db181c06718dfaf2d1861d6ae",
+      "column_names": {"printed_dbh": "dbh_mm"},
+      "rows": [
+        {"source_row_label": "26", "source_id_text": "551|ILEOPA|1", "box": {"x": 235, "y": 2105, "width": 2115, "height": 78, "skew_y": -0.01}}
+      ]
+    },
+    {
+      "source_page": 21,
+      "image_sha256": "933cd0a2203ebc4f1a03eb75459c628064afe12bc0a4bee89d5d40fbb4c3775f",
+      "column_names": {"printed_dbh": "dbh_mm"},
+      "rows": [
+        {"source_row_label": "N1", "source_id_text": "451|NYSSYL|1", "box": {"x": 236, "y": 2511, "width": 2112, "height": 80, "skew_y": -0.0075}},
+        {"source_row_label": "N2", "source_id_text": "5307|PINTAE|1", "box": {"x": 236, "y": 2591, "width": 2112, "height": 78, "skew_y": -0.0075}},
+        {"source_row_label": "N3", "source_id_text": "5381|ILEOPA|1", "box": {"x": 236, "y": 2669, "width": 2112, "height": 84, "skew_y": -0.0075}}
+      ]
+    },
+    {
+      "source_page": 23,
+      "image_sha256": "2ca503ef72ef72613b6196c1f0fab0ee05cc2ba8715d5559f76774a20340307c",
+      "column_names": {"printed_dbh": "dbh_mm"},
+      "rows": [
+        {"source_row_label": "N1", "source_id_text": "882|JUNVIR|1", "box": {"x": 239, "y": 2283, "width": 2111, "height": 88, "skew_y": -0.011667}},
+        {"source_row_label": "N2", "source_id_text": "903|UNISPP.|1", "box": {"x": 239, "y": 2371, "width": 2111, "height": 84, "skew_y": -0.011667}}
+      ]
+    },
+    {
+      "source_page": 57,
+      "image_sha256": "4eb4cdf40e613bb2449e363c8682cac877a02b50a6e6202fa483a8f71f58ba10",
+      "rows": [
+        {"source_row_label": "notes-1", "source_id_text": "100|JUN|1", "box": {"x": 233, "y": 988, "width": 2115, "height": 100, "skew_y": -0.015}}
+      ]
+    }
+  ]
+}
